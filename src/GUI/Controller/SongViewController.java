@@ -52,10 +52,10 @@ public class SongViewController {
     public void handleDeletePlaylist(ActionEvent actionEvent) {
     }
 
-    public void HandleMovePlaylistSongUp(ActionEvent actionEvent) {
+    public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
     }
 
-    public void HandleMovePlaylistSongDown(ActionEvent actionEvent) {
+    public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
     }
 
     public void handleSliMusicVolume(MouseEvent mouseEvent) {
