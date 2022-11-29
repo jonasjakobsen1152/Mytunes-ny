@@ -52,7 +52,7 @@
       <Button fx:id="btnAddSong" layoutX="620.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddSong" text="Add New Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="200.0" />
       <Button fx:id="btnEditSong" layoutX="716.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="117.0" />
       <Button fx:id="btnDeleteSong" layoutX="799.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeleteSong" text="Delete Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="20.0" />
-      <Slider layoutX="85.0" layoutY="67.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="67.0" />
+      <Slider fx:id="sliMusicVolume" layoutX="85.0" layoutY="67.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="67.0" />
       <Button fx:id="btnRestartSong" layoutX="173.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleRestart" text="⬅" AnchorPane.leftAnchor="68.0" AnchorPane.topAnchor="87.0" />
       <Button fx:id="btnSkipSong" layoutX="206.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSkipSong" text="➡" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="87.0" />
    </children>
