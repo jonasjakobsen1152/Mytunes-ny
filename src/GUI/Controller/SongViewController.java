@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 
 public class SongViewController {
     
@@ -20,6 +22,8 @@ public class SongViewController {
     public ListView lstPlaylist;
     public ListView lstSongs;
     public Button addSongToPlaylist;
+    public Slider sliMusicVolume;
+    public Button btnAddSong;
 
     public void handleAddSong(ActionEvent actionEvent) {
     }
@@ -52,5 +56,8 @@ public class SongViewController {
     }
 
     public void HandleMovePlaylistSongDown(ActionEvent actionEvent) {
+    }
+
+    public void handleSliMusicVolume(MouseEvent mouseEvent) {
     }
 }
