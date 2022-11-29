@@ -3,19 +3,15 @@ package DAL.db;
 import BE.Song;
 import DAL.IMyTunesDataAccess;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SongDAO_DB implements IMyTunesDataAccess {
 
     private DAL.db.MyDatabaseConnector databaseConnector;
-
-    // Return data structure
-    public SongDAO_DB() {
+    public SongDAO_DB() throws IOException {
         databaseConnector = new DAL.db.MyDatabaseConnector();
     }
     @Override
@@ -55,7 +51,37 @@ public class SongDAO_DB implements IMyTunesDataAccess {
 
     @Override
     public Song createSong(String title, String artist, String category, int seconds) throws Exception {
-        return null;
+
+        String sql = "INSERT INTO song (Title,Artist,Category,Seconds) VALUES (?,?,?,?);";
+
+        try (Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            // Bind parameters
+            stmt.setString(1, title);
+            stmt.setString(2,artist);
+            stmt.setString(3, category);
+            stmt.setInt(4,seconds);
+
+            // Run the specified SQL statement
+            stmt.executeUpdate();
+
+            // Get the generated ID from the DB
+            ResultSet rs = stmt.getGeneratedKeys();
+            int id = 0;
+
+            if ( rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            // Create Song object and send up the layers
+            Song song = new Song(id, title, artist, category, seconds);
+            return song;
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+            throw new Exception("Could not create song", ex);
+        }
     }
 
     @Override

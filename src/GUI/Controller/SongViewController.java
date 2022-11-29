@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URL;SongDetailsViewController
 import java.util.ResourceBundle;
 
 public class SongViewController extends BaseController implements Initializable {
