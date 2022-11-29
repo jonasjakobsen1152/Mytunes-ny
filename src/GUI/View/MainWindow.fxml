@@ -10,9 +10,9 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SongViewController">
    <children>
-      <ListView layoutX="241.0" layoutY="199.0" prefHeight="425.0" prefWidth="168.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="150.0" />
-      <ListView layoutX="26.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="150.0" />
-      <ListView layoutX="486.0" layoutY="163.0" prefHeight="450.0" prefWidth="329.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="551.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0" />
+      <ListView fx:id="lstSongsOnPlaylist" layoutX="241.0" layoutY="199.0" prefHeight="425.0" prefWidth="168.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="150.0" />
+      <ListView fx:id="lstPlaylist" layoutX="26.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="150.0" />
+      <ListView fx:id="lstSongs" layoutX="486.0" layoutY="163.0" prefHeight="450.0" prefWidth="329.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="551.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0" />
       <Button fx:id="addSongToPlaylist" layoutX="428.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddSongToPlaylist" text="⬅">
          <font>
             <Font size="15.0" />
