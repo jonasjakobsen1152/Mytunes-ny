@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class SongViewController {
-    /*
+    
     public Button btnEditSong;
     public Button btnDeleteSong;
     public Button btnRestartSong;
@@ -13,6 +13,8 @@ public class SongViewController {
     public Button btnAddPlaylist;
     public Button btnEditPlaylist;
     public Button btnDeletePlaylist;
+    public Button btnMovePlaylistSongUp;
+    public Button btnMovePlaylistSongDown;
 
     public void handleAddSong(ActionEvent actionEvent) {
     }
@@ -43,5 +45,7 @@ public class SongViewController {
 
     public void HandleMovePlaylistSongUp(ActionEvent actionEvent) {
     }
-     */
+
+    public void HandleMovePlaylistSongDown(ActionEvent actionEvent) {
+    }
 }
