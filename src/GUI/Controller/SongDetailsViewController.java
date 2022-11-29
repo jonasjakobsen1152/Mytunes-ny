@@ -33,5 +33,8 @@ public class SongDetailsViewController extends BaseController{
         model = getModel().getSongModel();
 
         txtTitle.setText(model.getSelectedSong().getTitle());
+        txtArtist.setText(model.getSelectedSong().getArtist());
+        txtCategory.setText(model.getSelectedSong().getCategory());
+        txtSeconds.setText(String.valueOf(model.getSelectedSong().getSeconds()));
     }
 }
