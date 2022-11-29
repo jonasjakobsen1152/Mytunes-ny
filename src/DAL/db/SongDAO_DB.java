@@ -7,11 +7,11 @@ import java.util.List;
 
 public class SongDAO_DB implements IMyTunesDataAccess {
 
-    private MyT.DAL.db.MyDatabaseConnector databaseConnector;
+    private DAL.db.MyDatabaseConnector databaseConnector;
 
     // Return data structure
     public SongDAO_DB() {
-        databaseConnector = new MyT.DAL.db.MyDatabaseConnector();
+        databaseConnector = new DAL.db.MyDatabaseConnector();
     }
     @Override
     public List<Song> getAllSongs() throws Exception {
