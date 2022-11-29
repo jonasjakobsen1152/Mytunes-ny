@@ -8,12 +8,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SongViewController">
    <children>
       <ListView layoutX="241.0" layoutY="199.0" prefHeight="425.0" prefWidth="168.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="150.0" />
       <ListView layoutX="26.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="150.0" />
       <ListView layoutX="486.0" layoutY="163.0" prefHeight="450.0" prefWidth="329.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="551.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0" />
-      <Button fx:id="addSongToPlaylist" layoutX="428.0" layoutY="150.0" mnemonicParsing="false" text="⬅">
+      <Button fx:id="addSongToPlaylist" layoutX="428.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddSongToPlaylist" text="⬅">
          <font>
             <Font size="15.0" />
          </font>
@@ -21,15 +21,15 @@
             <ColorAdjust />
          </effect>
       </Button>
-      <Button fx:id="btnAddToPlaylist" layoutX="23.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddNewSong" text="Add Song To Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="23.0" />
-      <Button fx:id="btnEditPlaylist" layoutX="155.0" layoutY="614.0" mnemonicParsing="false" text="Edit Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="155.0" />
-      <Button fx:id="btnDeletePlaylist" layoutX="240.0" layoutY="614.0" mnemonicParsing="false" text="Delete" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="240.0" />
-      <Button layoutX="428.0" layoutY="209.0" mnemonicParsing="false" text="⬆">
+      <Button fx:id="btnAddPlaylist" layoutX="23.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddPlaylist" text="Add New Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="23.0" />
+      <Button fx:id="btnEditPlaylist" layoutX="155.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditPlaylist" text="Edit Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="155.0" />
+      <Button fx:id="btnDeletePlaylist" layoutX="240.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeletePlaylist" text="Delete" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="240.0" />
+      <Button fx:id="btnMovePlaylistSongUp" layoutX="428.0" layoutY="209.0" mnemonicParsing="false" onAction="#HandleMovePlaylistSongUp" text="⬆">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="428.0" layoutY="265.0" mnemonicParsing="false" text="⬇">
+      <Button fx:id="btnMovePlaylistSongDown" layoutX="428.0" layoutY="265.0" mnemonicParsing="false" onAction="#HandleMovePlaylistSongDown" text="⬇">
          <font>
             <Font size="15.0" />
          </font>
@@ -49,12 +49,12 @@
             <Font name="Times New Roman" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="btmAddSong" layoutX="620.0" layoutY="614.0" mnemonicParsing="false" text="Add New Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="200.0" />
+      <Button fx:id="btnAddSong" layoutX="620.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddSong" text="Add New Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="200.0" />
       <Button fx:id="btnEditSong" layoutX="716.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="117.0" />
       <Button fx:id="btnDeleteSong" layoutX="799.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeleteSong" text="Delete Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="20.0" />
       <Slider layoutX="85.0" layoutY="67.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="67.0" />
-      <Button layoutX="173.0" layoutY="87.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="68.0" AnchorPane.topAnchor="87.0" />
-      <Button layoutX="167.0" layoutY="87.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="87.0" />
+      <Button fx:id="btnRestartSong" layoutX="173.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleRestart" text="⬅" AnchorPane.leftAnchor="68.0" AnchorPane.topAnchor="87.0" />
+      <Button fx:id="btnSkipSong" layoutX="206.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSkipSong" text="➡" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="87.0" />
    </children>
    <effect>
       <ColorAdjust />
