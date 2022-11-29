@@ -12,6 +12,7 @@ public class SongManager {
     private IMyTunesDataAccess songDAO;
 
     public SongManager() {songDAO = new SongDAO_DB();}
+
     public List<Song> getAllSongs() throws Exception {
         return songDAO.getAllSongs();
     }
@@ -22,5 +23,8 @@ public class SongManager {
     }
     public Song createNewSong(String title, String artist, String category, int seconds) throws Exception {
         return songDAO.createSong(title, artist, category, seconds);
+    }
+    public void updateSong(Song updatedSong) throws Exception{
+        songDAO.updateSong(updatedSong);
     }
 }

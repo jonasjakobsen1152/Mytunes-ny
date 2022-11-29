@@ -3,6 +3,11 @@ package DAL.db;
 import BE.Song;
 import DAL.IMyTunesDataAccess;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongDAO_DB implements IMyTunesDataAccess {
@@ -15,7 +20,37 @@ public class SongDAO_DB implements IMyTunesDataAccess {
     }
     @Override
     public List<Song> getAllSongs() throws Exception {
-        return null;
+        ArrayList<Song> allSongs = new ArrayList<>();
+
+        try (Connection conn = databaseConnector.getConnection();
+             Statement stmt = conn.createStatement())
+        {
+            String sql = "SELECT * FROM Song;";
+
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // Loop through rows from the database result set
+            while (rs.next()) {
+
+                //Map DB row to Movie object
+                int id = rs.getInt("Id");
+                String title = rs.getString("Title");
+                String artist = rs.getString("artist");
+                String category = rs.getString("category");
+                int seconds = rs.getInt("seconds");
+
+                Song song = new Song(id, title, artist, category, seconds);
+                allSongs.add(song);
+            }
+            return allSongs;
+
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            throw new Exception("Could not get Songs from database", ex);
+        }
     }
 
     @Override
