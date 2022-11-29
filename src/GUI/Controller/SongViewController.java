@@ -39,6 +39,7 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnPlaySong;
 
     public void handleAddSong(ActionEvent actionEvent) {
+
     }
 
     public void handleEditSong(ActionEvent actionEvent) {
