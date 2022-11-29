@@ -85,12 +85,36 @@ public class SongDAO_DB implements IMyTunesDataAccess {
     }
 
     @Override
-    public void updateSong(Song movie) throws Exception {
+    public void updateSong(Song song) throws Exception {
 
+        String sql = "UPDATE song SET Title = ?, Artist = ?, Catrgory = ?, Seconds = ? WHERE ID = ?";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Bind parameters
+            stmt.setString(1, song.getTitle());
+            stmt.setString(2, song.getArtist());
+            stmt.setString(3, song.getCategory());
+            stmt.setInt(4, song.getSeconds());
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not update song", ex);
+        }
     }
 
     @Override
-    public void deleteSong(Song movie) throws Exception {
+    public void deleteSong(Song song) throws Exception {
 
+        //TODO Delete Method
+        throw new UnsupportedOperationException();
+    }
+    public List<Song> searchSong(String query) throws Exception {
+
+        //TODO Search Method
+        throw new UnsupportedOperationException();
     }
 }
