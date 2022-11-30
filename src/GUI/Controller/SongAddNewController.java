@@ -9,10 +9,11 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 
-public class SongDetailsViewController extends BaseController{
+public class SongAddNewController extends BaseController{
     @FXML
     private TextField txtTitle, txtArtist, txtCategory, txtSeconds;
     private SongModel model;
+
 
     public void handleUpdate(ActionEvent actionEvent) throws Exception{
         String updatedTitle = txtTitle.getText();
