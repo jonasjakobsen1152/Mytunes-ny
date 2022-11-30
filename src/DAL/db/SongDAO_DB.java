@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class SongDAO_DB implements IMyTunesDataAccess {
 
     private DAL.db.MyDatabaseConnector databaseConnector;
@@ -21,7 +22,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement())
         {
-            String sql = "SELECT * FROM Song;";
+            String sql = "SELECT * FROM dbo.Song;";
 
 
             ResultSet rs = stmt.executeQuery(sql);
@@ -32,13 +33,18 @@ public class SongDAO_DB implements IMyTunesDataAccess {
                 //Map DB row to Movie object
                 int id = rs.getInt("Id");
                 String title = rs.getString("Title");
-                String artist = rs.getString("artist");
-                String category = rs.getString("category");
-                int seconds = rs.getInt("seconds");
+                String artist = rs.getString("Artist");
+                String category = rs.getString("Category");
+                int seconds = rs.getInt("Seconds");
+                String filePath = rs.getString("FilePath");
 
-                Song song = new Song(id, title, artist, category, seconds);
+                Song song = new Song(id, title, artist, category, seconds, filePath);
+
+
                 allSongs.add(song);
             }
+
+           System.out.println(allSongs);
             return allSongs;
 
         }
@@ -49,10 +55,13 @@ public class SongDAO_DB implements IMyTunesDataAccess {
         }
     }
 
-    @Override
-    public Song createSong(String title, String artist, String category, int seconds) throws Exception {
 
-        String sql = "INSERT INTO song (Title,Artist,Category,Seconds) VALUES (?,?,?,?);";
+
+
+    @Override
+    public Song createSong(String title, String artist, String category, int seconds,String filePath) throws Exception {
+
+        String sql = "INSERT INTO song (Title,Artist,Category,Seconds,FilePath) VALUES (?,?,?,?,?);";
 
         try (Connection conn = databaseConnector.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -62,6 +71,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             stmt.setString(2,artist);
             stmt.setString(3, category);
             stmt.setInt(4,seconds);
+            stmt.setString(5,filePath);
 
             // Run the specified SQL statement
             stmt.executeUpdate();
@@ -75,7 +85,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             }
 
             // Create Song object and send up the layers
-            Song song = new Song(id, title, artist, category, seconds);
+            Song song = new Song(id, title, artist, category, seconds, filePath);
             return song;
         }
         catch (SQLException ex){
@@ -87,7 +97,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
     @Override
     public void updateSong(Song song) throws Exception {
 
-        String sql = "UPDATE song SET Title = ?, Artist = ?, Catrgory = ?, Seconds = ? WHERE ID = ?";
+        String sql = "UPDATE song SET Title = ?, Artist = ?, Category = ?, Seconds = ? WHERE ID = ?";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -107,14 +117,9 @@ public class SongDAO_DB implements IMyTunesDataAccess {
     }
 
     @Override
-    public void deleteSong(Song song) throws Exception {
+    public void deleteSong(Song movie) throws Exception {
 
-        //TODO Delete Method
-        throw new UnsupportedOperationException();
     }
-    public List<Song> searchSong(String query) throws Exception {
 
-        //TODO Search Method
-        throw new UnsupportedOperationException();
-    }
+
 }
