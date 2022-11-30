@@ -4,15 +4,39 @@ import BE.Song;
 import GUI.Model.SongModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 import java.awt.*;
 
-public class SongAddNewController extends BaseController{
-    @FXML
-    private TextField txtTitle, txtArtist, txtCategory, txtSeconds;
-    private SongModel model;
+public class SongDataInputs extends BaseController{
+    SongModel songModel;
+    public TextField txtTitle;
+    public TextField txtArtist;
+    public TextField txtCategory;
+    public TextField txtFilePath;
+    public Button txtAddInput;
+
+    public void handleAddInput(ActionEvent actionEvent) throws Exception {
+        String updatedTitle = txtTitle.getText();
+        String updatedArtist = txtArtist.getText();
+        String updatedCategory = txtCategory.getText();
+        int updatedSeconds = -1;
+        String updatedFilePath = txtFilePath.getText();
+        try{
+            songModel = new SongModel();
+            songModel.createNewSong(updatedTitle, updatedArtist, updatedCategory, updatedSeconds,updatedFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        //TODO add method that calculates seconds
+
+
+    }
+
+
 
 
     /*
@@ -31,10 +55,9 @@ public class SongAddNewController extends BaseController{
     }
     */
 
-    @Override
+   // @Override
     public void setup() {
-
-        model = getModel().getSongModel();
+        //model = getModel().getSongModel();
         /*
         txtTitle.setText(model.getSelectedSong().getTitle());
         txtArtist.setText(model.getSelectedSong().getArtist());

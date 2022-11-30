@@ -30,10 +30,10 @@ public class SongModel {
     }
     public void createNewSong(String title, String artist, String category, int seconds, String filePath) throws Exception{
         // Create Song in data storage
-        Song s = songManager.createNewSong(title, artist, category, seconds,filePath);
+        songManager.createNewSong(title, artist, category, seconds,filePath);
 
         // Add Song to observable list (gui)
-        songsToBeViewed.add(s);
+        //songsToBeViewed.add(s);
     }
 
     public void updateSong(Song updateSong) throws Exception {
