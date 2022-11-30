@@ -71,27 +71,6 @@ public class SongViewController extends BaseController implements Initializable 
       } catch (IOException e) {
           e.printStackTrace();
       }
-      /*
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
-        AnchorPane pane = (AnchorPane) loader.load();
-
-        SongAddNewController controller = loader.getController();
-        controller.setModel(super.getModel());
-        controller.setup();
-
-
-        // Create the dialog stage
-        Stage dialogWindow = new Stage();
-        dialogWindow.setTitle("Add New Song");
-        dialogWindow.initModality(Modality.WINDOW_MODAL);
-        dialogWindow.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-        Scene scene = new Scene(pane);
-        dialogWindow.setScene(scene);
-
-        //Show the dialog and wait ultil the user closes it
-        dialogWindow.show();
-       */
     }
         @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
@@ -105,9 +84,8 @@ public class SongViewController extends BaseController implements Initializable 
                 e.printStackTrace();
             }
         }));
-
-
         }
+
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
     if(newValue != null){
