@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Song;
+import GUI.Model.SongModel;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SongViewController extends BaseController implements Initializable {
-    
+    public TextField txtFilter;
     public Button btnEditSong;
     public Button btnDeleteSong;
     public Button btnRestartSong;
@@ -34,13 +35,52 @@ public class SongViewController extends BaseController implements Initializable 
     public Button addSongToPlaylist;
     public Slider sliMusicVolume;
     public Button btnAddSong;
-    public TextField txtFilter;
     public Button btnSearch;
     public Button btnPlaySong;
+    private SongModel songModel;
+
+    public SongViewController() {
+        try {
+            // Istatiates a songModel inside a try catch.
+            songModel = new SongModel();
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+    }
+
 
     public void handleAddSong(ActionEvent actionEvent) {
-
+    //TODO when new window created.
     }
+        @Override
+        public void initialize (URL url, ResourceBundle resourceBundle){
+        lstSongs.setItems(songModel.getObservableSong());
+
+        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
+            try{
+                songModel.searchSong(newValue);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+        }));
+
+
+        }
+
+    public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
+    if(newValue != null){
+        //TODO When new window created, implement this to edit/update songs
+    }
+    }
+
+
+   @Override
+    public void setup() {
+        //songModel = getModel().getSongModel();
+    }
+
 
     public void handleEditSong(ActionEvent actionEvent) {
     }
@@ -80,20 +120,9 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handlePlaySong(ActionEvent actionEvent) {
     }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-    @Override
-    public void setup() {
-        //songModel = getModel().getSongModel();
-    }
-    public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
-
-    }
     private void displayError(Throwable t) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Something went wrong");
+        alert.setTitle("You did something wrong, the program did not");
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
     }
