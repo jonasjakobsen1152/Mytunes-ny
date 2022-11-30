@@ -15,12 +15,13 @@ public class SongAddNewController extends BaseController{
     private SongModel model;
 
 
+    /*
     public void handleUpdate(ActionEvent actionEvent) throws Exception{
         String updatedTitle = txtTitle.getText();
         String updatedArtist = txtArtist.getText();
         String updatedCategory = txtCategory.getText();
         int updatedSeconds = Integer.parseInt(txtSeconds.getText());
-        Song updatedSong = new Song(model.getSelectedSong().getId(),
+        //Song updatedSong = new Song(model.getSelectedSong().getId(),
                 updatedTitle, updatedArtist, updatedCategory, updatedSeconds);
 
         model.updateSong(updatedSong);
@@ -28,14 +29,17 @@ public class SongAddNewController extends BaseController{
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
+    */
+
     @Override
     public void setup() {
 
         model = getModel().getSongModel();
-
+        /*
         txtTitle.setText(model.getSelectedSong().getTitle());
         txtArtist.setText(model.getSelectedSong().getArtist());
         txtCategory.setText(model.getSelectedSong().getCategory());
         txtSeconds.setText(String.valueOf(model.getSelectedSong().getSeconds()));
+         */
     }
 }
