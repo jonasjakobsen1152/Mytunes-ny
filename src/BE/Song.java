@@ -27,6 +27,49 @@ public class Song {
     @Override
     public String toString() {
 
-        return id + ":"+ title + ":"+ artist+ ":"+category+ ":"+seconds+ ":" + filePath;
+
+        return makeStringEvenLength();
+
     }
+
+    public String makeStringEvenLength()
+    {
+        int lengthString= title.length();
+        for (int i=lengthString; i<30; i++)
+            title+=" ";
+
+
+        lengthString= artist.length();
+        for (int i=lengthString; i<30; i++)
+            artist+=" ";
+
+
+        lengthString= category.length();
+        for (int i=lengthString; i<30; i++)
+            category+=" ";
+
+
+        String secondsToString = seconds + " sek";
+        lengthString=secondsToString.length();
+
+        for (int i=lengthString; i<10; i++)
+            secondsToString+=" ";
+
+        String idString="";
+        if (id<10) {
+            idString =id +"  : ";
+        }
+        else if (id>=10 && id<100)
+            idString =id +" : ";
+        else
+            idString =id +": ";
+
+        return idString +  title +  artist+ category+ secondsToString;
+    }
+
+
+
+
+
+
 }

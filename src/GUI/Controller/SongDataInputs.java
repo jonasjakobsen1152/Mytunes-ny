@@ -1,15 +1,11 @@
 package GUI.Controller;
 
-import BE.Song;
 import GUI.Model.SongModel;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 public class SongDataInputs extends BaseController{
     SongModel songModel;
@@ -23,11 +19,10 @@ public class SongDataInputs extends BaseController{
         String Title = txtTitle.getText();
         String Artist = txtArtist.getText();
         String Category = txtCategory.getText();
-        int Seconds = -1;
         String FilePath = txtFilePath.getText();
         try{
             songModel = new SongModel();
-            songModel.createNewSong(Title, Artist, Category, Seconds,FilePath);
+            songModel.createNewSong(Title, Artist, Category, FilePath);
             Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
             stage.close();
         } catch (Exception e) {

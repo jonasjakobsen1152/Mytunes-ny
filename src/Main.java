@@ -1,4 +1,3 @@
-import DAL.db.SongDAO_DB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,11 +6,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     public static void main(String[] args) throws Exception {
-       // MusicSound musicSound = new MusicSound();
-        //musicSound.playMusic();
 
-        SongDAO_DB songDAO_db = new SongDAO_DB();
-        songDAO_db.getAllSongs();
 
 
         Application.launch();

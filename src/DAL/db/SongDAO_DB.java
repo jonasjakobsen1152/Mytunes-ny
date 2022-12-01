@@ -1,6 +1,7 @@
 package DAL.db;
 
 import BE.Song;
+import BLL.util.MusicSound;
 import DAL.IMyTunesDataAccess;
 
 import java.io.IOException;
@@ -40,11 +41,9 @@ public class SongDAO_DB implements IMyTunesDataAccess {
 
                 Song song = new Song(id, title, artist, category, seconds, filePath);
 
-
                 allSongs.add(song);
             }
 
-           System.out.println(allSongs);
             return allSongs;
 
         }
@@ -59,7 +58,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
 
 
     @Override
-    public Song createSong(String title, String artist, String category, int seconds,String filePath) throws Exception {
+    public Song createSong(String title, String artist, String category, String filePath) throws Exception {
 
         String sql = "INSERT INTO song (Title,Artist,Category,Seconds,FilePath) VALUES (?,?,?,?,?);";
 
@@ -70,7 +69,12 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             stmt.setString(1, title);
             stmt.setString(2,artist);
             stmt.setString(3, category);
-            stmt.setInt(4,seconds);
+
+            //Her kalder vi musik klassen
+            MusicSound musicSound= new MusicSound();
+            int seconds =musicSound.timeMusic(filePath);
+
+            stmt.setInt(4,seconds); //I musikklassen kaldes timeMusik som sender tiden i sekunder for nummeret tilbage.
             stmt.setString(5,filePath);
 
             // Run the specified SQL statement
@@ -106,6 +110,8 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             stmt.setString(1, song.getTitle());
             stmt.setString(2, song.getArtist());
             stmt.setString(3, song.getCategory());
+
+
             stmt.setInt(4, song.getSeconds());
 
             stmt.executeUpdate();

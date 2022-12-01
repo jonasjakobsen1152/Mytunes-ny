@@ -11,21 +11,22 @@ import java.io.File;
 public class MusicSound {
     int soundLevel = 0;
     MediaPlayer play;
+    Media hit;
 
     public String getMusicPath() {
-        String path = "C:\\Musik\\06 Hop-Bobbelloppe.mp3";
+        String path = "C:\\Musik\\file_example_WAV_10MG.wav";
         return path;
     }
 //
 // C:\Musik\01 Slotstema - Minuet.mp3
 
     public void playMusic() throws Exception {
-        Media hit = new Media(new File(getMusicPath()).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-
-        play = mediaPlayer;
+        hit = new Media(new File(getMusicPath()).toURI().toString());
+        play = new MediaPlayer(hit);
         play.play();
-timeMusic();
+
+
+
     }
 
     public void stopMusic() {
@@ -43,15 +44,16 @@ timeMusic();
 
     }
 
-    public int timeMusic() throws Exception
+    public int timeMusic(String path) throws Exception
     {
 
-            AudioFile audioFile = AudioFileIO.read(new File(getMusicPath())); //Kaster en masse røde infobeskeder. Det gør den bare og gør arbejdet. Vi lever med det.
+            AudioFile audioFile = AudioFileIO.read(new File(getMusicPath())); //Kaster en masse røde infobeskeder. Det gør den bare og gør arbejdet.
+        // Det lever vi med.
+
             int duration = audioFile.getAudioHeader().getTrackLength();
+
         System.out.println(duration);
-
-
         return duration;
-        }
+                    }
 
     }

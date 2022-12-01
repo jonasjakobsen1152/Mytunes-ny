@@ -4,7 +4,6 @@ import BE.Song;
 import BLL.SongManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 
 
 import java.util.List;
@@ -17,7 +16,10 @@ public class SongModel {
     public SongModel() throws Exception{
         songManager = new SongManager();
         songsToBeViewed = FXCollections.observableArrayList();
+
+
         songsToBeViewed.addAll(songManager.getAllSongs());
+        System.out.println(songsToBeViewed+"\n");
     }
 
     public ObservableList<Song> getObservableSong() {
@@ -28,9 +30,9 @@ public class SongModel {
         songsToBeViewed.clear();
         songsToBeViewed.addAll(searchResults);
     }
-    public void createNewSong(String title, String artist, String category, int seconds, String filePath) throws Exception{
+    public void createNewSong(String title, String artist, String category, String filePath) throws Exception{
         // Create Song in data storage
-        songManager.createNewSong(title, artist, category, seconds,filePath);
+        songManager.createNewSong(title, artist, category,filePath);
 
         // Add Song to observable list (gui)
         //songsToBeViewed.add(s);
