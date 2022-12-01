@@ -92,6 +92,18 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     public void handleEditSong(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Add that new song");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) {

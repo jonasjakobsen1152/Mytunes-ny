@@ -8,6 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SongDataInputs extends BaseController{
+    public TextField txtEditTitle;
+    public TextField txtEditArtist;
+    public TextField txtEditCategory;
+    public TextField txtEditSongFilePath;
+    public Button btnEditSong;
     SongModel songModel;
     public TextField txtTitle;
     public TextField txtArtist;
@@ -63,5 +68,8 @@ public class SongDataInputs extends BaseController{
         txtCategory.setText(model.getSelectedSong().getCategory());
         txtSeconds.setText(String.valueOf(model.getSelectedSong().getSeconds()));
          */
+    }
+
+    public void handleEditSong(ActionEvent actionEvent) {
     }
 }
