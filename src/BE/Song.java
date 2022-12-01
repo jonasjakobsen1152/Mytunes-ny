@@ -25,7 +25,7 @@ public class Song {
     public String getArtist(){return artist;}
     public String getCategory(){return category;}
     public int getSeconds() {return seconds;}
-    public String filePath() {return filePath;}
+    public String getFilePath() {return filePath;}
 
     @Override
     public String toString() {

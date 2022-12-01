@@ -20,6 +20,5 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    //Andreas
+
 }
-// Hallo
