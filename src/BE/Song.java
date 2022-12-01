@@ -28,11 +28,11 @@ public class Song {
     public String toString() {
 
 
-        return makeStringEvenLength();
-
+       // return makeStringEvenLength();
+return  id + ": " +  title + " " + artist+ " " + category+ " " +seconds;
     }
 
-    public String makeStringEvenLength()
+  /*  public String makeStringEvenLength()
     {
         int lengthString= title.length();
         for (int i=lengthString; i<30; i++)
@@ -67,7 +67,7 @@ public class Song {
         return idString +  title +  artist+ category+ secondsToString;
     }
 
-
+*/
 
 
 

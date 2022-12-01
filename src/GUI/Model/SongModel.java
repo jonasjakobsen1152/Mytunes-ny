@@ -19,7 +19,7 @@ public class SongModel {
 
 
         songsToBeViewed.addAll(songManager.getAllSongs());
-        System.out.println(songsToBeViewed+"\n");
+
     }
 
     public ObservableList<Song> getObservableSong() {
