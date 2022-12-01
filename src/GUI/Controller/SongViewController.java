@@ -28,7 +28,7 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnMovePlaylistSongDown;
     public ListView lstSongsOnPlaylist;
     public ListView lstPlaylist;
-    public ListView lstSongs;
+    public ListView<Song> lstSongs;
     public Button addSongToPlaylist;
     public Slider sliMusicVolume;
     public Button btnAddSong;
@@ -66,7 +66,6 @@ public class SongViewController extends BaseController implements Initializable 
         @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
-
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
@@ -93,6 +92,9 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleEditSong(ActionEvent actionEvent) {
         try {
+           Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+           songModel.setSelectedSong(selectedSong);
+
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/GUI/View/editSong.fxml"));
 
@@ -100,10 +102,16 @@ public class SongViewController extends BaseController implements Initializable 
             Stage stage = new Stage();
             stage.setTitle("Edit the song");
             stage.setScene(scene);
-            stage.show();
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Song getSelectedSong(){
+        Song song;
+        song = lstSongs.getSelectionModel().getSelectedItem();
+        return song;
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) {

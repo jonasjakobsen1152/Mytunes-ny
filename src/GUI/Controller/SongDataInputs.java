@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.Song;
 import GUI.Model.SongModel;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -39,7 +40,20 @@ public class SongDataInputs extends BaseController{
 
 
     }
+    public void handleEditSong(ActionEvent actionEvent) throws Exception {
+        String updatedTitle = txtEditTitle.getText();
+        String updatedArtist = txtEditArtist.getText();
+        String updatedCategory = txtEditCategory.getText();
+        String updatedFilePath = txtEditSongFilePath.getText();
 
+        songModel = new SongModel();
+        songModel.getSelectedSong().getId(),updatedTitle,updatedArtist,updatedCategory,updatedFilePath;
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+
+        //Song editedSong = new Song(songModel.getSelectedSong().getId(), updatedTitle, updatedArtist, updatedCategory,-1,updatedFilePath);
+        //songModel.updateSong(editedSong);
+    }
 
 
 
@@ -68,8 +82,5 @@ public class SongDataInputs extends BaseController{
         txtCategory.setText(model.getSelectedSong().getCategory());
         txtSeconds.setText(String.valueOf(model.getSelectedSong().getSeconds()));
          */
-    }
-
-    public void handleEditSong(ActionEvent actionEvent) {
     }
 }
