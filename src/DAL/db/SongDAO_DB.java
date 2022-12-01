@@ -123,9 +123,28 @@ public class SongDAO_DB implements IMyTunesDataAccess {
     }
 
     @Override
-    public void deleteSong(Song movie) throws Exception {
+    public void deleteSong(Song song) throws Exception  {
+        try(Connection conn = databaseConnector.getConnection()) {
 
+
+            String sql= "Delete song  WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+
+            //Bind parameters
+
+            stmt.setInt(1, song.getId());
+
+
+            stmt.executeUpdate();
+
+
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+            throw new Exception("Could not delete song", ex);
+
+        }
     }
-
 
 }
