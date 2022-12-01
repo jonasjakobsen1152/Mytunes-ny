@@ -1,4 +1,7 @@
 package BE;
+
+import BLL.util.SecondsToMinute;
+
 public class Song {
 
     private int id;
@@ -27,9 +30,12 @@ public class Song {
     @Override
     public String toString() {
 
+        SecondsToMinute secondsToMinute=new SecondsToMinute();
+
+        String time= secondsToMinute.secondsMinute(seconds);
 
        // return makeStringEvenLength();
-return  id + ": " +  title + " " + artist+ " " + category+ " " +seconds;
+return  id + ": " +  title + " " + artist+ " " + category+ " " +time;
     }
 
   /*  public String makeStringEvenLength()
