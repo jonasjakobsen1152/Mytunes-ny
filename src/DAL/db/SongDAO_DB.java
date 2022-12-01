@@ -112,7 +112,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             stmt.setString(3, song.getCategory());
 
 
-         String filePath= song.getFilePath(); //Her gemmes sti navnet til sangen
+            String filePath= song.getFilePath(); //Her gemmes sti navnet til sangen
 
             MusicSound musicSound= new MusicSound();
             int seconds =musicSound.timeMusic(filePath);  //Her måles spilletiden.

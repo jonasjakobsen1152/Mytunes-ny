@@ -76,7 +76,6 @@ public class SongViewController extends BaseController implements Initializable 
         }));
         }
 
-
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
     if(newValue != null){
         //TODO When new window created, implement this to edit/update songs
@@ -93,7 +92,6 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleEditSong(ActionEvent actionEvent) {
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-           songModel.setSelectedSong(selectedSong);
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/GUI/View/editSong.fxml"));
@@ -102,16 +100,12 @@ public class SongViewController extends BaseController implements Initializable 
             Stage stage = new Stage();
             stage.setTitle("Edit the song");
             stage.setScene(scene);
+            SongDataInputs songDataInputs = fxmlLoader.getController();
+            songDataInputs.setSelectSong(selectedSong);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Song getSelectedSong(){
-        Song song;
-        song = lstSongs.getSelectionModel().getSelectedItem();
-        return song;
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) {

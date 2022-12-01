@@ -14,49 +14,53 @@ public class SongDataInputs extends BaseController{
     public TextField txtEditCategory;
     public TextField txtEditSongFilePath;
     public Button btnEditSong;
-    SongModel songModel;
+    private SongModel songModel = new SongModel();
     public TextField txtTitle;
     public TextField txtArtist;
     public TextField txtCategory;
     public TextField txtFilePath;
     public Button txtAddInput;
+    private Song selectSong;
+
+    public SongDataInputs() throws Exception {
+    }
+
 
     public void handleAddInput(ActionEvent actionEvent) throws Exception {
+
         String Title = txtTitle.getText();
         String Artist = txtArtist.getText();
         String Category = txtCategory.getText();
         String FilePath = txtFilePath.getText();
         try{
-            songModel = new SongModel();
             songModel.createNewSong(Title, Artist, Category, FilePath);
             Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
             stage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public void setSelectSong(Song s) {
+        selectSong = s;
 
-        //TODO add method that calculates seconds
-
+        // Here we get the text into the inputs
+        txtEditTitle.setText(selectSong.getTitle());
+        txtEditArtist.setText(selectSong.getArtist());
+        txtEditCategory.setText(selectSong.getCategory());
+        txtEditSongFilePath.setText(selectSong.getFilePath());
 
     }
-    public void handleEditSong(ActionEvent actionEvent) throws Exception {
-        SongViewController controller = new SongViewController();
-        Song song = new Song;
-        song = controller.getSelectedSong();
+
+
+   public void handleEditSong(ActionEvent actionEvent) throws Exception {
+        int id = selectSong.getId();
         String updatedTitle = txtEditTitle.getText();
         String updatedArtist = txtEditArtist.getText();
         String updatedCategory = txtEditCategory.getText();
         String updatedFilePath = txtEditSongFilePath.getText();
+        songModel.updateSong(new Song(id, updatedTitle, updatedArtist, updatedCategory, selectSong.getSeconds(), updatedFilePath));
 
-        //songModel.createNewSong(txtEditTitle,txtEditArtist,txtEditCategory,txtEditSongFilePath);
-
-
-        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-
-        //Song editedSong = new Song(songModel.getSelectedSong().getId(), updatedTitle, updatedArtist, updatedCategory,-1,updatedFilePath);
-        //songModel.updateSong(editedSong);
     }
 
 
