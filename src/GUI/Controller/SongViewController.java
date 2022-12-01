@@ -86,7 +86,7 @@ public class SongViewController extends BaseController implements Initializable 
 
    @Override
     public void setup() {
-        //songModel = getModel().getSongModel();
+        songModel = getModel().getSongModel();
     }
 
 

@@ -41,13 +41,17 @@ public class SongDataInputs extends BaseController{
 
     }
     public void handleEditSong(ActionEvent actionEvent) throws Exception {
+        SongViewController controller = new SongViewController();
+        Song song = new Song;
+        song = controller.getSelectedSong();
         String updatedTitle = txtEditTitle.getText();
         String updatedArtist = txtEditArtist.getText();
         String updatedCategory = txtEditCategory.getText();
         String updatedFilePath = txtEditSongFilePath.getText();
 
-        songModel = new SongModel();
-        songModel.getSelectedSong().getId(),updatedTitle,updatedArtist,updatedCategory,updatedFilePath;
+        //songModel.createNewSong(txtEditTitle,txtEditArtist,txtEditCategory,txtEditSongFilePath);
+
+
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
 
