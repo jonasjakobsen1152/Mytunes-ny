@@ -98,7 +98,7 @@ public class SongViewController extends BaseController implements Initializable 
 
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             Stage stage = new Stage();
-            stage.setTitle("Add that new song");
+            stage.setTitle("Edit the song");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
