@@ -101,7 +101,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
     @Override
     public void updateSong(Song song) throws Exception {
 
-        String sql = "UPDATE song SET Title = ?, Artist = ?, Category = ?, Seconds = ? WHERE ID = ?";
+        String sql = "UPDATE song SET Title = ?, Artist = ?, Category = ?, Seconds = ? FilePath=? WHERE ID = ?";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -112,7 +112,15 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             stmt.setString(3, song.getCategory());
 
 
-            stmt.setInt(4, song.getSeconds());
+         String filePath= song.getFilePath(); //Her gemmes sti navnet til sangen
+
+            MusicSound musicSound= new MusicSound();
+            int seconds =musicSound.timeMusic(filePath);  //Her måles spilletiden.
+
+            stmt.setInt(4,seconds); //I musikklassen kaldes timeMusic som sender tiden i sekunder for nummeret tilbage.
+            stmt.setString(5, song.getFilePath());
+            
+
 
             stmt.executeUpdate();
         }
