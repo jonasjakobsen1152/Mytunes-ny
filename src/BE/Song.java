@@ -30,9 +30,9 @@ public class Song {
     @Override
     public String toString() {
 
-        SecondsToMinute secondsToMinute=new SecondsToMinute();
+        SecondsToMinute secondsToMinute=new SecondsToMinute(); //Her kaldes klassen ind som objekt til at lave normal tidsangivelse.
 
-        String time= secondsToMinute.secondsMinute(seconds);
+        String time= secondsToMinute.secondsMinute(seconds); // Her returnes en streng med tidsangivelse i formatet 00:00:00
 
        // return makeStringEvenLength();
 return  id + ": " +  title + " " + artist+ " " + category+ " " +time;
