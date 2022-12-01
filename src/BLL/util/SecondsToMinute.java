@@ -46,7 +46,7 @@ public class SecondsToMinute {
 
 
         String time=  hourString+ ":"+minuteString+":"+ secondString;
-        System.out.println(time);
+
         return time;
     }
 
