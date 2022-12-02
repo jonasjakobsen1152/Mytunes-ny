@@ -6,9 +6,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,18 +53,24 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     public void handleAddSong(ActionEvent actionEvent) throws IOException {
-      try {
-          FXMLLoader fxmlLoader = new FXMLLoader();
-          fxmlLoader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
 
-          Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-          Stage stage = new Stage();
-          stage.setTitle("Add that new song");
-          stage.setScene(scene);
-          stage.showAndWait();
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
+        SongDataInputs songdatainputs = loader.getController();
+        songdatainputs.setModel(super.getModel());
+        //showAllSongsAndPlaylists();
+        //songCrud.setup();
+
+
+        Stage dialogWindow = new Stage();
+        dialogWindow.setTitle("Add Song");
+        dialogWindow.initModality(Modality.WINDOW_MODAL);
+        dialogWindow.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+        Scene scene = new Scene(pane);
+        dialogWindow.setScene(scene);
+
+        dialogWindow.showAndWait();
     }
         @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
