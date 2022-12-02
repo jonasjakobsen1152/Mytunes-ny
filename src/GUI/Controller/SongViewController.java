@@ -142,6 +142,14 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
+    public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
+        System.out.println(sliMusicVolume.getValue());
+
+        double soundLevel=sliMusicVolume.getValue(); //Skalaen er fra 0 til 100. Her er værdien 5 til demonstration.
+        songModel.soundLevel(soundLevel);
+
+    }
+
     public void handleRestart(ActionEvent actionEvent) {
     }
 
@@ -166,13 +174,8 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
     }
 
-    public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
 
 
-        double soundLevel=5; //Skalaen er fra 0 til 100. Her er værdien 5 til demonstration.
-    songModel.soundLevel(soundLevel);
-
-    }
 
     public void handleSearchAllSongs(ActionEvent actionEvent) {
     }

@@ -2,16 +2,14 @@ package DAL.db;
 
 import BE.Song;
 import BLL.util.MusicSound;
-import DAL.IMyTunesDataAccess;
+import DAL.ISongDAO;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class SongDAO_DB implements IMyTunesDataAccess {
-
+public class SongDAO_DB implements ISongDAO {
     private DAL.db.MyDatabaseConnector databaseConnector;
     public SongDAO_DB() throws IOException {
         databaseConnector = new DAL.db.MyDatabaseConnector();
@@ -31,7 +29,7 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             // Loop through rows from the database result set
             while (rs.next()) {
 
-                //Map DB row to Movie object
+                //Map DB row to Song object
                 int id = rs.getInt("Id");
                 String title = rs.getString("Title");
                 String artist = rs.getString("Artist");
@@ -111,13 +109,15 @@ public class SongDAO_DB implements IMyTunesDataAccess {
             stmt.setString(2, song.getArtist());
             stmt.setString(3, song.getCategory());
 
+            //Her gemmes sti navnet til sangen
+            String filePath= song.getFilePath();
 
-            String filePath= song.getFilePath(); //Her gemmes sti navnet til sangen
-
+            //Her måles spilletiden.
             MusicSound musicSound= new MusicSound();
-            int seconds =musicSound.timeMusic(filePath);  //Her måles spilletiden.
+            int seconds =musicSound.timeMusic(filePath);
 
-            stmt.setInt(4,seconds); //I musikklassen kaldes timeMusic som sender tiden i sekunder for nummeret tilbage.
+            //I musikklassen kaldes timeMusic som sender tiden i sekunder for nummeret tilbage.
+            stmt.setInt(4,seconds);
             stmt.setString(5, song.getFilePath());
             stmt.setInt(6, song.getId());
 
