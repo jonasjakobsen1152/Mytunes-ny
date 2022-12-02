@@ -6,7 +6,6 @@ import BLL.util.MusicSound;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 import java.util.List;
 
 public class SongModel {
@@ -61,7 +60,7 @@ public class SongModel {
 
     public void playSong(String path) throws Exception {
         MusicSound musicSound = new MusicSound();
-        musicSound.playMusic(path);
+         musicSound.playMusic(path);
 
     }
 

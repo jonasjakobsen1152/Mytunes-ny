@@ -142,15 +142,16 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handlePlaySong(ActionEvent actionEvent) throws Exception {
-        Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        String path=selectedSong.getFilePath();
+       Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
-        SongModel songModel1 = new SongModel();
+
+       String path=selectedSong.getFilePath();
+
+        System.out.println(path);
+
+       SongModel songModel1 = new SongModel();
         songModel1.playSong(path);
 
-
-
-        //Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
 
     }
