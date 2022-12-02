@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -214,7 +215,8 @@ public class SongViewController extends BaseController implements Initializable 
                             songModel.playSong(path);
                             songIsPlayed=true;
                         }
-
+                        else
+                            JOptionPane.showMessageDialog(null,"File do not exit");
                      }
 
 
