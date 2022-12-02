@@ -53,12 +53,22 @@
       <Button fx:id="btnAddSong" layoutX="620.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddSong" text="Add New Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="200.0" />
       <Button fx:id="btnEditSong" layoutX="716.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="117.0" />
       <Button fx:id="btnDeleteSong" layoutX="799.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeleteSong" text="Delete Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="20.0" />
-      <Slider fx:id="sliMusicVolume" layoutX="85.0" layoutY="67.0" onDragDetected="#handleSliMusicVolume" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="67.0" />
-      <Button fx:id="btnRestartSong" layoutX="173.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleRestart" text="⬅" AnchorPane.leftAnchor="68.0" AnchorPane.topAnchor="87.0" />
-      <Button fx:id="btnSkipSong" layoutX="206.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSkipSong" text="➡" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="87.0" />
+      <Slider fx:id="sliMusicVolume" layoutX="85.0" layoutY="59.0" onDragDetected="#handleSliMusicVolume" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="59.0" />
+      <Button fx:id="btnRestartSong" layoutX="76.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleRestart" text="⏮" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="87.0" />
+      <Button fx:id="btnSkipSong" layoutX="206.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSkipSong" text="⏭" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="87.0" />
       <TextField fx:id="txtFilter" layoutX="557.0" layoutY="75.0" prefHeight="25.0" prefWidth="242.0" promptText="Filter" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="75.0" />
       <Button fx:id="btnSearch" layoutX="814.0" layoutY="75.0" mnemonicParsing="false" onAction="#handleSearchAllSongs" text="Search" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="75.0" />
-      <Button fx:id="btnPlaySong" layoutX="128.0" layoutY="87.0" mnemonicParsing="false" onAction="#handlePlaySong" text="Play" AnchorPane.leftAnchor="128.0" AnchorPane.topAnchor="87.0" />
+      <Button fx:id="btnPlaySong" layoutX="130.0" layoutY="87.0" mnemonicParsing="false" onAction="#handlePlaySong" prefHeight="25.0" prefWidth="51.0" text="▶ ⏸" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="87.0" />
+      <Text layoutX="52.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔉">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Text>
+      <Text layoutX="224.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔊">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Text>
    </children>
    <effect>
       <ColorAdjust />

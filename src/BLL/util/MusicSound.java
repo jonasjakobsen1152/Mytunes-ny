@@ -10,33 +10,30 @@ import java.io.File;
 
 public class MusicSound {
     int soundLevel = 0;
-    static MediaPlayer play;
+    static MediaPlayer play; //Vi er nød til at kunne huske mediaplayer, media og boolean isMusicPlaying. Ellers kan sange ikke stoppes, når klassen lukkes.
     static Media hit;
 
-    static boolean isMusicPlaying;
+    static boolean isMusicPlaying=false;
 
-//
-// C:\Musik\01 Slotstema - Minuet.mp3
+
 
     public void playMusic(String path) throws Exception {
 
-        hit = new Media(new File(path).toURI().toString());
-        play = new MediaPlayer(hit);
-        System.out.println("inden if "+isMusicPlaying);
 
-        if (isMusicPlaying==true)
+
+
+        if (isMusicPlaying)
         {
-
-            isMusicPlaying=false;
-            System.out.println(isMusicPlaying);
+             isMusicPlaying=false;
             play.stop();
 
         }
-        else if (isMusicPlaying==false)
+        else
         {
-
+            hit = new Media(new File(path).toURI().toString());
+            play = new MediaPlayer(hit);
             isMusicPlaying=true;
-            System.out.println(isMusicPlaying);
+
             play.play();
 
         }

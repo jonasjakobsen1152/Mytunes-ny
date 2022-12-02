@@ -37,10 +37,16 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnAddSong;
     public Button btnSearch;
     public Button btnPlaySong;
+    public Button btnPauseMusic;
     private SongModel songModel;
+
 
     boolean musicIsPlaying=false;
     String path = "";
+
+    private String errorText;
+
+
     public SongViewController() {
         try {
             // Istatiates a songModel inside a try catch.
@@ -104,22 +110,36 @@ public class SongViewController extends BaseController implements Initializable 
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/GUI/View/editSong.fxml"));
+           if(selectedSong != null) {
+               FXMLLoader fxmlLoader = new FXMLLoader();
+               fxmlLoader.setLocation(getClass().getResource("/GUI/View/editSong.fxml"));
 
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            Stage stage = new Stage();
-            stage.setTitle("Edit the song");
-            stage.setScene(scene);
-            SongDataInputs songDataInputs = fxmlLoader.getController();
-            songDataInputs.setSelectSong(selectedSong);
-            stage.showAndWait();
+               Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+               Stage stage = new Stage();
+               stage.setTitle("Edit the song");
+               stage.initModality(Modality.WINDOW_MODAL);
+               stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+               stage.setScene(scene);
+               SongDataInputs songDataInputs = fxmlLoader.getController();
+               songDataInputs.setSelectSong(selectedSong);
+               stage.showAndWait();
+           }
+           else {
+               alertUser("Please select a song");
+           }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) {
+        Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+        if(selectedSong != null){
+
+        }
+        else{
+            alertUser("Please select the song you wish to delete");
+        }
     }
 
     public void handleRestart(ActionEvent actionEvent) {
@@ -172,13 +192,23 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     }
+    private void alertUser(String error){
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(error);
+    alert.setHeaderText(error + "");
+    alert.showAndWait();
+    }
+
     private void displayError(Throwable t) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("You did something wrong, the program did not");
+        alert.setTitle(errorText);
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
     }
     public void handleEdit(ActionEvent actionEvent) throws IOException {
 
+    }
+
+    public void handlePauseMusic(ActionEvent actionEvent) {
     }
 }
