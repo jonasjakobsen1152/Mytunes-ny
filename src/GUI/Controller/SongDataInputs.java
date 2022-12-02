@@ -36,6 +36,7 @@ public class SongDataInputs extends BaseController{
             songModel.createNewSong(Title, Artist, Category, FilePath);
             Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
             stage.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +61,9 @@ public class SongDataInputs extends BaseController{
         String updatedCategory = txtEditCategory.getText();
         String updatedFilePath = txtEditSongFilePath.getText();
         songModel.updateSong(new Song(id, updatedTitle, updatedArtist, updatedCategory, selectSong.getSeconds(), updatedFilePath));
+
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.close();
 
     }
 

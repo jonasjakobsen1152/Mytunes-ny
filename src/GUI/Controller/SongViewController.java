@@ -108,6 +108,8 @@ public class SongViewController extends BaseController implements Initializable 
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             Stage stage = new Stage();
             stage.setTitle("Edit the song");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
             stage.setScene(scene);
             SongDataInputs songDataInputs = fxmlLoader.getController();
             songDataInputs.setSelectSong(selectedSong);
