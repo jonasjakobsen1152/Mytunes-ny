@@ -58,7 +58,7 @@ public class SongViewController extends BaseController implements Initializable 
           Stage stage = new Stage();
           stage.setTitle("Add that new song");
           stage.setScene(scene);
-          stage.show();
+          stage.showAndWait();
       } catch (IOException e) {
           e.printStackTrace();
       }
