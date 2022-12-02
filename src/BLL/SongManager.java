@@ -12,8 +12,6 @@ public class SongManager {
     private SongSearcher songSearcher = new SongSearcher();
     private IMyTunesDataAccess songDAO;
 
-    private SongModel songModel = new SongModel();
-
     public SongManager() throws Exception {songDAO = new SongDAO_DB();}
 
     public List<Song> getAllSongs() throws Exception {
