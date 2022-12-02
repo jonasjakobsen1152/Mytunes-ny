@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class SongViewController extends BaseController implements Initializable {
@@ -39,6 +41,8 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnPlaySong;
     public Button btnPauseMusic;
     private SongModel songModel;
+    
+    private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
 
 
     boolean musicIsPlaying=false;
@@ -145,7 +149,7 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
         System.out.println(sliMusicVolume.getValue());
 
-        double soundLevel=sliMusicVolume.getValue(); //Skalaen er fra 0 til 100. Her er værdien 5 til demonstration.
+        double soundLevel=sliMusicVolume.getValue(); //Skalaen er fra 0 til 100. Her vist som demonstration.
         songModel.soundLevel(soundLevel);
 
     }
@@ -182,13 +186,36 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handlePlaySong(ActionEvent actionEvent) throws Exception {
 
-                {
-            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-            String path=selectedSong.getFilePath();
-            songModel.playSong(path);
 
-        }
+                    String path = null;
+        boolean dontStartMusic=false;
 
+
+
+                    if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
+                    {
+                        songModel.playSong(path);
+                        songIsPlayed=false;
+                        dontStartMusic=true; // Musikken vil startes igen  i næste if statement selvom brugeren har valgt den skal stoppes,
+                        // Derfor er denne boolean lavet for at forhindre dette.
+
+                    }
+
+
+                    if (lstSongs.getSelectionModel().getSelectedItem()!=null && dontStartMusic==false) //Man skal kun kunne starte musik, hvis den er markeret.
+                    {
+                        Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+                        path=selectedSong.getFilePath();
+
+                        boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
+
+                        if (filesExits)
+                        {
+                            songModel.playSong(path);
+                            songIsPlayed=true;
+                        }
+
+                     }
 
 
 

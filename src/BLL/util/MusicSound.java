@@ -21,7 +21,6 @@ public class MusicSound {
 
 
 
-
         if (isMusicPlaying)
         {
              isMusicPlaying=false;
@@ -30,11 +29,12 @@ public class MusicSound {
         }
         else
         {
-            hit = new Media(new File(path).toURI().toString());
-            play = new MediaPlayer(hit);
-            isMusicPlaying=true;
-            soundVolume(soundLevel);
-            play.play();
+
+                hit = new Media(new File(path).toURI().toString());
+                play = new MediaPlayer(hit);
+                isMusicPlaying=true;
+                soundVolume(soundLevel);
+                play.play();
 
         }
 
