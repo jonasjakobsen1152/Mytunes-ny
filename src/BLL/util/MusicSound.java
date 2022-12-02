@@ -20,8 +20,9 @@ public class MusicSound {
 //
 // C:\Musik\01 Slotstema - Minuet.mp3
 
-    public void playMusic() throws Exception {
-        hit = new Media(new File(getMusicPath()).toURI().toString());
+    public void playMusic(String path) throws Exception {
+
+        hit = new Media(new File(path).toURI().toString());
         play = new MediaPlayer(hit);
         play.play();
 

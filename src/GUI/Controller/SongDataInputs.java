@@ -41,7 +41,7 @@ public class SongDataInputs extends BaseController{
         }
     }
 
-    public void setSelectSong(Song s) {
+   public void setSelectSong(Song s) {
         selectSong = s;
 
         // Here we get the text into the inputs
@@ -53,7 +53,7 @@ public class SongDataInputs extends BaseController{
     }
 
 
-   public void handleEditSong(ActionEvent actionEvent) throws Exception {
+    public void handleEditSong(ActionEvent actionEvent) throws Exception {
         int id = selectSong.getId();
         String updatedTitle = txtEditTitle.getText();
         String updatedArtist = txtEditArtist.getText();

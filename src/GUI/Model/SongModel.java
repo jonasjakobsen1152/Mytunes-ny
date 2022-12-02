@@ -2,6 +2,7 @@ package GUI.Model;
 
 import BE.Song;
 import BLL.SongManager;
+import BLL.util.MusicSound;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -49,10 +50,22 @@ public class SongModel {
     }
 
     public Song getSelectedSong() {
+
         return selectedSong;
     }
 
     public void setSelectedSong(Song selectedMovie) {
         this.selectedSong = selectedSong;
     }
+
+
+    public void playSong(String path) throws Exception {
+        MusicSound musicSound = new MusicSound();
+        musicSound.playMusic(path);
+
+    }
+
+
+
+
 }
