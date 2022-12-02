@@ -60,7 +60,7 @@ public class MusicSound {
 
             int duration = audioFile.getAudioHeader().getTrackLength();
 
-        System.out.println(duration);
+        System.out.println("Det er en fejl. Sådan gør den bare!");
         return duration;
                     }
 

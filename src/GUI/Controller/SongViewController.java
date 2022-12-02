@@ -65,7 +65,12 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
 
-    public void handleAddSong(ActionEvent actionEvent) throws IOException {
+    public void handleAddSong(ActionEvent actionEvent) throws Exception {
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+            handlePlaySong();
+
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
         AnchorPane pane = (AnchorPane) loader.load();
@@ -111,7 +116,11 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
 
-    public void handleEditSong(ActionEvent actionEvent) {
+    public void handleEditSong(ActionEvent actionEvent) throws Exception {
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+            handlePlaySong();
+
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
@@ -137,7 +146,10 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
-    public void handleDeleteSong(ActionEvent actionEvent) {
+    public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
+       if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+           handlePlaySong();
+
         Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
         if(selectedSong != null){
 
@@ -185,7 +197,7 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleSearchAllSongs(ActionEvent actionEvent) {
     }
 
-    public void handlePlaySong(ActionEvent actionEvent) throws Exception {
+    public void handlePlaySong() throws Exception {
 
 
                     String path = null;
@@ -216,7 +228,7 @@ public class SongViewController extends BaseController implements Initializable 
                             songIsPlayed=true;
                         }
                         else
-                            JOptionPane.showMessageDialog(null,"File do not exit");
+                            JOptionPane.showMessageDialog(null,"File do not exist!");
                      }
 
 
