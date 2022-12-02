@@ -137,6 +137,10 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
+    public void handleSliMusicVolume(MouseEvent mouseEvent) {
+        System.out.println(sliMusicVolume.getValue());
+    }
+
     public void handleRestart(ActionEvent actionEvent) {
     }
 
@@ -159,9 +163,6 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
-    }
-
-    public void handleSliMusicVolume(MouseEvent mouseEvent) {
     }
 
     public void handleSearchAllSongs(ActionEvent actionEvent) {
