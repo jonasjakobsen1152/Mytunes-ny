@@ -42,7 +42,7 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     boolean musicIsPlaying=false;
-    String path = "";
+
 
     private String errorText;
 
@@ -166,7 +166,12 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
     }
 
-    public void handleSliMusicVolume(MouseEvent mouseEvent) {
+    public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
+
+
+        double soundLevel=5; //Skalaen er fra 0 til 100. Her er værdien 5 til demonstration.
+    songModel.soundLevel(soundLevel);
+
     }
 
     public void handleSearchAllSongs(ActionEvent actionEvent) {
@@ -174,12 +179,9 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handlePlaySong(ActionEvent actionEvent) throws Exception {
 
-        SongModel songModel = new SongModel();
-
-        
                 {
             Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-            path=selectedSong.getFilePath();
+            String path=selectedSong.getFilePath();
             songModel.playSong(path);
 
         }

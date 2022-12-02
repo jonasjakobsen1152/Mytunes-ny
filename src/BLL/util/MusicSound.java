@@ -9,7 +9,7 @@ import org.jaudiotagger.audio.AudioFileIO;
 import java.io.File;
 
 public class MusicSound {
-    int soundLevel = 0;
+   static double soundLevel = 100;
     static MediaPlayer play; //Vi er nød til at kunne huske mediaplayer, media og boolean isMusicPlaying. Ellers kan sange ikke stoppes, når klassen lukkes.
     static Media hit;
 
@@ -33,7 +33,7 @@ public class MusicSound {
             hit = new Media(new File(path).toURI().toString());
             play = new MediaPlayer(hit);
             isMusicPlaying=true;
-
+            soundVolume(soundLevel);
             play.play();
 
         }
@@ -41,18 +41,11 @@ public class MusicSound {
 
     }
 
-    public void stopMusic(String path)
-    {
-     //  hit = new Media(new File(path).toURI().toString());
-      // play = new MediaPlayer(hit);
-        System.out.println("Test");
-        play.stop();
-
-    }
 
 
     public void soundVolume(double soundLevel) {
 
+        this.soundLevel=soundLevel;
         double soundLev = soundLevel / 100;
         play.setVolume(soundLev);
 
