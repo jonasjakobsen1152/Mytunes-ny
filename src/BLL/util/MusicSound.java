@@ -13,10 +13,7 @@ public class MusicSound {
     MediaPlayer play;
     Media hit;
 
-    public String getMusicPath() {
-        String path = "C:\\Musik\\file_example_WAV_10MG.wav";
-        return path;
-    }
+
 //
 // C:\Musik\01 Slotstema - Minuet.mp3
 
@@ -48,7 +45,7 @@ public class MusicSound {
     public int timeMusic(String path) throws Exception
     {
 
-            AudioFile audioFile = AudioFileIO.read(new File(getMusicPath())); //Kaster en masse røde infobeskeder. Det gør den bare og gør arbejdet.
+            AudioFile audioFile = AudioFileIO.read(new File(path)); //Kaster en masse røde infobeskeder. Det gør den bare og gør arbejdet.
         // Det lever vi med.
 
             int duration = audioFile.getAudioHeader().getTrackLength();
