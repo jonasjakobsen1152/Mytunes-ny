@@ -62,6 +62,7 @@ public class SongDataInputs extends BaseController{
         String updatedFilePath = txtEditSongFilePath.getText();
         songModel.updateSong(new Song(id, updatedTitle, updatedArtist, updatedCategory, selectSong.getSeconds(), updatedFilePath));
 
+        //Koden her gør sådan at vinduet bliver lukket når man har trykket på Edit Song
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
 
