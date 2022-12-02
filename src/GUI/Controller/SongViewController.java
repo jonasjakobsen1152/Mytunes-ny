@@ -40,7 +40,12 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnPauseMusic;
     private SongModel songModel;
 
+
+    boolean musicIsPlaying=false;
+    String path = "";
+
     private String errorText;
+
 
     public SongViewController() {
         try {
@@ -169,15 +174,21 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handlePlaySong(ActionEvent actionEvent) throws Exception {
-       Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+
+        SongModel songModel = new SongModel();
+
+        
+                {
+            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+            path=selectedSong.getFilePath();
+            songModel.playSong(path);
+
+        }
 
 
-       String path=selectedSong.getFilePath();
 
-        System.out.println(path);
 
-       SongModel songModel1 = new SongModel();
-        songModel1.playSong(path);
+
 
 
 
