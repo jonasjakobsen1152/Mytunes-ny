@@ -37,6 +37,7 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnAddSong;
     public Button btnSearch;
     public Button btnPlaySong;
+    public Button btnPauseMusic;
     private SongModel songModel;
 
     public SongViewController() {
@@ -174,5 +175,8 @@ public class SongViewController extends BaseController implements Initializable 
     }
     public void handleEdit(ActionEvent actionEvent) throws IOException {
 
+    }
+
+    public void handlePauseMusic(ActionEvent actionEvent) {
     }
 }
