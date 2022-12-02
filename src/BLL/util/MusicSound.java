@@ -10,9 +10,10 @@ import java.io.File;
 
 public class MusicSound {
     int soundLevel = 0;
-    MediaPlayer play;
-    Media hit;
+    static MediaPlayer play;
+    static Media hit;
 
+    static boolean isMusicPlaying;
 
 //
 // C:\Musik\01 Slotstema - Minuet.mp3
@@ -21,14 +22,33 @@ public class MusicSound {
 
         hit = new Media(new File(path).toURI().toString());
         play = new MediaPlayer(hit);
-        play.play();
+        System.out.println("inden if "+isMusicPlaying);
 
+        if (isMusicPlaying==true)
+        {
+
+            isMusicPlaying=false;
+            System.out.println(isMusicPlaying);
+            play.stop();
+
+        }
+        else if (isMusicPlaying==false)
+        {
+
+            isMusicPlaying=true;
+            System.out.println(isMusicPlaying);
+            play.play();
+
+        }
 
 
     }
 
-    public void stopMusic() {
-
+    public void stopMusic(String path)
+    {
+     //  hit = new Media(new File(path).toURI().toString());
+      // play = new MediaPlayer(hit);
+        System.out.println("Test");
         play.stop();
 
     }

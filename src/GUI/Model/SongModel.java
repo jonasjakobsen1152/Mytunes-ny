@@ -13,7 +13,7 @@ public class SongModel {
     private SongManager songManager;
     private Song selectedSong;
 
-    public SongModel() throws Exception{
+    public SongModel() throws Exception {
         songManager = new SongManager();
         songsToBeViewed = FXCollections.observableArrayList();
 
@@ -25,14 +25,16 @@ public class SongModel {
     public ObservableList<Song> getObservableSong() {
         return songsToBeViewed;
     }
-    public void searchSong(String query) throws Exception{
+
+    public void searchSong(String query) throws Exception {
         List<Song> searchResults = songManager.searchSongs(query);
         songsToBeViewed.clear();
         songsToBeViewed.addAll(searchResults);
     }
-    public void createNewSong(String title, String artist, String category, String filePath) throws Exception{
+
+    public void createNewSong(String title, String artist, String category, String filePath) throws Exception {
         // Create Song in data storage
-        songManager.createNewSong(title, artist, category,filePath);
+        songManager.createNewSong(title, artist, category, filePath);
 
         // Add Song to observable list (gui)
         //songsToBeViewed.add(s);
@@ -60,11 +62,14 @@ public class SongModel {
 
     public void playSong(String path) throws Exception {
         MusicSound musicSound = new MusicSound();
-         musicSound.playMusic(path);
+        musicSound.playMusic(path);
 
     }
 
+    public void stopSong(String path) throws Exception {
+        MusicSound musicSound = new MusicSound();
+        musicSound.stopMusic(path);
 
 
-
+    }
 }
