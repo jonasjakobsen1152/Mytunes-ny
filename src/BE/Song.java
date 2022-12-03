@@ -35,7 +35,7 @@ public class Song {
         String time= secondsToMinute.secondsMinute(seconds);
 
         // return makeStringEvenLength();
-        return  id + ": " +  title + " " + artist + " " + category+ " " + time;
+        return  title + " " + artist + " " + category+ " " + time;
     }
     /**
     public String makeStringEvenLength()

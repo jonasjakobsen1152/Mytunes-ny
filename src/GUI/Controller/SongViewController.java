@@ -42,12 +42,13 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnPlaySong;
     public Button btnPauseMusic;
     private SongModel songModel;
+
     
     private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
 
 
     boolean musicIsPlaying=false;
-
+    Song previousSong;
 
     private String errorText;
 
@@ -174,7 +175,7 @@ public class SongViewController extends BaseController implements Initializable 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
-            handlePlaySong(); //Starter den sang, som er markeret
+
         }
 
     }
@@ -186,7 +187,7 @@ public class SongViewController extends BaseController implements Initializable 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
-            handlePlaySong(); //Starter den sang, som er markeret
+
         }
     }
 
@@ -222,24 +223,30 @@ public class SongViewController extends BaseController implements Initializable 
 
 
                     String path = null;
-        boolean dontStartMusic=false;
+                    boolean startSong = true;
 
 
 
-                    if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
+
+
+        if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
                     {
-                        songModel.playSong(path);
+                        songModel.playSong(path); //Stop music
                         songIsPlayed=false;
-                        dontStartMusic=true; // Musikken vil startes igen i næste if statement selvom brugeren har valgt den skal stoppes,
-                        // Derfor er denne boolean lavet for at forhindre dette.
+
+                        if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
+                            startSong=false;
 
                     }
 
 
-                    if (lstSongs.getSelectionModel().getSelectedItem()!=null && dontStartMusic==false) //Man skal kun kunne starte musik, hvis den er markeret.
+        if (lstSongs.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
                     {
                         Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+                        previousSong=selectedSong;          //Gemmer nuværende sang, så vi kan se om sangen har skiftet.
+
                         path=selectedSong.getFilePath();
+
 
                         boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
 
