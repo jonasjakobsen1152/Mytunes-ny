@@ -167,13 +167,34 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
 
-    public void handleRestart(ActionEvent actionEvent) {
+    public void handleRestart(ActionEvent actionEvent) throws Exception {
+
+        lstSongs.getSelectionModel().selectPrevious();
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            handlePlaySong(); //Stopper den sang, som er i gang
+            handlePlaySong(); //Starter den sang, som er markeret
+        }
+
     }
 
-    public void handleSkipSong(ActionEvent actionEvent) {
+    public void handleSkipSong(ActionEvent actionEvent) throws Exception {
+
+        lstSongs.getSelectionModel().selectNext();
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            handlePlaySong(); //Stopper den sang, som er i gang
+            handlePlaySong(); //Starter den sang, som er markeret
+        }
     }
+
 
     public void handleAddPlaylist(ActionEvent actionEvent) {
+
+
+        String inputValue =JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) {
@@ -209,7 +230,7 @@ public class SongViewController extends BaseController implements Initializable 
                     {
                         songModel.playSong(path);
                         songIsPlayed=false;
-                        dontStartMusic=true; // Musikken vil startes igen  i næste if statement selvom brugeren har valgt den skal stoppes,
+                        dontStartMusic=true; // Musikken vil startes igen i næste if statement selvom brugeren har valgt den skal stoppes,
                         // Derfor er denne boolean lavet for at forhindre dette.
 
                     }
