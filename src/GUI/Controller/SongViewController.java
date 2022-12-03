@@ -168,7 +168,7 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
 
-    public void handleRestart(ActionEvent actionEvent) throws Exception {
+    public void handleRestart() throws Exception {
 
         lstSongs.getSelectionModel().selectPrevious();
 

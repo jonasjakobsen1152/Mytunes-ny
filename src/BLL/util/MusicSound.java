@@ -36,10 +36,17 @@ public class MusicSound {
                 soundVolume(soundLevel);
                 play.play();
 
+            }
+
+        //SongViewController songViewController = new SongViewController();
+          //  play.setOnEndOfMedia(songViewController.handleRestart());
+
+
         }
 
 
-    }
+
+
 
 
 
@@ -60,7 +67,7 @@ public class MusicSound {
 
             int duration = audioFile.getAudioHeader().getTrackLength();
 
-        System.out.println("Det er en fejl. Sådan gør den bare!");
+        System.out.println("Det er ikke en fejl. Sådan gør den bare!");
         return duration;
                     }
 
