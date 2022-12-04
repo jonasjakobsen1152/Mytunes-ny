@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.Song;
 import BLL.util.MusicSound;
 import GUI.Model.SongModel;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -24,31 +25,21 @@ import java.util.ResourceBundle;
 
 public class SongViewController extends BaseController implements Initializable {
     public TextField txtFilter;
-    public Button btnEditSong;
-    public Button btnDeleteSong;
-    public Button btnRestartSong;
-    public Button btnSkipSong;
-    public Button btnAddPlaylist;
-    public Button btnEditPlaylist;
-    public Button btnDeletePlaylist;
-    public Button btnMovePlaylistSongUp;
-    public Button btnMovePlaylistSongDown;
-    public ListView lstSongsOnPlaylist;
-    public ListView lstPlaylist;
+    public Button btnEditSong,btnDeleteSong,btnRestartSong,btnSkipSong,btnAddPlaylist,btnEditPlaylist,btnDeletePlaylist,
+            btnMovePlaylistSongUp,btnMovePlaylistSongDown,addSongToPlaylist,btnAddSong,btnSearch,btnPlaySong;
+
+    public ListView lstSongsOnPlaylist,lstPlaylist;
+
     public ListView<Song> lstSongs;
-    public Button addSongToPlaylist;
+
     public Slider sliMusicVolume;
-    public Button btnAddSong;
-    public Button btnSearch;
-    public Button btnPlaySong;
-    public Button btnPauseMusic;
+
+    //public Button btnPauseMusic;
     private SongModel songModel;
 
     
     private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
 
-
-    boolean musicIsPlaying=false;
     Song previousSong;
 
     private String errorText;
@@ -106,6 +97,16 @@ public class SongViewController extends BaseController implements Initializable 
                 e.printStackTrace();
             }
         }));
+
+        MusicSound musicSound = new MusicSound();
+            sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    musicSound.soundVolume(sliMusicVolume.getValue());
+                }
+            });
+
+
         }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
@@ -171,10 +172,6 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
-        System.out.println(sliMusicVolume.getValue());
-
-        double soundLevel=sliMusicVolume.getValue(); //Skalaen er fra 0 til 100. Her vist som demonstration.
-        songModel.soundLevel(soundLevel);
 
     }
 
