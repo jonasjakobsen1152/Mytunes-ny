@@ -266,16 +266,20 @@ public class SongViewController extends BaseController implements Initializable 
                             songIsPlayed=true;
                         }
                         else
-                            JOptionPane.showMessageDialog(null,"File do not exist!");
+                           // JOptionPane.showMessageDialog(null,"File do not exist!");
+                            informationUser("File do not exist!");
                      }
 
 
-
-
-
-
-
     }
+
+    private void informationUser(String information){
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle("Regarding music");
+        info.setHeaderText(information + "");
+        info.showAndWait();
+    }
+
     private void alertUser(String error){
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle(error);

@@ -13,18 +13,17 @@ public class MusicSound {
     static MediaPlayer play; //Vi er nød til at kunne huske mediaplayer, media og boolean isMusicPlaying. Ellers kan sange ikke stoppes, når klassen lukkes.
     static Media hit;
 
-    static boolean isMusicPlaying=false;
-static boolean musicHasPlayOnce=false;
+
 
 
     public void playMusic(String path) throws Exception {
 
                 hit = new Media(new File(path).toURI().toString());
                 play = new MediaPlayer(hit);
-                isMusicPlaying=true;
                 soundVolume(soundLevel);
+
                 play.play();
-                musicHasPlayOnce=true; //Den er defineret. Ellers kommer der fejl i soundvolume uden valgt mediaplayer.
+
 
             }
 
@@ -36,18 +35,18 @@ static boolean musicHasPlayOnce=false;
     }
 
 
-            public void soundVolume ( double soundLevel)
-            {
+            public void soundVolume ( double soundLevel) {
 
                 this.soundLevel = soundLevel;
 
-                if (musicHasPlayOnce) {
+                if (play != null) {
                     double soundLev = soundLevel / 100;
                     play.setVolume(soundLev);
                 }
 
-
             }
+
+
 
             public int timeMusic (String path) throws Exception
             {
@@ -60,5 +59,8 @@ static boolean musicHasPlayOnce=false;
                 System.out.println("Det er ikke en fejl. Sådan gør den bare!");
                 return duration;
             }
+
+
+
 
         }
