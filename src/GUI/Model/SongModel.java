@@ -60,11 +60,6 @@ public class SongModel {
     }
 
 
-    public void playSong(String path) throws Exception {
-        MusicSound musicSound = new MusicSound();
-        musicSound.playMusic(path);
-
-    }
 
     public void soundLevel(double volumen) throws Exception {
         MusicSound musicSound = new MusicSound();

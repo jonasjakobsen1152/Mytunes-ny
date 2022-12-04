@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Song;
+import BLL.util.MusicSound;
 import GUI.Model.SongModel;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -69,7 +70,10 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleAddSong(ActionEvent actionEvent) throws Exception {
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-            handlePlaySong();
+        {
+            MusicSound musicSound = new MusicSound();
+            musicSound.stopMusic();
+        }
 
 
         FXMLLoader loader = new FXMLLoader();
@@ -120,7 +124,10 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleEditSong(ActionEvent actionEvent) throws Exception {
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-            handlePlaySong();
+        {
+            MusicSound musicSound = new MusicSound();
+            musicSound.stopMusic();
+        }
 
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
@@ -148,8 +155,11 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
-       if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-           handlePlaySong();
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            MusicSound musicSound = new MusicSound();
+            musicSound.stopMusic();
+        }
 
         Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
         if(selectedSong != null){
@@ -224,14 +234,14 @@ public class SongViewController extends BaseController implements Initializable 
 
                     String path = null;
                     boolean startSong = true;
-
+                    MusicSound musicSound = new MusicSound();
 
 
 
 
         if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
                     {
-                        songModel.playSong(path); //Stop music
+                        musicSound.stopMusic(); //Stop music
                         songIsPlayed=false;
 
                         if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
@@ -252,7 +262,7 @@ public class SongViewController extends BaseController implements Initializable 
 
                         if (filesExits)
                         {
-                            songModel.playSong(path);
+                            musicSound.playMusic(path);
                             songIsPlayed=true;
                         }
                         else
