@@ -125,7 +125,7 @@ public class SongViewController extends BaseController implements Initializable 
                stage.showAndWait();
            }
            else {
-               alertUser("Please select a song");
+               alertUser("Nanna du tager fejl");
            }
         } catch (IOException e) {
             e.printStackTrace();
