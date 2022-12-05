@@ -48,14 +48,16 @@ public class SongViewController extends BaseController implements Initializable 
 
     private String errorText;
 
+
     private boolean change;
 
      double soundLevel = 50;
-        private MediaPlayer play; //Vi er nød til at kunne huske mediaplayer, media og boolean isMusicPlaying. Ellers kan sange ikke stoppes, når klassen lukkes.
+        private MediaPlayer play;
     private Media hit;
 
     private Timer timer;
     private TimerTask task;
+
 
 
     @Override
@@ -81,6 +83,12 @@ public class SongViewController extends BaseController implements Initializable 
             }
         });
 
+    }
+
+
+
+
+    private void displayError(Exception e) {
     }
 
 
@@ -162,12 +170,14 @@ public class SongViewController extends BaseController implements Initializable 
                stage.showAndWait();
            }
            else {
-               alertUser("Please select a song");
+               alertUser("Please select a song to edit");
            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
@@ -175,17 +185,28 @@ public class SongViewController extends BaseController implements Initializable 
 
 
         Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        if(selectedSong != null){
+        if (selectedSong != null) {
 
-        }
-        else{
-            alertUser("Please select the song you wish to delete");
+        } else {
+
+
+            Song deletedSong = lstSongs.getSelectionModel().getSelectedItem();
+            if (deletedSong == null) {
+
+                alertUser("Please select the song you wish to delete");
+            } else {
+                if (songIsPlayed) { //Stops all music from playing)
+                    stopMusic();  //Stops all music from playing
+                }
+                songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+            }
         }
     }
 
     public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
 
     }
+
 
     public void handleRestart() throws Exception {
 
@@ -316,8 +337,10 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
 
+
     public void handlePauseMusic(ActionEvent actionEvent) {
     }
+
 
     public void playMusic(String path) throws Exception {
 
@@ -340,7 +363,10 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
 
-    public void soundVolume ( double soundLevel) {
+
+
+    public void soundVolume(double soundLevel)
+        {
 
         this.soundLevel = soundLevel;
 
@@ -383,5 +409,6 @@ public class SongViewController extends BaseController implements Initializable 
         timer.scheduleAtFixedRate(task,10,1000);
 
     }
+
 
 }
