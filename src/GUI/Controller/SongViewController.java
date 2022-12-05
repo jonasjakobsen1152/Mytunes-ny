@@ -39,6 +39,7 @@ public class SongViewController extends BaseController implements Initializable 
     public Song previousSong;
     private String errorText;
 
+
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
@@ -58,6 +59,8 @@ public class SongViewController extends BaseController implements Initializable 
                 musicSound.soundVolume(sliMusicVolume.getValue());
             }
         });
+
+
     }
 
     public SongViewController() {
@@ -148,21 +151,21 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
+
     public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
-        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-        {
-            MusicSound musicSound = new MusicSound();
-            musicSound.stopMusic();
-        }
-
-        Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        if(selectedSong != null){
-
-        }
-        else{
+        MusicSound musicSound = new MusicSound();
+        Song deletedSong = lstSongs.getSelectionModel().getSelectedItem();
+        if(deletedSong == null){
             alertUser("Please select the song you wish to delete");
         }
+        else{
+            if(songIsPlayed) { //Stops all music from playing)
+                musicSound.stopMusic();  //Stops all music from playing
+            }
+            songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+        }
     }
+
 
     public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
 
@@ -285,8 +288,5 @@ public class SongViewController extends BaseController implements Initializable 
     }
     public void handleEdit(ActionEvent actionEvent) throws IOException {
 
-    }
-
-    public void handlePauseMusic(ActionEvent actionEvent) {
     }
 }
