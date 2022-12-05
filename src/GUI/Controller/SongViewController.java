@@ -41,6 +41,7 @@ public class SongViewController extends BaseController implements Initializable 
     private SongModel songModel;
     private PlaylistModel playlistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
+    private boolean songPlayedToEnd=false;
     public Song previousSong,selectedSong, nextSong;
     private String errorText;
 
@@ -235,13 +236,14 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handlePlaySong() throws Exception {
 
+        String path="";
+        Song song1;
+        Song song2;
+
+       // int number=lstSongs.getSelectionModel().getSelectedIndex();
 
 
         boolean startSong = true;
-
-
-
-
 
         if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
         {
@@ -251,19 +253,26 @@ public class SongViewController extends BaseController implements Initializable 
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
 
+
         }
 
 
         if (lstSongs.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
         {
-            selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-            previousSong=selectedSong;          //Gemmer nuværende sang, så vi kan se om sangen har skiftet.
+            if (songPlayedToEnd==false)
+                selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+            else
 
-            String path=selectedSong.getFilePath();
+            {
+                lstSongs.getSelectionModel().selectNext(); //frem
+                selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
+            }
 
-            lstSongs.getSelectionModel().selectNext(); //frem
-            nextSong = lstSongs.getSelectionModel().getSelectedItem(); //Vi gemmer lige næste sang. Så har vi den, hvis sangen render ud og vi skal spille næste.
-            lstSongs.getSelectionModel().selectPrevious();//tilbage
+            path=selectedSong.getFilePath(); //finder stinavnet
+            songPlayedToEnd=false;
+
+            previousSong=selectedSong;          //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
+
 
             boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
 
@@ -276,6 +285,7 @@ public class SongViewController extends BaseController implements Initializable 
                 // JOptionPane.showMessageDialog(null,"File do not exist!");
                 informationUser("File do not exist!");
         }
+
 
     }
 
@@ -344,7 +354,6 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     public void timeTest() {
-        double[] percentageFinish = new double[1];
 
         timer = new Timer();
         task = new TimerTask() {
@@ -352,28 +361,28 @@ public class SongViewController extends BaseController implements Initializable 
 
                 double current = play.getCurrentTime().toSeconds();
                 double end = hit.getDuration().toSeconds();
-                percentageFinish[0] = current/ end;
 
-                if (percentageFinish[0] ==1)
+
+                if (current/ end ==1)
                 {
                     timer.cancel();
-                    String path=nextSong.getFilePath();
+                    songPlayedToEnd=true;
+                    songIsPlayed=false;
                     try {
-                        playMusic(path);
+                        handlePlaySong();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-
 
                 }
 
             }
 
-
         };
         timer.scheduleAtFixedRate(task,10,1000);
 
     }
+
 
 
 
