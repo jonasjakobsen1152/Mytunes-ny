@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.Playlist;
 import BE.Song;
 import BLL.util.MusicSound;
+import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +34,7 @@ public class SongViewController extends BaseController implements Initializable 
     public ListView<Song> lstSongs;
     public Slider sliMusicVolume;
     private SongModel songModel;
+    private PlaylistModel playlistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
     public Song previousSong;
     private String errorText;
@@ -40,6 +42,7 @@ public class SongViewController extends BaseController implements Initializable 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
+        //lstPlaylist.setItems(playlistModel.getObservablePlaylist());
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
