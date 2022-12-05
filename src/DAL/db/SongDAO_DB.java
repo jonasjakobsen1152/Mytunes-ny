@@ -131,11 +131,11 @@ public class SongDAO_DB implements ISongDAO {
     }
 
     @Override
-    public void deleteSong(Song song) throws Exception {
+    public void deleteSong(Song song) throws Exception  {
         try(Connection conn = databaseConnector.getConnection()) {
 
 
-            String sql= "Delete FROM Song  WHERE Id = ?";
+            String sql= "Delete song  WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 

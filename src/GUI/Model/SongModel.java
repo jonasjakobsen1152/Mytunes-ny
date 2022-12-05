@@ -19,6 +19,7 @@ public class SongModel {
 
 
         songsToBeViewed.addAll(songManager.getAllSongs());
+
     }
 
     public ObservableList<Song> getObservableSong() {
@@ -35,8 +36,8 @@ public class SongModel {
         // Create Song in data storage
         songManager.createNewSong(title, artist, category, filePath);
 
-        //Updates the list when new song created.
-        showList();
+        // Add Song to observable list (gui)
+        //songsToBeViewed.add(s);
     }
 
     public void updateSong(Song updateSong) throws Exception {
@@ -45,32 +46,20 @@ public class SongModel {
         songManager.updateSong(updateSong);
 
         // update ListView
-        showList();
+        songsToBeViewed.clear();
+        songsToBeViewed.addAll(songManager.getAllSongs());
     }
+    public Song getSelectedSong() { return selectedSong; }
 
-    public void deleteSong(Song deletedSong) throws Exception {
-        songManager.deleteSong(deletedSong);
-        showList();
-    }
-    public Song getSelectedSong() {
-
-        return selectedSong;
-    }
-
-    public void setSelectedSong(Song selectedMovie) {
+    public void setSelectedSong(Song selectedSong) {
         this.selectedSong = selectedSong;
     }
-
-
 
     public void soundLevel(double volumen) throws Exception {
         MusicSound musicSound = new MusicSound();
         musicSound.soundVolume(volumen);
+
     }
 
-    public void showList() throws Exception {
-        //Update the listview
-        songsToBeViewed.clear();
-        songsToBeViewed.addAll(songManager.getAllSongs());
-    }
+
 }
