@@ -9,7 +9,6 @@ public class Song {
     private String artist;
     private String category;
     private int seconds;
-
     private String filePath;
 
     public Song(int id, String title, String artist, String category, int seconds, String filePath) {
@@ -29,16 +28,17 @@ public class Song {
 
     @Override
     public String toString() {
+        //Her kaldes klassen ind som objekt til at lave normal tidsangivelse.
+        SecondsToMinute secondsToMinute=new SecondsToMinute();
 
-        SecondsToMinute secondsToMinute=new SecondsToMinute(); //Her kaldes klassen ind som objekt til at lave normal tidsangivelse.
+        // Her returnes en streng med tidsangivelse i formatet 00:00:00
+        String time= secondsToMinute.secondsMinute(seconds);
 
-        String time= secondsToMinute.secondsMinute(seconds); // Her returnes en streng med tidsangivelse i formatet 00:00:00
-
-       // return makeStringEvenLength();
-return  id + ": " +  title + " " + artist+ " " + category+ " " +time;
+        // return makeStringEvenLength();
+        return  title + " " + artist + " " + category+ " " + time;
     }
-
-  /*  public String makeStringEvenLength()
+    /**
+    public String makeStringEvenLength()
     {
         int lengthString= title.length();
         for (int i=lengthString; i<30; i++)
@@ -72,10 +72,5 @@ return  id + ": " +  title + " " + artist+ " " + category+ " " +time;
 
         return idString +  title +  artist+ category+ secondsToString;
     }
-
-*/
-
-
-
-
+     */
 }

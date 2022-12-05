@@ -1,7 +1,9 @@
 package GUI.Controller;
 
 import BE.Song;
+import BLL.util.MusicSound;
 import GUI.Model.SongModel;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -14,38 +16,56 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class SongViewController extends BaseController implements Initializable {
     public TextField txtFilter;
-    public Button btnEditSong;
-    public Button btnDeleteSong;
-    public Button btnRestartSong;
-    public Button btnSkipSong;
-    public Button btnAddPlaylist;
-    public Button btnEditPlaylist;
-    public Button btnDeletePlaylist;
-    public Button btnMovePlaylistSongUp;
-    public Button btnMovePlaylistSongDown;
-    public ListView lstSongsOnPlaylist;
-    public ListView lstPlaylist;
+    public Button btnEditSong,btnDeleteSong,btnRestartSong,btnSkipSong,btnAddPlaylist,btnEditPlaylist,btnDeletePlaylist,
+            btnMovePlaylistSongUp,btnMovePlaylistSongDown,addSongToPlaylist,btnAddSong,btnSearch,btnPlaySong;
+
+    public ListView lstSongsOnPlaylist,lstPlaylist;
+
     public ListView<Song> lstSongs;
-    public Button addSongToPlaylist;
+
     public Slider sliMusicVolume;
-    public Button btnAddSong;
-    public Button btnSearch;
-    public Button btnPlaySong;
-    public Button btnPauseMusic;
+
+
     private SongModel songModel;
 
 
-    boolean musicIsPlaying=false;
-    String path = "";
+    private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
+
+    Song previousSong;
 
     private String errorText;
 
+    @Override
+    public void initialize (URL url, ResourceBundle resourceBundle){
+        lstSongs.setItems(songModel.getObservableSong());
+        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
+            try{
+                songModel.searchSong(newValue);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+        }));
+
+        MusicSound musicSound = new MusicSound();
+        sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                musicSound.soundVolume(sliMusicVolume.getValue());
+            }
+        });
+
+
+    }
 
     public SongViewController() {
         try {
@@ -60,7 +80,15 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
 
-    public void handleAddSong(ActionEvent actionEvent) throws IOException {
+    public void handleAddSong(ActionEvent actionEvent) throws Exception {
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            MusicSound musicSound = new MusicSound();
+            musicSound.stopMusic();
+        }
+
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
         AnchorPane pane = (AnchorPane) loader.load();
@@ -80,18 +108,6 @@ public class SongViewController extends BaseController implements Initializable 
 
         dialogWindow.showAndWait();
     }
-        @Override
-        public void initialize (URL url, ResourceBundle resourceBundle){
-        lstSongs.setItems(songModel.getObservableSong());
-        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
-            try{
-                songModel.searchSong(newValue);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
-        }));
-        }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
     if(newValue != null){
@@ -106,7 +122,14 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
 
-    public void handleEditSong(ActionEvent actionEvent) {
+    public void handleEditSong(ActionEvent actionEvent) throws Exception {
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            MusicSound musicSound = new MusicSound();
+            musicSound.stopMusic();
+        }
+
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
@@ -132,7 +155,13 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
-    public void handleDeleteSong(ActionEvent actionEvent) {
+    public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            MusicSound musicSound = new MusicSound();
+            musicSound.stopMusic();
+        }
+
         Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
         if(selectedSong != null){
 
@@ -142,17 +171,38 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
-    public void handleSliMusicVolume(MouseEvent mouseEvent) {
-        System.out.println(sliMusicVolume.getValue());
+    public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
+
     }
 
-    public void handleRestart(ActionEvent actionEvent) {
+    public void handleRestart() throws Exception {
+
+        lstSongs.getSelectionModel().selectPrevious();
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            handlePlaySong(); //Stopper den sang, som er i gang
+
+        }
+
     }
 
-    public void handleSkipSong(ActionEvent actionEvent) {
+    public void handleSkipSong(ActionEvent actionEvent) throws Exception {
+
+        lstSongs.getSelectionModel().selectNext();
+
+        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
+        {
+            handlePlaySong(); //Stopper den sang, som er i gang
+
+        }
     }
+
 
     public void handleAddPlaylist(ActionEvent actionEvent) {
+
+
+        String inputValue =JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) {
@@ -170,29 +220,63 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
     }
 
+
+
+
     public void handleSearchAllSongs(ActionEvent actionEvent) {
     }
 
-    public void handlePlaySong(ActionEvent actionEvent) throws Exception {
+    public void handlePlaySong() throws Exception {
 
-        SongModel songModel = new SongModel();
 
-        
-                {
-            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-            path=selectedSong.getFilePath();
-            songModel.playSong(path);
-
-        }
+                    String path = null;
+                    boolean startSong = true;
+                    MusicSound musicSound = new MusicSound();
 
 
 
 
+        if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
+                    {
+                        musicSound.stopMusic(); //Stop music
+                        songIsPlayed=false;
+
+                        if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
+                            startSong=false;
+
+                    }
 
 
+        if (lstSongs.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
+                    {
+                        Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+                        previousSong=selectedSong;          //Gemmer nuværende sang, så vi kan se om sangen har skiftet.
+
+                        path=selectedSong.getFilePath();
+
+
+                        boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
+
+                        if (filesExits)
+                        {
+                            musicSound.playMusic(path);
+                            songIsPlayed=true;
+                        }
+                        else
+                           // JOptionPane.showMessageDialog(null,"File do not exist!");
+                            informationUser("File do not exist!");
+                     }
 
 
     }
+
+    private void informationUser(String information){
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle("Regarding music");
+        info.setHeaderText(information + "");
+        info.showAndWait();
+    }
+
     private void alertUser(String error){
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle(error);

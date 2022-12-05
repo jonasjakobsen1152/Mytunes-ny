@@ -2,15 +2,14 @@ package BLL;
 
 import BE.Song;
 import BLL.util.SongSearcher;
-import DAL.IMyTunesDataAccess;
+import DAL.ISongDAO;
 import DAL.db.SongDAO_DB;
-import GUI.Model.SongModel;
 
 import java.util.List;
 
 public class SongManager {
     private SongSearcher songSearcher = new SongSearcher();
-    private IMyTunesDataAccess songDAO;
+    private ISongDAO songDAO;
 
     public SongManager() throws Exception {songDAO = new SongDAO_DB();}
 
@@ -28,8 +27,8 @@ public class SongManager {
     public void updateSong(Song updatedSong) throws Exception{
         songDAO.updateSong(updatedSong);
     }
-
-
-
+    public void deleteSong(Song song) throws Exception {
+        //TODO deleteSong
+    }
 
 }
