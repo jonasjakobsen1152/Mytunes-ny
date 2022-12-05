@@ -27,7 +27,8 @@ public class SongModel {
 
     public void searchSong(String query) throws Exception {
         List<Song> searchResults = songManager.searchSongs(query);
-        showList();
+        songsToBeViewed.clear();
+        songsToBeViewed.addAll(searchResults);
     }
 
     public void createNewSong(String title, String artist, String category, String filePath) throws Exception {
