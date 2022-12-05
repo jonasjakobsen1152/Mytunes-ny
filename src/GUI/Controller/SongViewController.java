@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.Playlist;
 import BE.Song;
 import BLL.util.MusicSound;
 import GUI.Model.SongModel;
@@ -27,21 +28,13 @@ public class SongViewController extends BaseController implements Initializable 
     public TextField txtFilter;
     public Button btnEditSong,btnDeleteSong,btnRestartSong,btnSkipSong,btnAddPlaylist,btnEditPlaylist,btnDeletePlaylist,
             btnMovePlaylistSongUp,btnMovePlaylistSongDown,addSongToPlaylist,btnAddSong,btnSearch,btnPlaySong;
-
-    public ListView lstSongsOnPlaylist,lstPlaylist;
-
+    public ListView lstSongsOnPlaylist;
+    public ListView<Playlist> lstPlaylist;
     public ListView<Song> lstSongs;
-
     public Slider sliMusicVolume;
-
-
     private SongModel songModel;
-
-
-    private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
-
-    Song previousSong;
-
+    private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
+    public Song previousSong;
     private String errorText;
 
     @Override
@@ -67,7 +60,7 @@ public class SongViewController extends BaseController implements Initializable 
 
     public SongViewController() {
         try {
-            // Istatiates a songModel inside a try catch.
+            // Instantiates a songModel inside a try catch.
             songModel = new SongModel();
         } catch (Exception e) {
             displayError(e);
@@ -234,7 +227,7 @@ public class SongViewController extends BaseController implements Initializable 
 
 
 
-        if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
+        if (songIsPlayed) //Denne if statement sikre, t man kan stoppe musikken selvom den ikke er markeret.
                     {
                         musicSound.stopMusic(); //Stop music
                         songIsPlayed=false;
