@@ -63,8 +63,6 @@ public class SongViewController extends BaseController implements Initializable 
                 musicSound.soundVolume(sliMusicVolume.getValue());
             }
         });
-
-
     }
 
     public SongViewController() {

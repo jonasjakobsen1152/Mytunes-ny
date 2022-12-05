@@ -49,17 +49,11 @@ public class SongModel {
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
     }
+    public Song getSelectedSong() { return selectedSong; }
 
-    public Song getSelectedSong() {
-
-        return selectedSong;
-    }
-
-    public void setSelectedSong(Song selectedMovie) {
+    public void setSelectedSong(Song selectedSong) {
         this.selectedSong = selectedSong;
     }
-
-
 
     public void soundLevel(double volumen) throws Exception {
         MusicSound musicSound = new MusicSound();
