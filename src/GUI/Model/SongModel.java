@@ -2,7 +2,6 @@ package GUI.Model;
 
 import BE.Song;
 import BLL.SongManager;
-import BLL.util.MusicSound;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -61,11 +60,7 @@ public class SongModel {
 
 
 
-    public void soundLevel(double volumen) throws Exception {
-        MusicSound musicSound = new MusicSound();
-        musicSound.soundVolume(volumen);
 
-    }
 
 
 }
