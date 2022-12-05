@@ -34,16 +34,38 @@ public class SongViewController extends BaseController implements Initializable 
 
     public Slider sliMusicVolume;
 
-    //public Button btnPauseMusic;
+
     private SongModel songModel;
 
-    
+
     private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
 
     Song previousSong;
 
     private String errorText;
 
+    @Override
+    public void initialize (URL url, ResourceBundle resourceBundle){
+        lstSongs.setItems(songModel.getObservableSong());
+        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
+            try{
+                songModel.searchSong(newValue);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+        }));
+
+        MusicSound musicSound = new MusicSound();
+        sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                musicSound.soundVolume(sliMusicVolume.getValue());
+            }
+        });
+
+
+    }
 
     public SongViewController() {
         try {
@@ -86,28 +108,6 @@ public class SongViewController extends BaseController implements Initializable 
 
         dialogWindow.showAndWait();
     }
-        @Override
-        public void initialize (URL url, ResourceBundle resourceBundle){
-        lstSongs.setItems(songModel.getObservableSong());
-        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
-            try{
-                songModel.searchSong(newValue);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
-        }));
-
-        MusicSound musicSound = new MusicSound();
-            sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                    musicSound.soundVolume(sliMusicVolume.getValue());
-                }
-            });
-
-
-        }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
     if(newValue != null){
