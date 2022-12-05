@@ -1,7 +1,9 @@
 package GUI.Controller;
 
+import BE.Playlist;
 import BE.Song;
 import BLL.util.MusicSound;
+import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,21 +29,14 @@ public class SongViewController extends BaseController implements Initializable 
     public TextField txtFilter;
     public Button btnEditSong,btnDeleteSong,btnRestartSong,btnSkipSong,btnAddPlaylist,btnEditPlaylist,btnDeletePlaylist,
             btnMovePlaylistSongUp,btnMovePlaylistSongDown,addSongToPlaylist,btnAddSong,btnSearch,btnPlaySong;
-
-    public ListView lstSongsOnPlaylist,lstPlaylist;
-
+    public ListView<Playlist> lstPlaylist;
+    public ListView lstSongsOnPlaylist;
     public ListView<Song> lstSongs;
-
     public Slider sliMusicVolume;
-
-
+    public PlaylistModel playlistModel;
     private SongModel songModel;
-
-
-    private boolean songIsPlayed=false; //used to stop songs from playing in case that no song is marked
-
-    Song previousSong;
-
+    private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
+    public Song previousSong;
     private String errorText;
 
     @Override

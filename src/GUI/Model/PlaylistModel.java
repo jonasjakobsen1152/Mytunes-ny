@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 public class PlaylistModel {
     private ObservableList<Playlist> playlistToBeViewed;
     private PlaylistManager playlistManager;
-    Playlist selectedPlaylist;
+    public Playlist selectedPlaylist;
 
     public PlaylistModel() throws Exception {
         playlistManager = new PlaylistManager();
