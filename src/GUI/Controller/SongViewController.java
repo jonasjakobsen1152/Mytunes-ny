@@ -162,7 +162,24 @@ public class SongViewController extends BaseController implements Initializable 
             if(songIsPlayed) { //Stops all music from playing)
                 stopMusic();  //Stops all music from playing
             }
-            songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Current project is modified");
+            alert.setContentText("Save?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, noButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == okButton) {
+                    try {
+                        songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (type == noButton) { // do something
+                } else { // do something
+                }
+            });
         }
     }
 
@@ -241,7 +258,6 @@ public class SongViewController extends BaseController implements Initializable 
 
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
-
 
         }
 
