@@ -1,11 +1,8 @@
 package BLL;
 
 import BE.Playlist;
-import BE.Song;
 import DAL.IPlaylistDAO;
-import DAL.ISongDAO;
 import DAL.db.PlaylistDAO_DB;
-import DAL.db.SongDAO_DB;
 
 import java.util.List;
 

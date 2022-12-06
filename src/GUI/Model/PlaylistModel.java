@@ -26,14 +26,14 @@ public class PlaylistModel {
         playlistManager.createPlaylist(name);
 
         //Add Playlist to observable list (gui)
+        showList();
     }
     public void updatePlaylist(Playlist updatePlaylist) throws Exception {
         // Call BLL and update Playlist in DB
         playlistManager.updatePlaylist(updatePlaylist);
 
         //update listview
-        playlistToBeViewed.clear();
-        playlistToBeViewed.addAll(playlistManager.getAllPlaylist());
+        showList();
     }
 
     public Playlist getSelectedPlaylist(){
@@ -42,5 +42,15 @@ public class PlaylistModel {
 
     public void setSelectedPlaylist(Playlist selectedPlaylist) {
         this.selectedPlaylist = selectedPlaylist;
+    }
+    public void deletePlaylist(Playlist deletePlaylist) throws Exception {
+        playlistManager.deletePlaylist(deletePlaylist);
+        showList();
+    }
+
+    public void showList() throws Exception {
+        // Update the listview
+        playlistToBeViewed.clear();
+        playlistToBeViewed.addAll(playlistManager.getAllPlaylist());
     }
 }

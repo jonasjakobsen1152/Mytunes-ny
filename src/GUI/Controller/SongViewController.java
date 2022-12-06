@@ -385,12 +385,5 @@ public class SongViewController extends BaseController implements Initializable 
 
         };
         timer.scheduleAtFixedRate(task,10,1000);
-
     }
-
-
-
-
-
-
 }

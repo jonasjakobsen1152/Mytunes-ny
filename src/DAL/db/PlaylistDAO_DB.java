@@ -19,7 +19,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement())
         {
-            String sql = "SELECT * FROM dbo.Playlist;";
+            String sql = "SELECT * FROM dbo.Playlister;";
 
 
             ResultSet rs = stmt.executeQuery(sql);
@@ -28,7 +28,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
             while (rs.next()) {
 
                 //Map DB row to Playlist object
-                int id = rs.getInt("Id");
+                int id = rs.getInt("PlaylistID");
                 String name = rs.getString("Name");
 
                 Playlist playlist = new Playlist(id, name);
@@ -49,7 +49,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
     @Override
     public Playlist createPlaylist(String name) throws Exception {
 
-        String sql = "INSERT INTO playlist (Name) VALUES (?);";
+        String sql = "INSERT INTO Playlister (Name) VALUES (?);";
 
         try (Connection conn = databaseConnector.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -80,7 +80,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
 
     @Override
     public void updatePlaylist(Playlist playlist) throws Exception {
-        String sql = "UPDATE playlist SET Title = ? WHERE ID = ?";
+        String sql = "UPDATE Playlister SET Name = ? WHERE PlaylistID = ?";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
         try(Connection conn = databaseConnector.getConnection()) {
 
 
-            String sql= "Delete playlist  WHERE id = ?";
+            String sql= "Delete Playlister WHERE PlaylistID = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 

@@ -36,7 +36,6 @@ public class SongModel {
         songManager.createNewSong(title, artist, category, filePath);
 
         // Add Song to observable list (gui)
-        //songsToBeViewed.add(s);
         showList();
     }
 
