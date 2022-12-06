@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class SongDataInputs extends BaseController{
+public class SongDataInputs {
     public TextField txtEditTitle;
     public TextField txtEditArtist;
     public TextField txtEditCategory;
@@ -66,34 +66,5 @@ public class SongDataInputs extends BaseController{
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
 
-    }
-
-
-
-    /*
-    public void handleUpdate(ActionEvent actionEvent) throws Exception{
-        String updatedTitle = txtTitle.getText();
-        String updatedArtist = txtArtist.getText();
-        String updatedCategory = txtCategory.getText();
-        int updatedSeconds = Integer.parseInt(txtSeconds.getText());
-        //Song updatedSong = new Song(model.getSelectedSong().getId(),
-                updatedTitle, updatedArtist, updatedCategory, updatedSeconds);
-
-        model.updateSong(updatedSong);
-
-        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.close();
-    }
-    */
-
-   // @Override
-    public void setup() {
-        //model = getModel().getSongModel();
-        /*
-        txtTitle.setText(model.getSelectedSong().getTitle());
-        txtArtist.setText(model.getSelectedSong().getArtist());
-        txtCategory.setText(model.getSelectedSong().getCategory());
-        txtSeconds.setText(String.valueOf(model.getSelectedSong().getSeconds()));
-         */
     }
 }

@@ -178,7 +178,6 @@ public class SongViewController extends BaseController implements Initializable 
                         throw new RuntimeException(e);
                     }
                 } else if (type == noButton) { // do something
-                } else { // do something
                 }
             });
         }
@@ -186,46 +185,78 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
-
     }
 
     public void handleRestart() throws Exception {
-
         lstSongs.getSelectionModel().selectPrevious();
-
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
-
         }
-
     }
 
     public void handleSkipSong(ActionEvent actionEvent) throws Exception {
-
         lstSongs.getSelectionModel().selectNext();
-
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
-
         }
     }
 
-
     public void handleAddPlaylist(ActionEvent actionEvent) {
-
-
-        String inputValue =JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
+        String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) {
     }
 
     public void handleEditPlaylist(ActionEvent actionEvent) {
+        try {
+            Playlist selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+
+            if(selectedPlaylist != null) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/GUI/View/editPlaylist.fxml"));
+
+                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                Stage stage = new Stage();
+                stage.setTitle("Edit the playlist");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                stage.setScene(scene);
+                PlaylistDataInputs playlistDataInputs = fxmlLoader.getController();
+                playlistDataInputs.setSelectPlaylist(selectedPlaylist);
+                stage.showAndWait();
+            }
+            else {
+                alertUser("Please select a playlist to edit");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleDeletePlaylist(ActionEvent actionEvent) {
+        Playlist deletedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+        if(deletedPlaylist == null){
+            alertUser("Please select the song you wish to delete");
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Current project is modified");
+        alert.setContentText("Save?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(okButton, noButton);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == okButton) {
+                try {
+                    playlistModel.deletePlaylist(deletedPlaylist); // Sends Playlist to be deleted to PlaylistModel.
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (type == noButton) { // do something
+            }
+        });
     }
 
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
@@ -233,9 +264,6 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
     }
-
-
-
 
     public void handleSearchAllSongs(ActionEvent actionEvent) {
     }
@@ -247,11 +275,7 @@ public class SongViewController extends BaseController implements Initializable 
         Song song2;
 
        // int number=lstSongs.getSelectionModel().getSelectedIndex();
-
-
         boolean startSong = true;
-
-
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
             stopMusic(); //Stop music
@@ -259,26 +283,19 @@ public class SongViewController extends BaseController implements Initializable 
 
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
-
         }
-
-
         if (lstSongs.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
         {
-            if (songPlayedToEnd==false)
+            if (songPlayedToEnd == false)
                 selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-            else
-
-            {
+            else {
                 lstSongs.getSelectionModel().selectNext(); //frem
                 selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
             }
-
             path=selectedSong.getFilePath(); //finder stinavnet
             songPlayedToEnd=false;
 
-            previousSong=selectedSong;          //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
-
+            previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
 
             boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
 
@@ -291,10 +308,7 @@ public class SongViewController extends BaseController implements Initializable 
                 // JOptionPane.showMessageDialog(null,"File do not exist!");
                 informationUser("File do not exist!");
         }
-
-
     }
-
 
     private void informationUser(String information){
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -331,43 +345,28 @@ public class SongViewController extends BaseController implements Initializable 
 
         timeTest();
         play.play();
-
-
-
     }
 
     public void stopMusic() {
-
         timer.cancel();
         play.pause();
-
     }
-
-
-
-
     public void soundVolume(double soundLevel)
     {
-
         this.soundLevel = soundLevel;
 
         if (play != null) {
             double soundLev = soundLevel / 100;
             play.setVolume(soundLev);
         }
-
     }
-
-
     public void timeTest() {
 
         timer = new Timer();
         task = new TimerTask() {
             public void run() {
-
                 double current = play.getCurrentTime().toSeconds();
                 double end = hit.getDuration().toSeconds();
-
 
                 if (current/ end ==1)
                 {
@@ -379,11 +378,8 @@ public class SongViewController extends BaseController implements Initializable 
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-
                 }
-
             }
-
         };
         timer.scheduleAtFixedRate(task,10,1000);
     }

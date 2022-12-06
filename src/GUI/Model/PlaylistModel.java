@@ -38,9 +38,7 @@ public class PlaylistModel {
         showList();
     }
 
-    public Playlist getSelectedPlaylist(){
-        return selectedPlaylist;
-    }
+    public Playlist getSelectedPlaylist() {return selectedPlaylist;}
 
     public void setSelectedPlaylist(Playlist selectedPlaylist) {
         this.selectedPlaylist = selectedPlaylist;

@@ -20,7 +20,7 @@ public class PlaylistManager {
     public void updatePlaylist(Playlist updatedPlaylist) throws Exception {
         playlistDAO.updatePlaylist(updatedPlaylist);
     }
-    public void deletePlaylist(Playlist playlist) throws Exception{
-        //TODO deletePlaylist
+    public void deletePlaylist(Playlist deletePlaylist) throws Exception{
+        playlistDAO.deletePlaylist(deletePlaylist);
     }
 }
