@@ -5,6 +5,8 @@ import BLL.PlaylistManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class PlaylistModel {
     private ObservableList<Playlist> playlistToBeViewed;
     private PlaylistManager playlistManager;
