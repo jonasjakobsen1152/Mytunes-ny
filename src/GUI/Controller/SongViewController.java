@@ -166,6 +166,7 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
+
     public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
 
     }
@@ -232,7 +233,11 @@ public class SongViewController extends BaseController implements Initializable 
 
         boolean startSong = true;
 
+<<<<<<< Updated upstream
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
+=======
+        if (songIsPlayed) //Denne if statement sikre,at man kan stop pe musikken selvom den ikke er markeret.
+>>>>>>> Stashed changes
         {
             stopMusic(); //Stop music
             songIsPlayed=false;
