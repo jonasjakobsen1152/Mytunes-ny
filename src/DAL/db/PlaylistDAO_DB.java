@@ -49,12 +49,16 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
     @Override
     public Playlist createPlaylist(String name) throws Exception {
 
-        String sql = "INSERT INTO Playlister (Name) VALUES (?);";
+        String sql = "INSERT INTO PlaylistInfo (Name) VALUES (?);";
 
         try (Connection conn = databaseConnector.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             // Bind parameters
+
+
+
+
             stmt.setString(1, name);
 
             // Run the specified SQL statement

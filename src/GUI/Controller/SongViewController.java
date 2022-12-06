@@ -206,8 +206,10 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
-    public void handleAddPlaylist(ActionEvent actionEvent) {
+    public void handleAddPlaylist(ActionEvent actionEvent) throws Exception {
         String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
+        playlistModel.createNewPlaylist(inputValue);
+
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) {
