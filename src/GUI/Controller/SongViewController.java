@@ -54,7 +54,7 @@ public class SongViewController extends BaseController implements Initializable 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
-        //lstPlaylist.setItems(playlistModel.getObservablePlaylist());
+        lstPlaylist.setItems(playlistModel.getObservablePlaylist());
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
@@ -75,6 +75,7 @@ public class SongViewController extends BaseController implements Initializable 
     public SongViewController() {
         try {
             // Instantiates a songModel inside a try catch.
+            playlistModel = new PlaylistModel();
             songModel = new SongModel();
         } catch (Exception e) {
             displayError(e);

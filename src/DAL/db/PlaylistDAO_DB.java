@@ -19,7 +19,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement())
         {
-            String sql = "SELECT * FROM dbo.Playlister;";
+            String sql = "SELECT * FROM dbo.PlaylistInfo;";
 
 
             ResultSet rs = stmt.executeQuery(sql);
@@ -28,7 +28,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
             while (rs.next()) {
 
                 //Map DB row to Playlist object
-                int id = rs.getInt("PlaylistID");
+                int id = rs.getInt("PlaylisteID");
                 String name = rs.getString("Name");
 
                 Playlist playlist = new Playlist(id, name);
