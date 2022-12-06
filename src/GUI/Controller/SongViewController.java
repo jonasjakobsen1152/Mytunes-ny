@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.Playlist;
 import BE.Song;
 import BLL.util.MusicSound;
+import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
 import javafx.beans.value.ChangeListener;
@@ -39,6 +40,7 @@ public class SongViewController extends BaseController implements Initializable 
     public ListView<Song> lstSongs;
     public Slider sliMusicVolume;
     private SongModel songModel;
+    private MYTModel mytModel;
     private PlaylistModel playlistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
     private boolean songPlayedToEnd=false;
@@ -77,6 +79,7 @@ public class SongViewController extends BaseController implements Initializable 
             // Instantiates a songModel inside a try catch.
             playlistModel = new PlaylistModel();
             songModel = new SongModel();
+            mytModel = new MYTModel();
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
@@ -97,7 +100,8 @@ public class SongViewController extends BaseController implements Initializable 
         AnchorPane pane = (AnchorPane) loader.load();
 
         SongDataInputs songdatainputs = loader.getController();
-        songdatainputs.setModel(super.getModel());
+        mytModel.setSongModel(super.getModel().getSongModel());
+        //songdatainputs.setModel(super.getModel());
         //showAllSongsAndPlaylists();
         //songCrud.setup();
 

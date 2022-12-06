@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Song;
+import GUI.Model.MYTModel;
 import GUI.Model.SongModel;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -21,6 +22,8 @@ public class SongDataInputs {
     public TextField txtFilePath;
     public Button txtAddInput;
     private Song selectSong;
+
+    private MYTModel model = new MYTModel();
 
     public SongDataInputs() throws Exception {
     }
@@ -66,5 +69,12 @@ public class SongDataInputs {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
 
+    }
+    public void setModel() {
+        songModel = model.getSongModel();
+    }
+
+    public void setModel(MYTModel model) {
+        this.songModel = model.getSongModel();
     }
 }
