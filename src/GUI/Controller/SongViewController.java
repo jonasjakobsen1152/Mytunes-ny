@@ -44,11 +44,9 @@ public class SongViewController extends BaseController implements Initializable 
     private boolean songPlayedToEnd=false;
     public Song previousSong,selectedSong, nextSong;
     private String errorText;
-
     double soundLevel = 50;
     private MediaPlayer play;
     private Media hit;
-
     private Timer timer;
     private TimerTask task;
 
@@ -74,7 +72,6 @@ public class SongViewController extends BaseController implements Initializable 
             }
         });
     }
-
     public SongViewController() {
         try {
             // Instantiates a songModel inside a try catch.
@@ -83,10 +80,7 @@ public class SongViewController extends BaseController implements Initializable 
             displayError(e);
             e.printStackTrace();
         }
-
-
     }
-
 
     public void handleAddSong(ActionEvent actionEvent) throws Exception {
 
@@ -118,18 +112,14 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
-    if(newValue != null){
-        //TODO When new window created, implement this to edit/update songs
+        if(newValue != null) {
+            //TODO When new window created, implement this to edit/update songs
+        }
     }
-    }
-
-
    @Override
     public void setup() {
         songModel = getModel().getSongModel();
     }
-
-
     public void handleEditSong(ActionEvent actionEvent) throws Exception {
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
@@ -137,7 +127,6 @@ public class SongViewController extends BaseController implements Initializable 
             MusicSound musicSound = new MusicSound();
             stopMusic();
         }
-
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
@@ -245,7 +234,7 @@ public class SongViewController extends BaseController implements Initializable 
 
         boolean startSong = true;
 
-        if (songIsPlayed) //Denne if statement sikre,at man kan stoppe musikken selvom den ikke er markeret.
+        if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
             stopMusic(); //Stop music
             songIsPlayed=false;

@@ -10,8 +10,8 @@ import DAL.db.SongDAO_DB;
 import java.util.List;
 
 public class PlaylistManager {
-    private IPlaylistDAO playlistDAO;{
-    }
+    private IPlaylistDAO playlistDAO;
+
     public PlaylistManager() throws Exception {playlistDAO = new PlaylistDAO_DB();}
 
     public List<Playlist>getAllPlaylist() throws Exception {

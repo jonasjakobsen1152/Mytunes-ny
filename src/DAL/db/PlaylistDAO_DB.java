@@ -1,8 +1,6 @@
 package DAL.db;
 
 import BE.Playlist;
-import BE.Song;
-import BLL.util.MusicSound;
 import DAL.IPlaylistDAO;
 
 import java.io.IOException;
