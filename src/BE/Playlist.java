@@ -1,13 +1,10 @@
 package BE;
 
-import java.util.*;
-import java.io.*;
-
-public class Playlist implements Serializable {
+public class Playlist {
     private int id;
     private String name;
 
-    //Creates a Playlist object that contains an ArrayList for Songs.
+
     public Playlist(int id, String name) {
         this.id = id;
         this.name = name;
@@ -19,6 +16,9 @@ public class Playlist implements Serializable {
 
     public String getName() {
         return name;
+    }
+    public String toString() {
+        return id + name;
     }
 }
 
