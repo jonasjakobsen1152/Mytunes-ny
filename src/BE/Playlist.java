@@ -18,7 +18,7 @@ public class Playlist {
         return name;
     }
     public String toString() {
-        return id + name;
+        return id + ": " + name;
     }
 }
 

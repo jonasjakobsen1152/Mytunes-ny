@@ -276,15 +276,19 @@ public class SongViewController extends BaseController implements Initializable 
     public void handlePlaySong() throws Exception {
 
         String path="";
-        Song song1;
-        Song song2;
 
-       // int number=lstSongs.getSelectionModel().getSelectedIndex();
+
         boolean startSong = true;
+
+        System.out.println("hej"+lstSongs.getSelectionModel().getSelectedItem());
+
+
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
             stopMusic(); //Stop music
             songIsPlayed=false;
+
+
 
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
@@ -302,6 +306,8 @@ public class SongViewController extends BaseController implements Initializable 
 
             previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
 
+
+
             boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
 
             if (filesExits)
@@ -310,7 +316,7 @@ public class SongViewController extends BaseController implements Initializable 
                 songIsPlayed=true;
             }
             else
-                // JOptionPane.showMessageDialog(null,"File do not exist!");
+
                 informationUser("File do not exist!");
         }
     }

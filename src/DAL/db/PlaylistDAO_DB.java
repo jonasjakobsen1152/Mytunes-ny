@@ -84,7 +84,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
 
     @Override
     public void updatePlaylist(Playlist playlist) throws Exception {
-        String sql = "UPDATE Playlister SET Name = ? WHERE PlaylistID = ?";
+        String sql = "UPDATE PlaylistInfo SET Name = ? WHERE PlaylisteID = ?";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -104,8 +104,8 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
     public void deletePlaylist(Playlist playlist) throws Exception {
         try(Connection conn = databaseConnector.getConnection()) {
 
+            String sql= "Delete FROM PlaylistInfo WHERE PlaylisteID = ?";
 
-            String sql= "Delete Playlister WHERE PlaylistID = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 
