@@ -164,18 +164,16 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
-        if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-        {
-
-            stopMusic();
-        }
-
-        Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        if(selectedSong != null){
-
+        MusicSound musicSound = new MusicSound();
+        Song deletedSong = lstSongs.getSelectionModel().getSelectedItem();
+        if(deletedSong == null){
+            alertUser("Please select the song you wish to delete");
         }
         else{
-            alertUser("Please select the song you wish to delete");
+            if(songIsPlayed) { //Stops all music from playing)
+                stopMusic();  //Stops all music from playing
+            }
+            songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
         }
     }
 
