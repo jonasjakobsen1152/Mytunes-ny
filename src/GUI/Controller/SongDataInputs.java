@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.Song;
 import GUI.Model.MYTModel;
 import GUI.Model.SongModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -39,7 +40,6 @@ public class SongDataInputs {
             songModel.createNewSong(Title, Artist, Category, FilePath);
             Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
             stage.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +64,6 @@ public class SongDataInputs {
         String updatedCategory = txtEditCategory.getText();
         String updatedFilePath = txtEditSongFilePath.getText();
         songModel.updateSong(new Song(id, updatedTitle, updatedArtist, updatedCategory, selectSong.getSeconds(), updatedFilePath));
-
         //Koden her gør sådan at vinduet bliver lukket når man har trykket på Edit Song
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();

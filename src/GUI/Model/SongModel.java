@@ -12,10 +12,9 @@ public class SongModel {
     private SongManager songManager;
     private Song selectedSong;
 
-    public SongModel() throws Exception {
+    public SongModel() throws Exception  {
         songManager = new SongManager();
         songsToBeViewed = FXCollections.observableArrayList();
-
 
         songsToBeViewed.addAll(songManager.getAllSongs());
 

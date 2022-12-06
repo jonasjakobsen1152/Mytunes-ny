@@ -94,17 +94,15 @@ public class SongViewController extends BaseController implements Initializable 
             stopMusic();
         }
 
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
         AnchorPane pane = (AnchorPane) loader.load();
 
         SongDataInputs songdatainputs = loader.getController();
+
         mytModel.setSongModel(super.getModel().getSongModel());
         //songdatainputs.setModel(super.getModel());
         //showAllSongsAndPlaylists();
-        //songCrud.setup();
-
 
         Stage dialogWindow = new Stage();
         dialogWindow.setTitle("Add Song");
@@ -114,6 +112,7 @@ public class SongViewController extends BaseController implements Initializable 
         dialogWindow.setScene(scene);
 
         dialogWindow.showAndWait();
+        //lstSongs.getSongModel().getObservableSong());
     }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
