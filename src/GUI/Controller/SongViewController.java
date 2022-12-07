@@ -101,7 +101,7 @@ public class SongViewController extends BaseController implements Initializable 
         SongDataInputs songdatainputs = loader.getController();
 
         mytModel.setSongModel(super.getModel().getSongModel());
-        //songdatainputs.setModel(super.getModel());
+        //songDatainputs.setModel(super.getModel());
         //showAllSongsAndPlaylists();
 
         Stage dialogWindow = new Stage();
@@ -208,11 +208,16 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleAddPlaylist(ActionEvent actionEvent) throws Exception {
         String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
-        playlistModel.createNewPlaylist(inputValue);
-
+        if (inputValue == null || inputValue.equals("")){
+            alertUser("Please into a name");
+        }
+        else {
+            playlistModel.createNewPlaylist(inputValue);
+        }
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) {
+        //TODO AddSongToPlaylist
     }
 
     public void handleEditPlaylist(ActionEvent actionEvent) {
