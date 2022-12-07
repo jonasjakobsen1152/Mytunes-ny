@@ -91,6 +91,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
 
             // Bind parameters
             stmt.setString(1, playlist.getName());
+            stmt.setInt(2, playlist.getId());
 
             stmt.executeUpdate();
         }

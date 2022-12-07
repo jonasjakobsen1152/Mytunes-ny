@@ -35,7 +35,7 @@ public class PlaylistDataInputs {
         selectPlaylist = p;
 
         // Here we get the text into the inputs
-        btnEditPlaylist.setText(selectPlaylist.getName());
+        txtName.setText(selectPlaylist.getName());
     }
     public void handleEditPlaylist(ActionEvent actionEvent) throws Exception {
         int id = selectPlaylist.getId();
