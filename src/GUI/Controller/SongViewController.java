@@ -280,8 +280,7 @@ public class SongViewController extends BaseController implements Initializable 
 
         boolean startSong = true;
 
-        System.out.println("hej"+lstSongs.getSelectionModel().getSelectedItem());
-
+      
 
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
