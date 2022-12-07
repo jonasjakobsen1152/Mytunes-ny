@@ -18,6 +18,7 @@ public class SongDAO_DB implements ISongDAO {
     public List<Song> getAllSongs() throws Exception {
         ArrayList<Song> allSongs = new ArrayList<>();
 
+
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement())
         {
