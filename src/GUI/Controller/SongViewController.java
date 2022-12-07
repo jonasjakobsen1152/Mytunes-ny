@@ -112,7 +112,7 @@ public class SongViewController extends BaseController implements Initializable 
         dialogWindow.setScene(scene);
 
         dialogWindow.showAndWait();
-        //lstSongs.getSongModel().getObservableSong());
+        songModel.searchSong(""); // A hacky method to get the songs to update. This works because it searches for all songs
     }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {

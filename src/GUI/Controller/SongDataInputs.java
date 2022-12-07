@@ -8,7 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class SongDataInputs {
     public TextField txtEditTitle;
@@ -16,6 +19,7 @@ public class SongDataInputs {
     public TextField txtEditCategory;
     public TextField txtEditSongFilePath;
     public Button btnEditSong;
+    public Button txtChooseFile;
     private SongModel songModel = new SongModel();
     public TextField txtTitle;
     public TextField txtArtist;
@@ -68,6 +72,20 @@ public class SongDataInputs {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
 
+    }
+
+    public void handleChooseFIle(ActionEvent actionEvent) {
+        String fileName;
+        Stage stage = new Stage();
+        FileChooser fc = new FileChooser();
+        File file = fc.showOpenDialog(stage);
+        if (file != null) {
+
+            fileName = file.toURI().toString();
+            fileName=fileName.substring(6);
+
+            txtFilePath.setText(fileName);
+        }
     }
     public void setModel() {
         songModel = model.getSongModel();

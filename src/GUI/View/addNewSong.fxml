@@ -11,7 +11,8 @@
       <TextField fx:id="txtArtist" layoutX="80.0" layoutY="113.0" promptText="Artist" />
       <TextField fx:id="txtCategory" layoutX="80.0" layoutY="161.0" promptText="Song category" />
       <TextField fx:id="txtFilePath" layoutX="80.0" layoutY="214.0" promptText="The songs file path" />
-      <Button fx:id="txtAddInput" layoutX="281.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleAddInput" text="Add New Song" />
+      <Button fx:id="txtAddInput" layoutX="14.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleAddInput" text="Add New Song" />
       <Text layoutX="80.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill out the details and press add new song to create a new song" />
+      <Button fx:id="txtChooseFile" layoutX="255.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleChooseFIle" text="Choose FIle" />
    </children>
 </AnchorPane>
