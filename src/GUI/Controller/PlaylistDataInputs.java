@@ -12,7 +12,7 @@ public class PlaylistDataInputs {
     public TextField txtName;
     public TextField txtEditName;
     public Button txtAddInput;
-    public Button txtEditPlaylist;
+    public Button btnEditPlaylist;
     private Playlist selectPlaylist;
     private PlaylistModel playlistModel = new PlaylistModel();
 
@@ -35,7 +35,7 @@ public class PlaylistDataInputs {
         selectPlaylist = p;
 
         // Here we get the text into the inputs
-        txtEditName.setText(selectPlaylist.getName());
+        btnEditPlaylist.setText(selectPlaylist.getName());
     }
     public void handleEditPlaylist(ActionEvent actionEvent) throws Exception {
         int id = selectPlaylist.getId();

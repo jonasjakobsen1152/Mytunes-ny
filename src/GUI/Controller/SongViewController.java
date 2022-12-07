@@ -228,7 +228,7 @@ public class SongViewController extends BaseController implements Initializable 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/GUI/View/editPlaylist.fxml"));
 
-                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+                Scene scene = new Scene(fxmlLoader.load(), 360, 70);
                 Stage stage = new Stage();
                 stage.setTitle("Edit the playlist");
                 stage.initModality(Modality.WINDOW_MODAL);
