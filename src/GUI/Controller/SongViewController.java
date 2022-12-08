@@ -38,7 +38,7 @@ public class SongViewController extends BaseController implements Initializable 
             btnMovePlaylistSongUp,btnMovePlaylistSongDown,addSongToPlaylist,btnAddSong,btnSearch,btnPlaySong;
     public ListView lstSongsOnPlaylist;
     public ListView<Playlist> lstPlaylist;
-    public ListView<Song> lstSongs, lstSongToPlaylist;
+    public ListView<Song> lstSongs;
     public Slider sliMusicVolume;
     private SongModel songModel;
     private MYTModel mytModel;
@@ -60,7 +60,7 @@ public class SongViewController extends BaseController implements Initializable 
         lstSongs.setItems(songModel.getObservableSong());
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
 
-    lstSongToPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+    lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
 
 
 
