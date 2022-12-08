@@ -1,3 +1,4 @@
+import DAL.db.AddSongToPlaylist;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -10,6 +11,9 @@ import javafx.stage.WindowEvent;
 public class Main extends Application {
     public static void main(String[] args) throws Exception {
 
+
+        AddSongToPlaylist addSongToPlaylist = new AddSongToPlaylist();
+          addSongToPlaylist.getAllSongs();
 
         Application.launch();
     }
