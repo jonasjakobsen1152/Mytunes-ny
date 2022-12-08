@@ -15,7 +15,7 @@ public class SongToPlaylistModel {
     public SongToPlaylistModel() throws Exception {
          songToPlaylistManager = new SongToPlaylistManager();
         SongToPlayToBeViewed = FXCollections.observableArrayList();
-        SongToPlayToBeViewed.addAll(songToPlaylistManager.getAllSongToPlaylistlist());
+        SongToPlayToBeViewed.addAll(songToPlaylistManager.getAllSongToPlaylistlist( 0));
 
     }
 
@@ -24,7 +24,10 @@ public class SongToPlaylistModel {
         return SongToPlayToBeViewed;
     }
 
+    public void showList(int playlisteID) throws Exception {
+        //Update the listview
+        SongToPlayToBeViewed.clear();
+        SongToPlayToBeViewed.addAll(songToPlaylistManager.getAllSongToPlaylistlist(playlisteID));
 
-
-
+    }
 }

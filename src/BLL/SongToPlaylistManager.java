@@ -13,8 +13,8 @@ public class SongToPlaylistManager {
 
     }
 
-    public List<Song> getAllSongToPlaylistlist() throws Exception {
-        return songToPlayListDAO.getAllSongsFromPlaylist();
+    public List<Song> getAllSongToPlaylistlist(int playlisteID) throws Exception {
+        return songToPlayListDAO.getAllSongsFromPlaylist(playlisteID);
     }
 
 

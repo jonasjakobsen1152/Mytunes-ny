@@ -1,11 +1,9 @@
 package DAL.db;
 
 import BE.Song;
+import BLL.util.MusicSound;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,23 +19,18 @@ public class AddSongToPlaylist  {
 
 
 
-    public List<Song> getAllSongs() throws Exception {
+    public List<Song> getAllSongs(int playlistID) throws Exception {
 
         ArrayList<Song> allSongs = new ArrayList<>();
+
+
+
+        String sql = "Select * From PlaylistAndSongs ps, PlaylistInfo pl, Song so " +
+                "Where pl.PlaylisteID=ps.PlaylisteID AND so.Id=ps.MusicID AND pl.PlaylisteID="+playlistID+";";
 
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement())
         {
-
-            //so.Title, so.Artist, so.Category, so.Seconds, so.Filepath
-
-         String sql = "Select * From PlaylistAndSongs ps, PlaylistInfo pl, Song so " +
-                "Where pl.PlaylisteID=ps.PlaylisteID AND so.Id=ps.MusicID AND pl.PlaylisteID=;";
-
-
-
-
-
 
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -69,21 +62,24 @@ public class AddSongToPlaylist  {
 
     }
 
-
-    public Song createSong(String title, String artist, String category, String filePath) throws Exception {
-        return null;
     }
 
 
-    public void updateSong(Song song) throws Exception {
-
-    }
 
 
-    public void deleteSong(Song song) throws Exception {
 
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

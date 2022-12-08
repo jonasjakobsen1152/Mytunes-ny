@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Playlist;
 import BE.Song;
+import BLL.SongToPlaylistManager;
 import BLL.util.MusicSound;
 import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
@@ -64,11 +65,10 @@ public class SongViewController extends BaseController implements Initializable 
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
 
     lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+        
 
 
-
-
-     txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
+        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
             } catch (Exception e) {
@@ -76,6 +76,7 @@ public class SongViewController extends BaseController implements Initializable 
                 e.printStackTrace();
             }
         }));
+
 
 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
@@ -92,9 +93,13 @@ public class SongViewController extends BaseController implements Initializable 
             songModel = new SongModel();
             mytModel = new MYTModel();
           songToPlaylistModel = new SongToPlaylistModel();
+
+
+
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
+
         }
     }
 

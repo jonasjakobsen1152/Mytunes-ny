@@ -20,7 +20,7 @@ public class SongToPlaylistDAO_DB {
 
     }
 
-    public List<Song> getAllSongsFromPlaylist() throws Exception {
+    public List<Song> getAllSongsFromPlaylist(int playlisteID) throws Exception {
         ArrayList<Song> allSongs = new ArrayList<>();
 
 
@@ -29,7 +29,7 @@ public class SongToPlaylistDAO_DB {
 
             String sql = "SELECT *" +
                     "FROM PlaylistInfo PI, [PlaylistAndSongs] P, Song S " +
-                    "WHERE S.Id = P.MusicID and PI.PlaylisteID = P.PlaylisteID and P.PlaylisteID=1 " +
+                    "WHERE S.Id = P.MusicID and PI.PlaylisteID = P.PlaylisteID and P.PlaylisteID=" +playlisteID+
                     "ORDER BY P.Rank;";
 
 
