@@ -90,7 +90,7 @@ public class SongViewController extends BaseController implements Initializable 
 
 
             try {
-                songToPlaylistModel.showList(number);
+                songToPlaylistModel.showList(number); //Vælger playlisten der skal vises
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -99,7 +99,7 @@ public class SongViewController extends BaseController implements Initializable 
 
                 lstSongs.setOnMouseClicked(event -> {
 
-                    if (event.getClickCount() == 2 ) {
+                    if (event.getClickCount() == 2 ) { //Ved dobbeltklik kan man starte musikken
                         try {
                             handlePlaySong();
                         } catch (Exception e) {
@@ -116,7 +116,7 @@ public class SongViewController extends BaseController implements Initializable 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                soundVolume(sliMusicVolume.getValue());
+                soundVolume(sliMusicVolume.getValue());         //Lytter om lyden skal skues op.
             }
         });
     }
@@ -347,14 +347,13 @@ public class SongViewController extends BaseController implements Initializable 
     public void handlePlaySong() throws Exception {
 
         String path="";
-
-
         boolean startSong = true;
 
-      
 
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
+
+
             stopMusic(); //Stop music
             songIsPlayed=false;
 
@@ -372,12 +371,11 @@ public class SongViewController extends BaseController implements Initializable 
                 selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
             }
             path=selectedSong.getFilePath(); //finder stinavnet
-            songTitle=selectedSong.getTitle();
+            songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
 
             songPlayedToEnd=false;
 
             previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
-
 
 
             boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
@@ -423,7 +421,7 @@ public class SongViewController extends BaseController implements Initializable 
         play = new MediaPlayer(hit);
         soundVolume(soundLevel);
 
-        txtShowSong.setText("Playing: " + songTitle);
+        txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
 
         timeTest();
         play.play();
