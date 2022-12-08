@@ -112,7 +112,7 @@ public class SongViewController extends BaseController implements Initializable 
         dialogWindow.setScene(scene);
 
         dialogWindow.showAndWait();
-        songModel.searchSong(""); // A hacky method to get the songs to update. This works because it searches for all songs
+        updateSongModel();
     }
 
     public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
@@ -147,6 +147,7 @@ public class SongViewController extends BaseController implements Initializable 
                SongDataInputs songDataInputs = fxmlLoader.getController();
                songDataInputs.setSelectSong(selectedSong);
                stage.showAndWait();
+               updateSongModel();
            }
            else {
                alertUser("Please select a song to edit");
@@ -177,6 +178,7 @@ public class SongViewController extends BaseController implements Initializable 
                 if (type == okButton) {
                     try {
                         songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+                        updateSongModel();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -269,6 +271,11 @@ public class SongViewController extends BaseController implements Initializable 
         });
     }
 
+    private void updateSongModel() throws Exception {
+        SongModel updatedSongModel = new SongModel();
+        songModel = updatedSongModel;
+        lstSongs.setItems(songModel.getObservableSong());
+    }
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
     }
 

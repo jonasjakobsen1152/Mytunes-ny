@@ -21,6 +21,7 @@ public class SongManager {
         List<Song> searchResult = songSearcher.search(allSongs, query);
         return searchResult;
     }
+
     public Song createNewSong(String title, String artist, String category, String filePath) throws Exception {
         return songDAO.createSong(title, artist, category,filePath);
     }
