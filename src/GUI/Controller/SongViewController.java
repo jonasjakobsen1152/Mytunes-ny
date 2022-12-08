@@ -48,6 +48,7 @@ public class SongViewController extends BaseController implements Initializable 
     private boolean songPlayedToEnd=false;
     public Song previousSong,selectedSong;
     private String errorText;
+    private String songTitle;
     double soundLevel = 50;
     private MediaPlayer play;
     private Media hit;
@@ -330,6 +331,8 @@ public class SongViewController extends BaseController implements Initializable 
                 selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
             }
             path=selectedSong.getFilePath(); //finder stinavnet
+            songTitle=selectedSong.getTitle();
+
             songPlayedToEnd=false;
 
             previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
@@ -378,6 +381,7 @@ public class SongViewController extends BaseController implements Initializable 
         hit = new Media(new File(path).toURI().toString());
         play = new MediaPlayer(hit);
         soundVolume(soundLevel);
+
 
         timeTest();
         play.play();
