@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -59,6 +60,7 @@ public class SongViewController extends BaseController implements Initializable 
     private Media hit;
     private Timer timer;
     private TimerTask task;
+    private java.awt.event.MouseEvent mouseEvent;
 
 
     @Override
@@ -80,10 +82,13 @@ public class SongViewController extends BaseController implements Initializable 
         }));
 
 
+
         lstPlaylist.setOnMouseClicked(event -> {
 
             selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
             int number=selectedPlaylist.getId();
+
+
             try {
                 songToPlaylistModel.showList(number);
             } catch (Exception e) {
@@ -91,6 +96,21 @@ public class SongViewController extends BaseController implements Initializable 
             }
 
         });
+
+                lstSongs.setOnMouseClicked(event -> {
+
+                    if (event.getClickCount() == 2 ) {
+                        try {
+                            handlePlaySong();
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+
+
+
+
 
 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
