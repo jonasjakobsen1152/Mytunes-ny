@@ -115,11 +115,6 @@ public class SongViewController extends BaseController implements Initializable 
         updateSongModel();
     }
 
-    public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
-        if(newValue != null) {
-            //TODO When new window created, implement this to edit/update songs
-        }
-    }
    @Override
     public void setup() {
         songModel = getModel().getSongModel();
@@ -211,10 +206,11 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleAddPlaylist(ActionEvent actionEvent) throws Exception {
         String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
         if (inputValue == null || inputValue.equals("")){
-            alertUser("Please into a name");
+            alertUser("Please enter a name");
         }
         else {
             playlistModel.createNewPlaylist(inputValue);
+            updatePlaylistModel();
         }
     }
 
@@ -239,12 +235,15 @@ public class SongViewController extends BaseController implements Initializable 
                 PlaylistDataInputs playlistDataInputs = fxmlLoader.getController();
                 playlistDataInputs.setSelectPlaylist(selectedPlaylist);
                 stage.showAndWait();
+                updatePlaylistModel();
             }
             else {
                 alertUser("Please select a playlist to edit");
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -263,6 +262,7 @@ public class SongViewController extends BaseController implements Initializable 
             if (type == okButton) {
                 try {
                     playlistModel.deletePlaylist(deletedPlaylist); // Sends Playlist to be deleted to PlaylistModel.
+                    updatePlaylistModel();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -276,6 +276,14 @@ public class SongViewController extends BaseController implements Initializable 
         songModel = updatedSongModel;
         lstSongs.setItems(songModel.getObservableSong());
     }
+
+    private void updatePlaylistModel() throws Exception {
+        PlaylistModel updatedPlaylistModel = new PlaylistModel();
+        playlistModel = updatedPlaylistModel;
+        lstPlaylist.setItems(playlistModel.getObservablePlaylist());
+    }
+
+
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
     }
 
@@ -354,9 +362,6 @@ public class SongViewController extends BaseController implements Initializable 
     }
     public void handleEdit(ActionEvent actionEvent) throws IOException {
 
-    }
-
-    public void handlePauseMusic(ActionEvent actionEvent) {
     }
 
     public void playMusic(String path) throws Exception {
