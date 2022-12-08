@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -40,6 +41,7 @@ public class SongViewController extends BaseController implements Initializable 
     public ListView<Playlist> lstPlaylist;
     public ListView<Song> lstSongs;
     public Slider sliMusicVolume;
+    public Text txtShowSong;
     private SongModel songModel;
     private MYTModel mytModel;
     private PlaylistModel playlistModel;
@@ -382,6 +384,7 @@ public class SongViewController extends BaseController implements Initializable 
         play = new MediaPlayer(hit);
         soundVolume(soundLevel);
 
+        txtShowSong.setText("Playing: " + songTitle);
 
         timeTest();
         play.play();
