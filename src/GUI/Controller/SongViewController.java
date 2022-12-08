@@ -25,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +50,7 @@ public class SongViewController extends BaseController implements Initializable 
     private SongToPlaylistModel songToPlaylistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
     private boolean songPlayedToEnd=false;
+    public Playlist selectedPlaylist;
     public Song previousSong,selectedSong;
     private String errorText;
     private String songTitle;
@@ -77,6 +79,18 @@ public class SongViewController extends BaseController implements Initializable 
             }
         }));
 
+
+        lstPlaylist.setOnMouseClicked(event -> {
+
+            selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+            int number=selectedPlaylist.getId();
+            try {
+                songToPlaylistModel.showList(number);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        });
 
 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {

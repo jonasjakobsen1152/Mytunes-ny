@@ -53,7 +53,7 @@ public class SongToPlaylistDAO_DB {
                 allSongs.add(song);
             }
 
-            System.out.println(allSongs);
+
             return allSongs;
 
         } catch (SQLException ex) {
