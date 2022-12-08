@@ -13,7 +13,7 @@ public class SongToPlaylistManager {
 
     }
 
-    public List<Song> getAllPlaylist() throws Exception {
+    public List<Song> getAllSongToPlaylistlist() throws Exception {
         return songToPlayListDAO.getAllSongsFromPlaylist();
     }
 
