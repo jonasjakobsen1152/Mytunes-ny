@@ -83,7 +83,8 @@ public class SongDataInputs {
 
             fileName = file.toURI().toString();
             fileName=fileName.substring(6);
-
+            String newFile = fileName;
+            fileName = newFile.replace("%20"," ");
             txtFilePath.setText(fileName);
         }
     }

@@ -6,6 +6,7 @@ import BLL.util.MusicSound;
 import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
+import GUI.Model.SongToPlaylistModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,13 +41,16 @@ public class SongViewController extends BaseController implements Initializable 
     public ListView<Playlist> lstPlaylist;
     public ListView<Song> lstSongs;
     public Slider sliMusicVolume;
+    public Text txtShowSong;
     private SongModel songModel;
     private MYTModel mytModel;
     private PlaylistModel playlistModel;
+    private SongToPlaylistModel songToPlaylistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
     private boolean songPlayedToEnd=false;
-    public Song previousSong,selectedSong, nextSong;
+    public Song previousSong,selectedSong;
     private String errorText;
+    private String songTitle;
     double soundLevel = 50;
     private MediaPlayer play;
     private Media hit;
@@ -57,7 +62,13 @@ public class SongViewController extends BaseController implements Initializable 
     public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
-        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
+
+    lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+
+
+
+
+     txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
             } catch (Exception e) {
@@ -66,7 +77,7 @@ public class SongViewController extends BaseController implements Initializable 
             }
         }));
 
-        MusicSound musicSound = new MusicSound();
+
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -80,6 +91,7 @@ public class SongViewController extends BaseController implements Initializable 
             playlistModel = new PlaylistModel();
             songModel = new SongModel();
             mytModel = new MYTModel();
+          songToPlaylistModel = new SongToPlaylistModel();
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
@@ -112,14 +124,9 @@ public class SongViewController extends BaseController implements Initializable 
         dialogWindow.setScene(scene);
 
         dialogWindow.showAndWait();
-        songModel.searchSong(""); // A hacky method to get the songs to update. This works because it searches for all songs
+        updateSongModel();
     }
 
-    public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
-        if(newValue != null) {
-            //TODO When new window created, implement this to edit/update songs
-        }
-    }
    @Override
     public void setup() {
         songModel = getModel().getSongModel();
@@ -147,6 +154,7 @@ public class SongViewController extends BaseController implements Initializable 
                SongDataInputs songDataInputs = fxmlLoader.getController();
                songDataInputs.setSelectSong(selectedSong);
                stage.showAndWait();
+               updateSongModel();
            }
            else {
                alertUser("Please select a song to edit");
@@ -177,6 +185,7 @@ public class SongViewController extends BaseController implements Initializable 
                 if (type == okButton) {
                     try {
                         songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+                        updateSongModel();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -209,10 +218,11 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleAddPlaylist(ActionEvent actionEvent) throws Exception {
         String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
         if (inputValue == null || inputValue.equals("")){
-            alertUser("Please into a name");
+            alertUser("Please enter a name");
         }
         else {
             playlistModel.createNewPlaylist(inputValue);
+            updatePlaylistModel();
         }
     }
 
@@ -237,12 +247,15 @@ public class SongViewController extends BaseController implements Initializable 
                 PlaylistDataInputs playlistDataInputs = fxmlLoader.getController();
                 playlistDataInputs.setSelectPlaylist(selectedPlaylist);
                 stage.showAndWait();
+                updatePlaylistModel();
             }
             else {
                 alertUser("Please select a playlist to edit");
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -261,6 +274,7 @@ public class SongViewController extends BaseController implements Initializable 
             if (type == okButton) {
                 try {
                     playlistModel.deletePlaylist(deletedPlaylist); // Sends Playlist to be deleted to PlaylistModel.
+                    updatePlaylistModel();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -268,6 +282,19 @@ public class SongViewController extends BaseController implements Initializable 
             }
         });
     }
+
+    private void updateSongModel() throws Exception {
+        SongModel updatedSongModel = new SongModel();
+        songModel = updatedSongModel;
+        lstSongs.setItems(songModel.getObservableSong());
+    }
+
+    private void updatePlaylistModel() throws Exception {
+        PlaylistModel updatedPlaylistModel = new PlaylistModel();
+        playlistModel = updatedPlaylistModel;
+        lstPlaylist.setItems(playlistModel.getObservablePlaylist());
+    }
+
 
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
     }
@@ -306,6 +333,8 @@ public class SongViewController extends BaseController implements Initializable 
                 selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
             }
             path=selectedSong.getFilePath(); //finder stinavnet
+            songTitle=selectedSong.getTitle();
+
             songPlayedToEnd=false;
 
             previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
@@ -349,14 +378,13 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
 
-    public void handlePauseMusic(ActionEvent actionEvent) {
-    }
-
     public void playMusic(String path) throws Exception {
 
         hit = new Media(new File(path).toURI().toString());
         play = new MediaPlayer(hit);
         soundVolume(soundLevel);
+
+        txtShowSong.setText("Playing: " + songTitle);
 
         timeTest();
         play.play();

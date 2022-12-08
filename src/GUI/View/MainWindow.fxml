@@ -69,6 +69,11 @@
             <Font size="33.0" />
          </font>
       </Text>
+      <Text fx:id="txtShowSong" layoutX="321.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Playing: Not playing anything" wrappingWidth="392.13671875">
+         <font>
+            <Font name="Times New Roman" size="27.0" />
+         </font>
+      </Text>
    </children>
    <effect>
       <ColorAdjust />

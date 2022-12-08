@@ -12,8 +12,7 @@ public class Main extends Application {
     public static void main(String[] args) throws Exception {
 
 
-        AddSongToPlaylist addSongToPlaylist = new AddSongToPlaylist();
-          addSongToPlaylist.getAllSongs();
+
 
         Application.launch();
     }
