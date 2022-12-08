@@ -6,6 +6,7 @@ import BLL.util.MusicSound;
 import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
+import GUI.Model.SongToPlaylistModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -37,14 +38,15 @@ public class SongViewController extends BaseController implements Initializable 
             btnMovePlaylistSongUp,btnMovePlaylistSongDown,addSongToPlaylist,btnAddSong,btnSearch,btnPlaySong;
     public ListView lstSongsOnPlaylist;
     public ListView<Playlist> lstPlaylist;
-    public ListView<Song> lstSongs;
+    public ListView<Song> lstSongs, lstSongToPlaylist;
     public Slider sliMusicVolume;
     private SongModel songModel;
     private MYTModel mytModel;
     private PlaylistModel playlistModel;
+    private SongToPlaylistModel songToPlaylistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
     private boolean songPlayedToEnd=false;
-    public Song previousSong,selectedSong, nextSong;
+    public Song previousSong,selectedSong;
     private String errorText;
     double soundLevel = 50;
     private MediaPlayer play;
@@ -57,7 +59,13 @@ public class SongViewController extends BaseController implements Initializable 
     public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
-        txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
+
+    lstSongToPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+
+
+
+
+     txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
             } catch (Exception e) {
@@ -66,7 +74,7 @@ public class SongViewController extends BaseController implements Initializable 
             }
         }));
 
-        MusicSound musicSound = new MusicSound();
+
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -80,6 +88,7 @@ public class SongViewController extends BaseController implements Initializable 
             playlistModel = new PlaylistModel();
             songModel = new SongModel();
             mytModel = new MYTModel();
+          songToPlaylistModel = new SongToPlaylistModel();
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
