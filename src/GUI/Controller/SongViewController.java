@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import BE.Playlist;
 import BE.Song;
-import BLL.SongToPlaylistManager;
 import BLL.util.MusicSound;
 import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
@@ -16,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -26,7 +24,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -62,7 +59,7 @@ public class SongViewController extends BaseController implements Initializable 
     private Timer timer;
     private TimerTask task;
     private java.awt.event.MouseEvent mouseEvent;
-
+private int playlistNumber;
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
@@ -87,16 +84,30 @@ public class SongViewController extends BaseController implements Initializable 
         lstPlaylist.setOnMouseClicked(event -> {
 
             selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-            int number=selectedPlaylist.getId();
+            playlistNumber=selectedPlaylist.getId();
 
 
             try {
-                songToPlaylistModel.showList(number); //Vælger playlisten der skal vises
+                songToPlaylistModel.showList(playlistNumber); //Vælger playlisten der skal vises
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
         });
+
+
+
+
+
+        lstSongsOnPlaylist.setOnMouseClicked(event -> {
+
+
+
+        });
+
+
+
+
 
                 lstSongs.setOnMouseClicked(event -> {
 
