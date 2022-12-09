@@ -87,7 +87,7 @@ private boolean clickPlaylistNotMusicList;
 
             selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
             playlistNumber=selectedPlaylist.getId();
-            clickPlaylistNotMusicList=true;
+
 
             try {
                 songToPlaylistModel.showList(playlistNumber); //Vælger playlisten der skal vises
@@ -100,13 +100,25 @@ private boolean clickPlaylistNotMusicList;
 
 
         lstSongsOnPlaylist.setOnMouseClicked(event -> {
+            clickPlaylistNotMusicList=true;
 
-            clickPlaylistNotMusicList=false;
+            if (event.getClickCount() == 2 ) //Ved dobbeltklik kan man starte musikken
+            {
+                try {
+                    handlePlaySong();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
 
         });
 
 
                 lstSongs.setOnMouseClicked(event -> {
+
+                    clickPlaylistNotMusicList=false;
+                    System.out.println(clickPlaylistNotMusicList);
 
                     if (event.getClickCount() == 2 ) { //Ved dobbeltklik kan man starte musikken
                         try {
@@ -114,6 +126,7 @@ private boolean clickPlaylistNotMusicList;
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
+
                     }
                 });
 
@@ -149,10 +162,9 @@ private boolean clickPlaylistNotMusicList;
     public void handleAddSong(ActionEvent actionEvent) throws Exception {
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-        {
-            MusicSound musicSound = new MusicSound();
-            stopMusic();
-        }
+
+                    stopMusic();
+
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/addNewSong.fxml"));
@@ -182,10 +194,10 @@ private boolean clickPlaylistNotMusicList;
     public void handleEditSong(ActionEvent actionEvent) throws Exception {
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-        {
-            MusicSound musicSound = new MusicSound();
+
+
             stopMusic();
-        }
+
         try {
            Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
@@ -248,7 +260,12 @@ private boolean clickPlaylistNotMusicList;
     }
 
     public void handleRestart() throws Exception {
-        lstSongs.getSelectionModel().selectPrevious();
+
+        if (clickPlaylistNotMusicList)
+            lstSongsOnPlaylist.getSelectionModel().selectPrevious();
+        else
+            lstSongs.getSelectionModel().selectPrevious();
+
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
@@ -256,7 +273,14 @@ private boolean clickPlaylistNotMusicList;
     }
 
     public void handleSkipSong(ActionEvent actionEvent) throws Exception {
+
+        if (clickPlaylistNotMusicList)
+        lstSongsOnPlaylist.getSelectionModel().selectNext();
+        else
         lstSongs.getSelectionModel().selectNext();
+
+
+
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
@@ -355,6 +379,65 @@ private boolean clickPlaylistNotMusicList;
 
     public void handlePlaySong() throws Exception {
 
+
+
+        if (clickPlaylistNotMusicList)
+            playSongInPlaylist();
+        else
+            playSongInMusicList();
+
+
+    }
+
+     public void playSongInPlaylist() throws Exception {
+         String path="";
+         boolean startSong = true;
+
+         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
+         {
+
+             stopMusic(); //Stop music
+             songIsPlayed=false;
+
+
+             if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
+                 startSong=false;
+         }
+
+
+         if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
+         {
+             if (songPlayedToEnd == false)
+                 selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+             else {
+                 lstSongs.getSelectionModel().selectNext(); //frem
+                 selectedSong= (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); //vælger song
+             }
+
+
+
+             path=selectedSong.getFilePath(); //finder stinavnet
+             songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
+
+             songPlayedToEnd=false;
+
+             previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
+
+
+             boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
+
+             if (filesExits)
+             {
+                 playMusic(path);
+                 songIsPlayed=true;
+             }
+             else
+
+                 informationUser("File do not exist!");
+         }
+     }
+
+    public void playSongInMusicList() throws Exception {
         String path="";
         boolean startSong = true;
 
@@ -362,15 +445,15 @@ private boolean clickPlaylistNotMusicList;
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
 
-
             stopMusic(); //Stop music
             songIsPlayed=false;
-
 
 
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
         }
+
+
         if (lstSongs.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
         {
             if (songPlayedToEnd == false)
@@ -379,6 +462,9 @@ private boolean clickPlaylistNotMusicList;
                 lstSongs.getSelectionModel().selectNext(); //frem
                 selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
             }
+
+
+
             path=selectedSong.getFilePath(); //finder stinavnet
             songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
 
@@ -399,6 +485,13 @@ private boolean clickPlaylistNotMusicList;
                 informationUser("File do not exist!");
         }
     }
+
+
+
+
+
+
+
 
     private void informationUser(String information){
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -474,3 +567,5 @@ private boolean clickPlaylistNotMusicList;
         timer.scheduleAtFixedRate(task,10,1000);
     }
 }
+
+
