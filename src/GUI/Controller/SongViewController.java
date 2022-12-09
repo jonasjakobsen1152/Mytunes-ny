@@ -42,6 +42,7 @@ public class SongViewController extends BaseController implements Initializable 
     public ListView<Song> lstSongs;
     public Slider sliMusicVolume;
     public Text txtShowSong;
+    public Button btnDeleteSongFromPlaylist;
     private SongModel songModel;
     private MYTModel mytModel;
     private PlaylistModel playlistModel;
@@ -448,6 +449,7 @@ private boolean clickPlaylistNotMusicList;
             play.setVolume(soundLev);
         }
     }
+    
     public void timeTest() {
 
         timer = new Timer();
