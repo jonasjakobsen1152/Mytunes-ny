@@ -59,6 +59,8 @@ public class SongViewController extends BaseController implements Initializable 
     private TimerTask task;
     private java.awt.event.MouseEvent mouseEvent;
 private int playlistNumber;
+private boolean clickPlaylistNotMusicList;
+
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
@@ -84,7 +86,7 @@ private int playlistNumber;
 
             selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
             playlistNumber=selectedPlaylist.getId();
-
+            clickPlaylistNotMusicList=true;
 
             try {
                 songToPlaylistModel.showList(playlistNumber); //Vælger playlisten der skal vises
@@ -96,16 +98,11 @@ private int playlistNumber;
 
 
 
-
-
         lstSongsOnPlaylist.setOnMouseClicked(event -> {
 
-
+            clickPlaylistNotMusicList=false;
 
         });
-
-
-
 
 
                 lstSongs.setOnMouseClicked(event -> {
