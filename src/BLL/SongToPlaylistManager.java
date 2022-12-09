@@ -1,8 +1,10 @@
 package BLL;
 
+import BE.Playlist;
 import BE.Song;
 import DAL.db.SongToPlaylistDAO_DB;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class SongToPlaylistManager {
@@ -19,6 +21,8 @@ public class SongToPlaylistManager {
 
 
 
-
+    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist) throws SQLException {
+        songToPlayListDAO.addSongToPlaylist(selectedSong,selectedPlaylist);
+    }
 }
 

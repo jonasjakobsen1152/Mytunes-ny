@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -274,8 +275,14 @@ private boolean clickPlaylistNotMusicList;
         }
     }
 
-    public void handleAddSongToPlaylist(ActionEvent actionEvent) {
-        //TODO AddSongToPlaylist
+    public void handleAddSongToPlaylist(ActionEvent actionEvent) throws SQLException {
+        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+        int playlistSize =  lstSongsOnPlaylist.getItems().size();
+        System.out.println(playlistSize);
+
+        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
+
     }
 
     public void handleEditPlaylist(ActionEvent actionEvent) {
@@ -449,7 +456,7 @@ private boolean clickPlaylistNotMusicList;
             play.setVolume(soundLev);
         }
     }
-    
+
     public void timeTest() {
 
         timer = new Timer();
@@ -473,4 +480,5 @@ private boolean clickPlaylistNotMusicList;
         };
         timer.scheduleAtFixedRate(task,10,1000);
     }
+
 }

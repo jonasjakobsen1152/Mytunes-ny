@@ -1,9 +1,12 @@
 package GUI.Model;
 
+import BE.Playlist;
 import BE.Song;
 import BLL.SongToPlaylistManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 
 public class SongToPlaylistModel {
 
@@ -13,10 +16,9 @@ public class SongToPlaylistModel {
 
 
     public SongToPlaylistModel() throws Exception {
-         songToPlaylistManager = new SongToPlaylistManager();
+        songToPlaylistManager = new SongToPlaylistManager();
         SongToPlayToBeViewed = FXCollections.observableArrayList();
         SongToPlayToBeViewed.addAll(songToPlaylistManager.getAllSongToPlaylistlist( 0));
-
     }
 
     public ObservableList<Song> getObservablePlaylist()
@@ -29,5 +31,9 @@ public class SongToPlaylistModel {
         SongToPlayToBeViewed.clear();
         SongToPlayToBeViewed.addAll(songToPlaylistManager.getAllSongToPlaylistlist(playlisteID));
 
+    }
+
+    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist, int playlistSize) throws SQLException {
+        songToPlaylistManager.addSongToPlaylist(selectedSong,selectedPlaylist);
     }
 }

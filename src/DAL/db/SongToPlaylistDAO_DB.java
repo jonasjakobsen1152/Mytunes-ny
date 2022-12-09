@@ -1,5 +1,6 @@
 package DAL.db;
 
+import BE.Playlist;
 import BE.Song;
 
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class SongToPlaylistDAO_DB {
 
             String sql = "SELECT *" +
                     "FROM PlaylistInfo PI, [PlaylistAndSongs] P, Song S " +
-                    "WHERE S.Id = P.MusicID and PI.PlaylisteID = P.PlaylisteID and P.PlaylisteID=" +playlisteID+
+                    "WHERE S.Id = P.MusicID and PI.PlaylisteID = P.PlaylisteID and P.PlaylisteID=" + playlisteID +
                     "ORDER BY P.Rank;";
 
 
@@ -47,7 +48,6 @@ public class SongToPlaylistDAO_DB {
                 String filePath = rs.getString("FilePath");
 
 
-
                 Song song = new Song(id, title, artist, category, seconds, filePath);
 
                 allSongs.add(song);
@@ -63,5 +63,14 @@ public class SongToPlaylistDAO_DB {
     }
 
 
+    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist) throws SQLException {
+       // try (Connection conn = databaseConnector.getConnection();
+           //  Statement stmt = conn.createStatement()) {
+           // selectedPlaylist.
+           // String sql = "INSERT "
 
+        //}
     }
+
+
+}
