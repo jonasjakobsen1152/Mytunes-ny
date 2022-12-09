@@ -23,8 +23,8 @@
          </effect>
       </Button>
       <Button fx:id="btnAddPlaylist" layoutX="23.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddPlaylist" text="Add New Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="23.0" />
-      <Button fx:id="btnEditPlaylist" layoutX="155.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditPlaylist" text="Edit Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="155.0" />
-      <Button fx:id="btnDeletePlaylist" layoutX="240.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeletePlaylist" text="Delete" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="240.0" />
+      <Button fx:id="btnEditPlaylist" layoutX="143.0" layoutY="641.0" mnemonicParsing="false" onAction="#handleEditPlaylist" text="Edit Playlist" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="143.0" />
+      <Button fx:id="btnDeletePlaylist" layoutX="24.0" layoutY="663.0" mnemonicParsing="false" onAction="#handleDeletePlaylist" prefHeight="25.0" prefWidth="104.0" text="Delete Playlist" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="24.0" />
       <Button fx:id="btnMovePlaylistSongUp" layoutX="428.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleMovePlaylistSongUp" text="⬆">
          <font>
             <Font size="15.0" />
@@ -74,6 +74,11 @@
             <Font name="Times New Roman" size="27.0" />
          </font>
       </Text>
+      <Button fx:id="btnDeleteSongFromPlaylist" layoutX="428.0" layoutY="326.0" mnemonicParsing="false" text="➡">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
    <effect>
       <ColorAdjust />
