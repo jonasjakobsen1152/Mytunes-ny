@@ -49,7 +49,9 @@ public class SongViewController extends BaseController implements Initializable 
     private PlaylistModel playlistModel;
     private SongToPlaylistModel songToPlaylistModel;
     private boolean songIsPlayed = false; //used to stop songs from playing in case that no song is marked
-    private boolean songPlayedToEnd=false;
+    private boolean endOfPlayList=false;
+    private boolean clickPlaylistNotMusicList;
+    private boolean inPlaylister;
     public Playlist selectedPlaylist;
     public Song previousSong,selectedSong;
     private String errorText;
@@ -61,7 +63,7 @@ public class SongViewController extends BaseController implements Initializable 
     private TimerTask task;
     private java.awt.event.MouseEvent mouseEvent;
 private int playlistNumber;
-private boolean clickPlaylistNotMusicList;
+
 
 
     @Override
@@ -88,20 +90,19 @@ private boolean clickPlaylistNotMusicList;
 
             selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
             playlistNumber=selectedPlaylist.getId();
-
+            inPlaylister=true;
 
             try {
                 songToPlaylistModel.showList(playlistNumber); //Vælger playlisten der skal vises
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            }
-
-        });
+            }   });
 
 
 
         lstSongsOnPlaylist.setOnMouseClicked(event -> {
             clickPlaylistNotMusicList=true;
+            inPlaylister=false;
 
             if (event.getClickCount() == 2 ) //Ved dobbeltklik kan man starte musikken
             {
@@ -110,16 +111,13 @@ private boolean clickPlaylistNotMusicList;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }
-
-
-        });
+            }  });
 
 
                 lstSongs.setOnMouseClicked(event -> {
 
                     clickPlaylistNotMusicList=false;
-
+                    inPlaylister=false;
 
                     if (event.getClickCount() == 2 ) { //Ved dobbeltklik kan man starte musikken
                         try {
@@ -128,11 +126,7 @@ private boolean clickPlaylistNotMusicList;
                             throw new RuntimeException(e);
                         }
 
-                    }
-                });
-
-
-
+                    } });
 
 
 
@@ -278,8 +272,8 @@ private boolean clickPlaylistNotMusicList;
         if (clickPlaylistNotMusicList)
         lstSongsOnPlaylist.getSelectionModel().selectNext();
         else
-        lstSongs.getSelectionModel().selectNext();
-
+        lstSongs.getSelectionModel().selectNext()
+;
 
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
@@ -393,17 +387,18 @@ private boolean clickPlaylistNotMusicList;
     public void handlePlaySong() throws Exception {
 
 
-
-        if (clickPlaylistNotMusicList)
+        System.out.println(endOfPlayList);
+        if (clickPlaylistNotMusicList && inPlaylister==false)
             playSongInPlaylist();
-        else
+        else if (clickPlaylistNotMusicList==false && inPlaylister==false)
             playSongInMusicList();
 
+        endOfPlayList=false; //Vi nulstiller endOfPlayList
 
     }
 
      public void playSongInPlaylist() throws Exception {
-         String path="";
+
          boolean startSong = true;
 
          if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
@@ -415,45 +410,32 @@ private boolean clickPlaylistNotMusicList;
 
              if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                  startSong=false;
+
+
          }
 
+         if (endOfPlayList)
+             startSong=false;
 
-         if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
+         selectedSong= (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+
+         if (selectedSong!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
          {
-             if (songPlayedToEnd == false)
-                 selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-             else {
-                 lstSongs.getSelectionModel().selectNext(); //frem
-                 selectedSong= (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); //vælger song
-             }
 
-
-
-             path=selectedSong.getFilePath(); //finder stinavnet
+             String path=selectedSong.getFilePath(); //finder stinavnet
              songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
-
-             songPlayedToEnd=false;
 
              previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
 
+             filePath(path);
 
-             boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
-
-             if (filesExits)
-             {
-                 playMusic(path);
-                 songIsPlayed=true;
-             }
-             else
-
-                 informationUser("File do not exist!");
          }
      }
 
-    public void playSongInMusicList() throws Exception {
-        String path="";
-        boolean startSong = true;
 
+    public void playSongInMusicList() throws Exception {
+
+        boolean startSong = true;
 
         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
         {
@@ -464,44 +446,41 @@ private boolean clickPlaylistNotMusicList;
 
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
+
         }
 
+        if (endOfPlayList)
+            startSong=false;
 
-        if (lstSongs.getSelectionModel().getSelectedItem()!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
+        selectedSong=lstSongs.getSelectionModel().getSelectedItem();
+
+
+        if (selectedSong!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
         {
-            if (songPlayedToEnd == false)
-                selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-            else {
-                lstSongs.getSelectionModel().selectNext(); //frem
-                selectedSong=lstSongs.getSelectionModel().getSelectedItem(); //vælger song
-            }
-
-
-
-            path=selectedSong.getFilePath(); //finder stinavnet
+            String path=selectedSong.getFilePath(); //finder stinavnet
             songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
-
-            songPlayedToEnd=false;
 
             previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
 
+            filePath(path);
 
-            boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
-
-            if (filesExits)
-            {
-                playMusic(path);
-                songIsPlayed=true;
-            }
-            else
-
-                informationUser("File do not exist!");
         }
     }
 
 
+public void filePath(String path) throws Exception {
+    boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
 
 
+    if (filesExits)
+    {
+        playMusic(path);
+        songIsPlayed=true;
+    }
+    else
+
+        informationUser("File do not exist!");
+}
 
 
 
@@ -544,7 +523,7 @@ private boolean clickPlaylistNotMusicList;
 
     public void stopMusic() {
         timer.cancel();
-        play.pause();
+        play.stop();
     }
     public void soundVolume(double soundLevel)
     {
@@ -567,8 +546,38 @@ private boolean clickPlaylistNotMusicList;
                 if (current/ end ==1)
                 {
                     timer.cancel();
-                    songPlayedToEnd=true;
-                    songIsPlayed=false;
+
+
+                    if (clickPlaylistNotMusicList) {
+                        if (lstSongsOnPlaylist.getItems().size() == lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1) //Hvis det er sidste sang i playlisten, så
+                                                                                                                                    //skal den stoppe med at spille.
+                            endOfPlayList = true;
+                        else
+                            endOfPlayList = false;
+
+
+                        lstSongsOnPlaylist.getSelectionModel().selectNext(); //Her skifter til næste linje
+                    }
+                    else {
+
+                        if (lstSongs.getItems().size() == lstSongs.getSelectionModel().getSelectedIndex() + 1)
+                            endOfPlayList = true;
+                        else
+                            endOfPlayList = false;
+
+
+                        lstSongs.getSelectionModel().selectNext(); //Her skifter til næste linje
+                        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+
+                    }
+
+                        songIsPlayed=false;
+
+
+
+
+
+
                     try {
                         handlePlaySong();
                     } catch (Exception e) {
@@ -577,7 +586,7 @@ private boolean clickPlaylistNotMusicList;
                 }
             }
         };
-        timer.scheduleAtFixedRate(task,10,1000);
+        timer.scheduleAtFixedRate(task,10,1000); //Den måler hver sekund altså 1000 ms med en lille delay.
     }
 
 }

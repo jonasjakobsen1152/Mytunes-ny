@@ -14,21 +14,16 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class SongDataInputs {
-    public TextField txtEditTitle;
-    public TextField txtEditArtist;
-    public TextField txtEditCategory;
-    public TextField txtEditSongFilePath;
-    public Button btnEditSong;
-    public Button txtChooseFile;
-    private SongModel songModel = new SongModel();
-    public TextField txtTitle;
-    public TextField txtArtist;
-    public TextField txtCategory;
-    public TextField txtFilePath;
-    public Button txtAddInput;
-    private Song selectSong;
+    public TextField txtEditTitle, txtEditArtist, txtEditCategory,txtEditSongFilePath,txtTitle,txtArtist,txtCategory,txtFilePath;
 
+    public Button btnEditSong,txtChooseFile,txtAddInput;
+
+    private Song selectSong;
+    private SongModel songModel = new SongModel();
     private MYTModel model = new MYTModel();
+
+
+
 
     public SongDataInputs() throws Exception {
     }
