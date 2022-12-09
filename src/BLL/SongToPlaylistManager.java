@@ -20,8 +20,8 @@ public class SongToPlaylistManager {
     }
 
 
-    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist) throws SQLException {
-        songToPlayListDAO.addSongToPlaylist(selectedSong,selectedPlaylist);
+    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist, int playlistSize) throws SQLException {
+        songToPlayListDAO.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
     }
 }
 

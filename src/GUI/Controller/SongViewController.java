@@ -119,7 +119,7 @@ private boolean clickPlaylistNotMusicList;
                 lstSongs.setOnMouseClicked(event -> {
 
                     clickPlaylistNotMusicList=false;
-                    System.out.println(clickPlaylistNotMusicList);
+
 
                     if (event.getClickCount() == 2 ) { //Ved dobbeltklik kan man starte musikken
                         try {
@@ -299,16 +299,6 @@ private boolean clickPlaylistNotMusicList;
         }
     }
 
-    public void handleAddSongToPlaylist(ActionEvent actionEvent) throws SQLException {
-        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-        int playlistSize =  lstSongsOnPlaylist.getItems().size();
-        System.out.println(playlistSize);
-
-        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
-
-    }
-
     public void handleEditPlaylist(ActionEvent actionEvent) {
         try {
             Playlist selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
@@ -374,6 +364,22 @@ private boolean clickPlaylistNotMusicList;
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
     }
 
+    private void updateSongToPlaylistModel() throws Exception {
+        SongToPlaylistModel updatedSongToPlaylistModel = new SongToPlaylistModel();
+        songToPlaylistModel = updatedSongToPlaylistModel;
+        lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+        songToPlaylistModel.showList(playlistNumber);
+
+    }
+
+    public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
+        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+        int playlistSize =  lstSongsOnPlaylist.getItems().size();
+        System.out.println(playlistSize);
+        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
+        updateSongToPlaylistModel();
+    }
 
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
     }

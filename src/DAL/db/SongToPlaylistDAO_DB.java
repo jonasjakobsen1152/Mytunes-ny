@@ -3,10 +3,7 @@ package DAL.db;
 import BE.Playlist;
 import BE.Song;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,13 +60,21 @@ public class SongToPlaylistDAO_DB {
     }
 
 
-    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist) throws SQLException {
-       // try (Connection conn = databaseConnector.getConnection();
-           //  Statement stmt = conn.createStatement()) {
-           // selectedPlaylist.
-           // String sql = "INSERT "
+    public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist, int playlistSize) throws SQLException {
+        String sql = "INSERT INTO PlaylistAndSongs (MusicID, PlaylisteID, Rank) VALUES (?,?,?);";
 
-        //}
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            int playlistId = selectedPlaylist.getId();
+            int songId = selectedSong.getId();
+            int nextSongRank = playlistSize + 1;
+
+            stmt.setString(1, String.valueOf(songId));
+            stmt.setString(2, String.valueOf(playlistId));
+            stmt.setString(3, String.valueOf(nextSongRank));
+            stmt.executeUpdate();
+
+        }
     }
 
 
