@@ -136,14 +136,19 @@ public class SongDAO_DB implements ISongDAO {
         try(Connection conn = databaseConnector.getConnection()) {
 
 
-            String sql= "Delete FROM Song  WHERE Id = ?";
+            String sql= "" +
+                    "DELETE PlaylistAndSongs\n" +
+                    "                    FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID" +
+                    "                    WHERE PlaylistAndSongs.ID=?" +
+                    "                    DELETE from Song" +
+                    "                    WHERE Song.Id=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 
             //Bind parameters
 
             stmt.setInt(1, song.getId());
-
+            stmt.setInt(2, song.getId());
 
             stmt.executeUpdate();
 
