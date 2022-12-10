@@ -9,10 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class PlaylistDataInputs {
-    public TextField txtName;
-    public TextField txtEditName;
-    public Button txtAddInput;
-    public Button btnEditPlaylist;
+    public TextField txtName, txtEditName;
+
+    public Button txtAddInput, btnEditPlaylist;
+
     private Playlist selectPlaylist;
     private PlaylistModel playlistModel = new PlaylistModel();
 
