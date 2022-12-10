@@ -105,7 +105,14 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
     public void deletePlaylist(Playlist playlist) throws Exception {
         try(Connection conn = databaseConnector.getConnection()) {
 
-            String sql= "Delete FROM PlaylistInfo WHERE PlaylisteID = ?";
+
+
+            String sql=
+            "DELETE PlaylistAndSongs FROM PlaylistAndSongs inner join PlaylistInfo on PlaylistInfo.PlaylisteID=PlaylistAndSongs.PlaylisteID " +
+                    "WHERE PlaylistAndSongs.ID=? Delete FROM PlaylistInfo WHERE PlaylisteID = ?;";
+
+
+
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -113,7 +120,7 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
             //Bind parameters
 
             stmt.setInt(1, playlist.getId());
-
+            stmt.setInt(2, playlist.getId());
 
             stmt.executeUpdate();
 
