@@ -80,12 +80,8 @@ public class SongToPlaylistDAO_DB {
 
     public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) throws Exception {
 
-        String sql= "" +
-                "DELETE PlaylistAndSongs\n" + //Hvis jeg fjerner mellemrummene så virker det ikke.
-                "                    FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID" +
-                "                    WHERE PlaylistAndSongs.ID=?" +
-                "                    DELETE from Song" +
-                "                    WHERE Song.Id=?;";
+        String sql= "DELETE PlaylistAndSongs FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID " +
+                "WHERE PlaylistAndSongs.ID=? DELETE from Song WHERE Song.Id=?;";
 
         try(Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
