@@ -137,7 +137,7 @@ public class SongDAO_DB implements ISongDAO {
 
 
             String sql= "" +
-                    "DELETE PlaylistAndSongs\n FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID " +
+                    "DELETE PlaylistAndSongs FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID " +
                     "WHERE PlaylistAndSongs.ID=? DELETE from Song WHERE Song.Id=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
