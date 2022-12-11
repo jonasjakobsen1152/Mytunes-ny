@@ -78,4 +78,8 @@ public class SongToPlaylistDAO_DB {
     }
 
 
+    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) {
+        String sql = "";
+        
+    }
 }

@@ -370,8 +370,14 @@ private int playlistNumber;
         selectedSong = lstSongs.getSelectionModel().getSelectedItem();
         selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
         int playlistSize =  lstSongsOnPlaylist.getItems().size();
-        System.out.println(playlistSize);
         songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
+        updateSongToPlaylistModel();
+    }
+
+    public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
+        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist);
         updateSongToPlaylistModel();
     }
 
@@ -588,7 +594,6 @@ public void filePath(String path) throws Exception {
         };
         timer.scheduleAtFixedRate(task,10,1000); //Den måler hver sekund altså 1000 ms med en lille delay.
     }
-
 }
 
 
