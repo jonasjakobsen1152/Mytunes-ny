@@ -393,7 +393,6 @@ private int playlistNumber;
     public void handlePlaySong() throws Exception {
 
 
-        System.out.println(endOfPlayList);
         if (clickPlaylistNotMusicList && inPlaylister==false)
             playSongInPlaylist();
         else if (clickPlaylistNotMusicList==false && inPlaylister==false)

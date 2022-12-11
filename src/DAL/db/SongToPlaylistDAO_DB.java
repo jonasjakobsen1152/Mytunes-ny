@@ -2,6 +2,7 @@ package DAL.db;
 
 import BE.Playlist;
 import BE.Song;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -80,9 +81,9 @@ public class SongToPlaylistDAO_DB {
 
     public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) throws Exception {
 
-        String sql= "DELETE From PlaylistAndSongs where PlaylistAndSongs.MusicID=? and PlaylistAndSongs.ID=?";
+        String sql = "DELETE From PlaylistAndSongs where PlaylistAndSongs.MusicID=? and PlaylistAndSongs.ID=?";
 
-        try(Connection conn = databaseConnector.getConnection()) {
+        try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             //Bind parameters
@@ -95,12 +96,67 @@ public class SongToPlaylistDAO_DB {
 
 
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not delete song", ex);
 
         }
     }
+
+    public void swapRows(int first, int second) throws SQLServerException {
+
+        int[][] storedData = new int[2][4];
+
+
+        String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + second + " or P.MusicID=" + first + ";";
+
+        try (Connection conn = databaseConnector.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            int number = 0;
+            int counter = 0;
+            // Loop through rows from the database result set
+            while (rs.next()) {
+
+                storedData[number][0] = rs.getInt("MusicID");
+                storedData[number][1] = rs.getInt("PlaylisteID");
+                storedData[number][2] = rs.getInt("Rank");
+                storedData[number][3] = rs.getInt("Rank");
+                System.out.println(counter);
+
+                if (counter == 1)
+                    number = 1;
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+                sql =    "UPDATE PlaylistAndSongs SET MusicID = ?, PlaylisteID = ?, Rank = ? WHERE ID = ? " +
+                        "UPDATE PlaylistAndSongs SET MusicID = ?, PlaylisteID = ?, Rank = ? WHERE ID = ?";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Bind parameters
+            stmt.setInt(1, storedData[0][1]); //MusicID
+            stmt.setInt(2, storedData[0][2]); //PlaylisteID
+            stmt.setInt(3, storedData[0][3]);//Rank
+            stmt.setInt(4, storedData[1][0]);//Rank
+            stmt.setInt(5, storedData[1][1]);//MusicID
+            stmt.setInt(6, storedData[1][2]);
+            stmt.setInt(7, storedData[1][3]);
+            stmt.setInt(8, storedData[0][0]);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
+}
