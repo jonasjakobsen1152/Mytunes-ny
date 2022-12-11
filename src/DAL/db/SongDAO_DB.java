@@ -137,11 +137,8 @@ public class SongDAO_DB implements ISongDAO {
 
 
             String sql= "" +
-                    "DELETE PlaylistAndSongs\n" + //Hvis jeg fjerner mellemrummene så virker det ikke.
-                    "                    FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID" +
-                    "                    WHERE PlaylistAndSongs.ID=?" +
-                    "                    DELETE from Song" +
-                    "                    WHERE Song.Id=?;";
+                    "DELETE PlaylistAndSongs\n FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID " +
+                    "WHERE PlaylistAndSongs.ID=? DELETE from Song WHERE Song.Id=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 
