@@ -37,7 +37,7 @@ public class SongToPlaylistModel {
         songToPlaylistManager.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
     }
 
-    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) {
+    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) throws Exception {
         songToPlaylistManager.deleteSongFromPlaylist(selectedSong,selectedPlaylist);
     }
 }

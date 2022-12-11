@@ -69,17 +69,42 @@ public class SongToPlaylistDAO_DB {
             int songId = selectedSong.getId();
             int nextSongRank = playlistSize + 1;
 
-            stmt.setString(1, String.valueOf(songId));
-            stmt.setString(2, String.valueOf(playlistId));
-            stmt.setString(3, String.valueOf(nextSongRank));
+            stmt.setInt(1, songId);
+            stmt.setInt(2, playlistId);
+            stmt.setInt(3, nextSongRank);
             stmt.executeUpdate();
 
         }
     }
 
 
-    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) {
-        String sql = "";
-        
+    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) throws Exception {
+
+        String sql= "" +
+                "DELETE PlaylistAndSongs\n" + //Hvis jeg fjerner mellemrummene så virker det ikke.
+                "                    FROM PlaylistAndSongs inner join song on Song.Id=PlaylistAndSongs.ID" +
+                "                    WHERE PlaylistAndSongs.ID=?" +
+                "                    DELETE from Song" +
+                "                    WHERE Song.Id=?;";
+
+        try(Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            //Bind parameters
+
+            int playlistId = selectedPlaylist.getId();
+            int songId = selectedSong.getId();
+
+            stmt.setInt(1, playlistId);
+            stmt.setInt(2, songId);
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+            throw new Exception("Could not delete song", ex);
+
+        }
     }
-}
+    }
+

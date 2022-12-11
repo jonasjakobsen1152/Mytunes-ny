@@ -375,8 +375,8 @@ private int playlistNumber;
     }
 
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
-        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
         selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
         songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist);
         updateSongToPlaylistModel();
     }
