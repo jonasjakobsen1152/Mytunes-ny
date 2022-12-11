@@ -11,10 +11,7 @@ import javafx.stage.WindowEvent;
 public class Main extends Application {
     public static void main(String[] args) throws Exception {
 
-        SongToPlaylistDAO_DB songToPlaylistDAO_db = new SongToPlaylistDAO_DB();
-        songToPlaylistDAO_db.swapRows(101,103);
-
-
+        
         Application.launch();
     }
 
