@@ -78,9 +78,12 @@ public class SongToPlaylistDAO_DB {
     }
 
 
-    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) throws Exception {
+    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist, int selectedRank) throws Exception {
 
-        String sql= "DELETE From PlaylistAndSongs where PlaylistAndSongs.MusicID=? and PlaylistAndSongs.ID=?";
+        String sql= "Delete from PlaylistAndSongs \n" +
+                "WHERE PlaylistAndSongs.MusicID = ? \n" +
+                "and PlaylistAndSongs.PlaylisteID = ?\n" +
+                "and PlaylistAndSongs.Rank = ?";
 
         try(Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -92,6 +95,7 @@ public class SongToPlaylistDAO_DB {
 
             stmt.setInt(1, songId);
             stmt.setInt(2, playlistId);
+            stmt.setInt(3,selectedRank);
 
 
             stmt.executeUpdate();

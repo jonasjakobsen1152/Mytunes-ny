@@ -377,7 +377,8 @@ private int playlistNumber;
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
         selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
         selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist);
+        int selectedRank = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1; // Gets the position of the Song and adds 1 to as java uses Zero-based numbering and the database does not.
+        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
         updateSongToPlaylistModel();
     }
 

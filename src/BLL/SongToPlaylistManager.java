@@ -24,8 +24,8 @@ public class SongToPlaylistManager {
         songToPlayListDAO.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
     }
 
-    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist) throws Exception {
-        songToPlayListDAO.deleteSongFromPlaylist(selectedSong,selectedPlaylist);
+    public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist, int selectedRank) throws Exception {
+        songToPlayListDAO.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
     }
 }
 
