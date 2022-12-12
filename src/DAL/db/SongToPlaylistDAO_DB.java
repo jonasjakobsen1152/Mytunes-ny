@@ -168,5 +168,20 @@ public class SongToPlaylistDAO_DB {
 
 
 
+        public void swap(int number1, int number2, int playlistID) throws SQLServerException {
+
+            int rank1=getRank(number1,playlistID);
+            int rank2=getRank(number2,playlistID);
+
+            updateSongAndPlaylist(rank2, number1, playlistID, rank1);
+            updateSongAndPlaylist(rank1, number2, playlistID, rank2);
+
+
+        }
+
+
+
+
+
 
 }

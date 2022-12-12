@@ -3,6 +3,7 @@ package GUI.Model;
 import BE.Playlist;
 import BE.Song;
 import BLL.SongToPlaylistManager;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -39,5 +40,10 @@ public class SongToPlaylistModel {
 
     public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist, int selectedRank) throws Exception {
         songToPlaylistManager.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
+    }
+
+    public void songSwap(int number1, int number2, int playlist) throws SQLServerException {
+    songToPlaylistManager.songSwap(number1, number2, playlist);
+
     }
 }
