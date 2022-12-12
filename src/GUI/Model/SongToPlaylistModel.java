@@ -44,6 +44,7 @@ public class SongToPlaylistModel {
 
 
     public void songSwap(int number1, int number2, int playlist) throws SQLServerException {
+
         songToPlaylistManager.songSwap(number1, number2, playlist);
     }
 

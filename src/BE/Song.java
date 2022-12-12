@@ -1,6 +1,7 @@
 package BE;
 
 import BLL.util.SecondsToMinute;
+import javafx.scene.control.SelectionModel;
 
 public class Song {
 
@@ -37,6 +38,8 @@ public class Song {
         // return makeStringEvenLength();
         return  title + " " + artist + " " + category+ " " + time;
     }
+
+
     /**
     public String makeStringEvenLength()
     {

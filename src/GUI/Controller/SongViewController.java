@@ -226,7 +226,7 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
-        MusicSound musicSound = new MusicSound();
+
         Song deletedSong = lstSongs.getSelectionModel().getSelectedItem();
         if(deletedSong == null){
             alertUser("Please select the song you wish to delete");
@@ -399,21 +399,59 @@ public class SongViewController extends BaseController implements Initializable 
         updateSongToPlaylistModel();
     }
 
-    public void handleMovePlaylistSongUp(ActionEvent actionEvent) throws SQLServerException {
-
-        int number1= selectedSong.getId();
-        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-
-        lstSongsOnPlaylist.getSelectionModel().selectNext();
-        int number2= selectedSong.getId();
-        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+    public void handleMovePlaylistSongUp(ActionEvent actionEvent) throws Exception {
 
 
 
-        songToPlaylistModel.songSwap(number1,number2,playlistNumber);
-    }
+        if (clickPlaylistNotMusicList && inPlaylister==false)
+        {
+            if (songIsPlayed)
+                handlePlaySong(); //Stop music
 
-    public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+            int number1 = selectedSong.getId();
+
+
+            lstSongsOnPlaylist.getSelectionModel().selectPrevious();
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+            int number2 = selectedSong.getId();
+            int number3=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();
+
+
+            songToPlaylistModel.songSwap(number1, number2, playlistNumber);
+            songToPlaylistModel.showList(playlistNumber);
+
+            lstSongsOnPlaylist.getSelectionModel().select(number3);
+
+
+
+        }
+        }
+
+
+    public void handleMovePlaylistSongDown(ActionEvent actionEvent) throws Exception {
+
+
+        if (clickPlaylistNotMusicList && inPlaylister==false) {
+
+            if (songIsPlayed)
+                handlePlaySong(); //Stop music
+
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+            int number1 = selectedSong.getId();
+
+
+            lstSongsOnPlaylist.getSelectionModel().selectNext();
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+            int number2 = selectedSong.getId();
+            int number3=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();
+
+            songToPlaylistModel.songSwap(number1, number2, playlistNumber);
+            songToPlaylistModel.showList(playlistNumber);
+
+            lstSongsOnPlaylist.getSelectionModel().select(number3);
+
+        }
     }
 
     public void handleSearchAllSongs(ActionEvent actionEvent) {
