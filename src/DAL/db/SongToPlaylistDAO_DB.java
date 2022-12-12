@@ -111,30 +111,23 @@ public class SongToPlaylistDAO_DB {
         }
     }
 
-    public void swapRows(int first, int second) throws SQLServerException {
+    public int getRank(int songNumber,int playlisteID) throws SQLServerException {
 
-        int[][] storedData = new int[2][3];
+        //int songNumber=song.getId();
+        int rank = 0;
 
-
-        String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + second + " or P.MusicID=" + first + ";";
+        String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + songNumber + " AND " + "P.playlisteID=" + playlisteID +";";
 
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(sql);
 
-            int number = 0;
-            int counter = 0;
+
             // Loop through rows from the database result set
             while (rs.next()) {
 
-                storedData[number][0] = rs.getInt("MusicID");
-                storedData[number][1] = rs.getInt("PlaylisteID");
-                storedData[number][2] = rs.getInt("Rank");
-                counter++;
-
-                if (counter == 1)
-                    number = 1;
+                rank = rs.getInt("Rank");
 
             }
 
@@ -143,8 +136,9 @@ public class SongToPlaylistDAO_DB {
             throw new RuntimeException(e);
         }
 
-        updateSongAndPlaylist(storedData[1][2],storedData[0][0],storedData[0][1],storedData[0][2] );
-        updateSongAndPlaylist(storedData[0][2],storedData[1][0],storedData[1][1],storedData[1][2] );
+                return rank;
+
+
 
     }
 
