@@ -367,22 +367,29 @@ private int playlistNumber;
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
-        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+        int lastIndex = songToPlaylistModel.getObservablePlaylist().size(); // Gets the size and stashes it in variable lastIndex
+        Song getSongForRank = (Song) lstSongsOnPlaylist.getItems().get(lastIndex - 1); // Gets the last song and creates a object with its values
+        int lastSongID = getSongForRank.getId(); // Holds the value for the songID of the last song
+        int lastPlaylistID = selectedPlaylist.getId(); // Holds the value for the playlistID
+        int lastRank = songToPlaylistModel.getRank(lastSongID, lastPlaylistID); // Gets the highest/last rank from the database
 
-        int songId = selectedSong.getId();
-        int playlistId = selectedPlaylist.getId();
-        int nextRank = songToPlaylistModel.getRank(songId, playlistId) + 1; // Gets the highest rank from the database and adds one as we want it to be the rank of the new song.
-        
-        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,nextRank);
-        updateSongToPlaylistModel();
+        selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
+        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets the selected playlist the song will be added to
+        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,lastRank + 1); // Adds the song to the database
+        updateSongToPlaylistModel(); // Updates the SongToPlaylistModel
     }
 
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
         selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
         selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-        int selectedRank = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1; // Gets the position of the Song and adds 1 to as java uses Zero-based numbering and the database does not.
-        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
+        int songID = selectedSong.getId();
+        int playlistID = selectedPlaylist.getId();
+
+        int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID);
+
+        //int selectedRank = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1; // Gets the position of the Song and adds 1 to as java uses Zero-based numbering and the database does not.
+
+        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,songToBeDeleted);
         updateSongToPlaylistModel();
     }
 
