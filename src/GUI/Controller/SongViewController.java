@@ -52,6 +52,9 @@ public class SongViewController extends BaseController implements Initializable 
     private boolean endOfPlayList=false;
     private boolean clickPlaylistNotMusicList;
     private boolean inPlaylister;
+
+    private boolean isNewPlay = true;
+
     public Playlist selectedPlaylist;
     public Song previousSong,selectedSong;
     private String errorText;
@@ -62,8 +65,7 @@ public class SongViewController extends BaseController implements Initializable 
     private Timer timer;
     private TimerTask task;
     private java.awt.event.MouseEvent mouseEvent;
-private int playlistNumber;
-
+    private int playlistNumber;
 
 
     @Override
@@ -73,7 +75,9 @@ private int playlistNumber;
 
     lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
         
-
+    lstSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        isNewPlay = true;
+    });
 
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
@@ -97,8 +101,6 @@ private int playlistNumber;
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }   });
-
-
 
         lstSongsOnPlaylist.setOnMouseClicked(event -> {
             clickPlaylistNotMusicList=true;
@@ -126,9 +128,8 @@ private int playlistNumber;
                             throw new RuntimeException(e);
                         }
 
-                    } });
-
-
+                    }
+                });
 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -367,18 +368,29 @@ private int playlistNumber;
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
-        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
-        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-        int playlistSize =  lstSongsOnPlaylist.getItems().size();
-        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
-        updateSongToPlaylistModel();
+        int lastIndex = songToPlaylistModel.getObservablePlaylist().size(); // Gets the size and stashes it in variable lastIndex
+        Song getSongForRank = (Song) lstSongsOnPlaylist.getItems().get(lastIndex - 1); // Gets the last song and creates a object with its values
+        int lastSongID = getSongForRank.getId(); // Holds the value for the songID of the last song
+        int lastPlaylistID = selectedPlaylist.getId(); // Holds the value for the playlistID
+        int lastRank = songToPlaylistModel.getRank(lastSongID, lastPlaylistID); // Gets the highest/last rank from the database
+
+        selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
+        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets the selected playlist the song will be added to
+        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,lastRank + 1); // Adds the song to the database
+        updateSongToPlaylistModel(); // Updates the SongToPlaylistModel
     }
 
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
         selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
         selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-        int selectedRank = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1; // Gets the position of the Song and adds 1 to as java uses Zero-based numbering and the database does not.
-        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
+        int songID = selectedSong.getId();
+        int playlistID = selectedPlaylist.getId();
+
+        int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID);
+
+        //int selectedRank = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1; // Gets the position of the Song and adds 1 to as java uses Zero-based numbering and the database does not.
+
+        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,songToBeDeleted);
         updateSongToPlaylistModel();
     }
 
@@ -449,7 +461,6 @@ private int playlistNumber;
          }
      }
 
-
     public void playSongInMusicList() throws Exception {
 
         boolean startSong = true;
@@ -484,10 +495,8 @@ private int playlistNumber;
         }
     }
 
-
 public void filePath(String path) throws Exception {
     boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
-
 
     if (filesExits)
     {
@@ -495,12 +504,8 @@ public void filePath(String path) throws Exception {
         songIsPlayed=true;
     }
     else
-
         informationUser("File do not exist!");
 }
-
-
-
 
     private void informationUser(String information){
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -522,26 +527,25 @@ public void filePath(String path) throws Exception {
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
     }
-    public void handleEdit(ActionEvent actionEvent) throws IOException {
-
-    }
 
     public void playMusic(String path) throws Exception {
+        if (isNewPlay) {
+            hit = new Media(new File(path).toURI().toString());
+            play = new MediaPlayer(hit);
+            txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
+            isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
+        }
 
-        hit = new Media(new File(path).toURI().toString());
-        play = new MediaPlayer(hit);
         soundVolume(soundLevel);
-
-        txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
-
         timeTest();
         play.play();
     }
 
     public void stopMusic() {
         timer.cancel();
-        play.stop();
+        play.pause();
     }
+
     public void soundVolume(double soundLevel)
     {
         this.soundLevel = soundLevel;
@@ -564,14 +568,12 @@ public void filePath(String path) throws Exception {
                 {
                     timer.cancel();
 
-
                     if (clickPlaylistNotMusicList) {
                         if (lstSongsOnPlaylist.getItems().size() == lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1) //Hvis det er sidste sang i playlisten, så
                                                                                                                                     //skal den stoppe med at spille.
                             endOfPlayList = true;
                         else
                             endOfPlayList = false;
-
 
                         lstSongsOnPlaylist.getSelectionModel().selectNext(); //Her skifter til næste linje
                     }
@@ -582,19 +584,12 @@ public void filePath(String path) throws Exception {
                         else
                             endOfPlayList = false;
 
-
                         lstSongs.getSelectionModel().selectNext(); //Her skifter til næste linje
                         selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
                     }
 
                         songIsPlayed=false;
-
-
-
-
-
-
                     try {
                         handlePlaySong();
                     } catch (Exception e) {

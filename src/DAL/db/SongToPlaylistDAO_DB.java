@@ -111,12 +111,15 @@ public class SongToPlaylistDAO_DB {
         }
     }
 
-    public int getRank(int songNumber,int playlisteID) throws SQLServerException {
+    public int getRank(int songID, int playlistID) throws SQLServerException {
 
         //int songNumber=song.getId();
         int rank = 0;
 
-        String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + songNumber + " AND " + "P.playlisteID=" + playlisteID +";";
+
+        String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + songID + " AND " + "P.playlisteID=" + playlistID +";";
+
+
 
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement()) {
@@ -126,9 +129,7 @@ public class SongToPlaylistDAO_DB {
 
             // Loop through rows from the database result set
             while (rs.next()) {
-
                 rank = rs.getInt("Rank");
-
             }
 
 

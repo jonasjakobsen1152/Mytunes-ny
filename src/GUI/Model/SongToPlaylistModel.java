@@ -42,8 +42,13 @@ public class SongToPlaylistModel {
         songToPlaylistManager.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
     }
 
+
     public void songSwap(int number1, int number2, int playlist) throws SQLServerException {
-    songToPlaylistManager.songSwap(number1, number2, playlist);
+        songToPlaylistManager.songSwap(number1, number2, playlist);
+    }
+
+    public int getRank(int songID, int playlistID) throws SQLServerException {
+        return songToPlaylistManager.getRank(songID, playlistID);
 
     }
 }
