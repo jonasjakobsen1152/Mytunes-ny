@@ -7,9 +7,9 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SongViewController">
    <children>
-      <ListView fx:id="lstSongsOnPlaylist" layoutX="241.0" layoutY="199.0" prefHeight="425.0" prefWidth="168.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="150.0" />
-      <ListView fx:id="lstPlaylist" layoutX="26.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="150.0" />
-      <ListView fx:id="lstSongs" layoutX="486.0" layoutY="163.0" prefHeight="450.0" prefWidth="329.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="551.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0" />
+      <ListView fx:id="lstSongsOnPlaylist" layoutX="240.0" layoutY="150.0" prefHeight="425.0" prefWidth="168.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="190.0" />
+      <ListView fx:id="lstPlaylist" layoutX="26.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="190.0" />
+      <ListView fx:id="lstSongs" layoutX="486.0" layoutY="163.0" prefHeight="450.0" prefWidth="329.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="551.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="190.0" />
       <Button fx:id="addSongToPlaylist" layoutX="428.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddSongToPlaylist" text="⬅">
          <font>
             <Font size="15.0" />
@@ -18,9 +18,9 @@
             <ColorAdjust />
          </effect>
       </Button>
-      <Button fx:id="btnAddPlaylist" layoutX="23.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddPlaylist" text="Add New Playlist" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="23.0" />
-      <Button fx:id="btnEditPlaylist" layoutX="143.0" layoutY="641.0" mnemonicParsing="false" onAction="#handleEditPlaylist" text="Edit Playlist" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="143.0" />
-      <Button fx:id="btnDeletePlaylist" layoutX="24.0" layoutY="663.0" mnemonicParsing="false" onAction="#handleDeletePlaylist" prefHeight="25.0" prefWidth="104.0" text="Delete Playlist" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="24.0" />
+      <Button fx:id="btnAddPlaylist" layoutX="23.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddPlaylist" text="Add New Playlist" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="240.0" />
+      <Button fx:id="btnEditPlaylist" layoutX="143.0" layoutY="641.0" mnemonicParsing="false" onAction="#handleEditPlaylist" text="Edit Playlist" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="143.0" />
+      <Button fx:id="btnDeletePlaylist" layoutX="24.0" layoutY="663.0" mnemonicParsing="false" onAction="#handleDeletePlaylist" prefHeight="25.0" prefWidth="104.0" text="Delete Playlist" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="24.0" />
       <Button fx:id="btnMovePlaylistSongUp" layoutX="428.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleMovePlaylistSongUp" text="⬆">
          <font>
             <Font size="15.0" />
@@ -31,41 +31,41 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Text layoutX="20.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Playlists" wrappingWidth="65.13671875">
+      <Text layoutX="20.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Playlists" wrappingWidth="65.13671875" AnchorPane.topAnchor="170.0">
          <font>
             <Font name="Times New Roman" size="15.0" />
          </font>
       </Text>
-      <Text layoutX="246.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Songs on Playlist">
+      <Text layoutX="246.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Songs on Playlist" AnchorPane.topAnchor="170.0">
          <font>
             <Font name="Times New Roman" size="15.0" />
          </font>
       </Text>
-      <Text layoutX="551.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Songs">
+      <Text layoutX="551.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Songs" AnchorPane.topAnchor="170.0">
          <font>
             <Font name="Times New Roman" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="btnAddSong" layoutX="620.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddSong" text="Add New Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="200.0" />
-      <Button fx:id="btnEditSong" layoutX="716.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="117.0" />
-      <Button fx:id="btnDeleteSong" layoutX="799.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeleteSong" text="Delete Song" AnchorPane.bottomAnchor="61.0" AnchorPane.rightAnchor="20.0" />
-      <Slider fx:id="sliMusicVolume" layoutX="85.0" layoutY="59.0" onDragDetected="#handleSliMusicVolume" value="50.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="59.0" />
-      <Button fx:id="btnRestartSong" layoutX="76.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleRestart" text="⏮" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="87.0" />
-      <Button fx:id="btnSkipSong" layoutX="206.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSkipSong" text="⏭" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="87.0" />
-      <TextField fx:id="txtFilter" layoutX="557.0" layoutY="75.0" prefHeight="25.0" prefWidth="242.0" promptText="Filter" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="75.0" />
-      <Button fx:id="btnSearch" layoutX="814.0" layoutY="75.0" mnemonicParsing="false" onAction="#handleSearchAllSongs" text="Search" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="75.0" />
-      <Button fx:id="btnPlaySong" layoutX="130.0" layoutY="87.0" mnemonicParsing="false" onAction="#handlePlaySong" prefHeight="25.0" prefWidth="51.0" text="▶ ⏸" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="87.0" />
-      <Text layoutX="52.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔉">
+      <Button fx:id="btnAddSong" layoutX="620.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleAddSong" text="Add New Song" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="200.0" />
+      <Button fx:id="btnEditSong" layoutX="716.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit Song" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="117.0" />
+      <Button fx:id="btnDeleteSong" layoutX="799.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleDeleteSong" text="Delete Song" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Slider fx:id="sliMusicVolume" layoutX="85.0" layoutY="59.0" onDragDetected="#handleSliMusicVolume" value="50.0" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="110.0" />
+      <Button fx:id="btnRestartSong" layoutX="76.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleRestart" text="⏮" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="135.0" />
+      <Button fx:id="btnSkipSong" layoutX="206.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSkipSong" text="⏭" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="135.0" />
+      <TextField fx:id="txtFilter" layoutX="557.0" layoutY="75.0" prefHeight="25.0" prefWidth="242.0" promptText="Filter" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="130.0" />
+      <Button fx:id="btnSearch" layoutX="814.0" layoutY="75.0" mnemonicParsing="false" onAction="#handleSearchAllSongs" text="Search" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="130.0" />
+      <Button fx:id="btnPlaySong" layoutX="130.0" layoutY="87.0" mnemonicParsing="false" onAction="#handlePlaySong" prefHeight="25.0" prefWidth="51.0" text="▶ ⏸" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="135.0" />
+      <Text layoutX="52.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔉" AnchorPane.topAnchor="90.0">
          <font>
             <Font size="33.0" />
          </font>
       </Text>
-      <Text layoutX="224.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔊">
+      <Text layoutX="224.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔊" AnchorPane.topAnchor="90.0">
          <font>
             <Font size="33.0" />
          </font>
       </Text>
-      <Text fx:id="txtShowSong" layoutX="321.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Playing: Not playing anything" wrappingWidth="392.13671875">
+      <Text fx:id="txtShowSong" layoutX="228.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Playing: Not playing anything" textAlignment="CENTER" wrappingWidth="536.13671875" AnchorPane.bottomAnchor="664.15966796875" AnchorPane.leftAnchor="228.0" AnchorPane.rightAnchor="269.86328125" AnchorPane.topAnchor="19.93994140625">
          <font>
             <Font name="Times New Roman" size="27.0" />
          </font>
@@ -75,6 +75,7 @@
             <Font size="15.0" />
          </font>
       </Button>
+      <Slider layoutX="287.0" layoutY="83.0" prefHeight="14.0" prefWidth="419.0" />
    </children>
    <effect>
       <ColorAdjust />
