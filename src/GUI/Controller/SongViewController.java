@@ -369,8 +369,12 @@ private int playlistNumber;
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
         selectedSong = lstSongs.getSelectionModel().getSelectedItem();
         selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-        int playlistSize =  lstSongsOnPlaylist.getItems().size();
-        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,playlistSize);
+
+        int songId = selectedSong.getId();
+        int playlistId = selectedPlaylist.getId();
+        int nextRank = songToPlaylistModel.getRank(songId, playlistId) + 1; // Gets the highest rank from the database and adds one as we want it to be the rank of the new song.
+        
+        songToPlaylistModel.addSongToPlaylist(selectedSong,selectedPlaylist,nextRank);
         updateSongToPlaylistModel();
     }
 

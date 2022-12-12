@@ -3,6 +3,7 @@ package BLL;
 import BE.Playlist;
 import BE.Song;
 import DAL.db.SongToPlaylistDAO_DB;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,6 +27,10 @@ public class SongToPlaylistManager {
 
     public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist, int selectedRank) throws Exception {
         songToPlayListDAO.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
+    }
+
+    public int getRank(int songID, int playlistID) throws SQLServerException {
+        return songToPlayListDAO.getRank(songID, playlistID);
     }
 }
 
