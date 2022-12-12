@@ -29,8 +29,16 @@ public class SongToPlaylistManager {
         songToPlayListDAO.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
     }
 
+
+    public void songSwap(int number1, int number2, int playlist) throws SQLServerException {
+        songToPlayListDAO.swap(number1, number2, playlist);
+
+    }
+
+
     public int getRank(int songID, int playlistID) throws SQLServerException {
         return songToPlayListDAO.getRank(songID, playlistID);
     }
+
 }
 

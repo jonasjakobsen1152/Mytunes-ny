@@ -7,6 +7,7 @@ import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
 import GUI.Model.SongToPlaylistModel;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -399,7 +399,18 @@ public class SongViewController extends BaseController implements Initializable 
         updateSongToPlaylistModel();
     }
 
-    public void handleMovePlaylistSongUp(ActionEvent actionEvent) {
+    public void handleMovePlaylistSongUp(ActionEvent actionEvent) throws SQLServerException {
+
+        int number1= selectedSong.getId();
+        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+
+        lstSongsOnPlaylist.getSelectionModel().selectNext();
+        int number2= selectedSong.getId();
+        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+
+
+
+        songToPlaylistModel.songSwap(number1,number2,playlistNumber);
     }
 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) {
