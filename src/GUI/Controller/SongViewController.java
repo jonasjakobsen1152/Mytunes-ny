@@ -52,6 +52,9 @@ public class SongViewController extends BaseController implements Initializable 
     private boolean endOfPlayList=false;
     private boolean clickPlaylistNotMusicList;
     private boolean inPlaylister;
+
+    private boolean isNewPlay = true;
+
     public Playlist selectedPlaylist;
     public Song previousSong,selectedSong;
     private String errorText;
@@ -62,8 +65,7 @@ public class SongViewController extends BaseController implements Initializable 
     private Timer timer;
     private TimerTask task;
     private java.awt.event.MouseEvent mouseEvent;
-private int playlistNumber;
-
+    private int playlistNumber;
 
 
     @Override
@@ -73,7 +75,9 @@ private int playlistNumber;
 
     lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
         
-
+    lstSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        isNewPlay = true;
+    });
 
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
@@ -97,8 +101,6 @@ private int playlistNumber;
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }   });
-
-
 
         lstSongsOnPlaylist.setOnMouseClicked(event -> {
             clickPlaylistNotMusicList=true;
@@ -126,9 +128,8 @@ private int playlistNumber;
                             throw new RuntimeException(e);
                         }
 
-                    } });
-
-
+                    }
+                });
 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -438,7 +439,6 @@ private int playlistNumber;
          }
      }
 
-
     public void playSongInMusicList() throws Exception {
 
         boolean startSong = true;
@@ -473,10 +473,8 @@ private int playlistNumber;
         }
     }
 
-
 public void filePath(String path) throws Exception {
     boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
-
 
     if (filesExits)
     {
@@ -484,12 +482,8 @@ public void filePath(String path) throws Exception {
         songIsPlayed=true;
     }
     else
-
         informationUser("File do not exist!");
 }
-
-
-
 
     private void informationUser(String information){
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -511,26 +505,25 @@ public void filePath(String path) throws Exception {
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
     }
-    public void handleEdit(ActionEvent actionEvent) throws IOException {
-
-    }
 
     public void playMusic(String path) throws Exception {
+        if (isNewPlay) {
+            hit = new Media(new File(path).toURI().toString());
+            play = new MediaPlayer(hit);
+            txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
+            isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
+        }
 
-        hit = new Media(new File(path).toURI().toString());
-        play = new MediaPlayer(hit);
         soundVolume(soundLevel);
-
-        txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
-
         timeTest();
         play.play();
     }
 
     public void stopMusic() {
         timer.cancel();
-        play.stop();
+        play.pause();
     }
+
     public void soundVolume(double soundLevel)
     {
         this.soundLevel = soundLevel;
@@ -553,14 +546,12 @@ public void filePath(String path) throws Exception {
                 {
                     timer.cancel();
 
-
                     if (clickPlaylistNotMusicList) {
                         if (lstSongsOnPlaylist.getItems().size() == lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1) //Hvis det er sidste sang i playlisten, så
                                                                                                                                     //skal den stoppe med at spille.
                             endOfPlayList = true;
                         else
                             endOfPlayList = false;
-
 
                         lstSongsOnPlaylist.getSelectionModel().selectNext(); //Her skifter til næste linje
                     }
@@ -571,19 +562,12 @@ public void filePath(String path) throws Exception {
                         else
                             endOfPlayList = false;
 
-
                         lstSongs.getSelectionModel().selectNext(); //Her skifter til næste linje
                         selectedSong = lstSongs.getSelectionModel().getSelectedItem();
 
                     }
 
                         songIsPlayed=false;
-
-
-
-
-
-
                     try {
                         handlePlaySong();
                     } catch (Exception e) {
