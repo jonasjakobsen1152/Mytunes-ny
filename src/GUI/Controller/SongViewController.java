@@ -361,7 +361,7 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
-        if(selectedSong != null || selectedPlaylist != null) {
+        if(lstSongsOnPlaylist.getSelectionModel().getSelectedItem() != null || selectedPlaylist != null) {
             int lastIndex = songToPlaylistModel.getObservablePlaylist().size(); // Gets the size and stashes it in variable lastIndex
             if (lastIndex == 0) {
                 selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
@@ -386,47 +386,46 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
-        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Sets instance variable to the selected playlist
-        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Sets the instance variable to selected song
-        if(selectedPlaylist != null || selectedPlaylist != null) {
+        if(lstSongsOnPlaylist.getSelectionModel().getSelectedItem() == null || selectedPlaylist == null) {
+            alertUser("Please the song from the playlist you wish to delete");
+        }
+        else {
+            selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Sets instance variable to the selected playlist
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Sets the instance variable to selected song
             int songID = selectedSong.getId(); // Gets the song id from our selected song
             int playlistID = selectedPlaylist.getId(); // Gets the id from the selected playlist
             int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID); // Uses the id's from instance variables
             songToPlaylistModel.deleteSongFromPlaylist(selectedSong, selectedPlaylist, songToBeDeleted); // Sends down the selectedSong, from selected playlist with the rank of the song that should be deleted.
             updateSongToPlaylistModel(); // Updates SongToPlaylistModel
         }
-        else {
-            alertUser("Please select the playlists song you wish to delete");
-        }
     }
 
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) throws Exception {
-
-
-
         if (clickPlaylistNotMusicList && inPlaylister==false)  //Vi sikre os, at vi er musikplayliste vinduet.
         {
             if (songIsPlayed)
                 handlePlaySong(); //Stop music
 
             selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Her gemmes sangen vi står på.
-            int songID1 = selectedSong.getId(); //Her hentes sangens databasenummer.
+            if(selectedSong != null){
+                int songID1 = selectedSong.getId(); //Her hentes sangens databasenummer.
 
 
-            lstSongsOnPlaylist.getSelectionModel().selectPrevious(); //Her hentes linjen før.
+                lstSongsOnPlaylist.getSelectionModel().selectPrevious(); //Her hentes linjen før.
 
-            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); //Sangen gemmes
-            int songID2 = selectedSong.getId();                                             //Sangens ID gemmes
-            int place=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();            //Vi gemmes placering vi står på.
-
-
-            songToPlaylistModel.songSwap(songID1, songID2, playlistNumber);      //Vi kalder songSwap i Model klassen. Der trækker via en mellemstation
-            songToPlaylistModel.showList(playlistNumber);                       // i manageren en metode i DAO som bytter rank mellem to gemte sange.
-                                                                                // Listen opdateres
-            lstSongsOnPlaylist.getSelectionModel().select(place);               //Markeringen placeres hvor den før opdateringen.
+                selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); //Sangen gemmes
+                int songID2 = selectedSong.getId();                                             //Sangens ID gemmes
+                int place=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();            //Vi gemmes placering vi står på.
 
 
-
+                songToPlaylistModel.songSwap(songID1, songID2, playlistNumber);      //Vi kalder songSwap i Model klassen. Der trækker via en mellemstation
+                songToPlaylistModel.showList(playlistNumber);                       // i manageren en metode i DAO som bytter rank mellem to gemte sange.
+                // Listen opdateres
+                lstSongsOnPlaylist.getSelectionModel().select(place);               //Markeringen placeres hvor den før opdateringen.
+            }
+            else{
+                alertUser("Please select a song from a playlist");
+            }
         }
         }
 
@@ -440,19 +439,23 @@ public class SongViewController extends BaseController implements Initializable 
                 handlePlaySong(); //Stop music
 
             selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-            int number1 = selectedSong.getId();
+            if(selectedSong != null) {
+                int number1 = selectedSong.getId();
 
 
-            lstSongsOnPlaylist.getSelectionModel().selectNext();
-            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-            int number2 = selectedSong.getId();
-            int number3=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();
+                lstSongsOnPlaylist.getSelectionModel().selectNext();
+                selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+                int number2 = selectedSong.getId();
+                int number3 = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();
 
-            songToPlaylistModel.songSwap(number1, number2, playlistNumber);
-            songToPlaylistModel.showList(playlistNumber);
+                songToPlaylistModel.songSwap(number1, number2, playlistNumber);
+                songToPlaylistModel.showList(playlistNumber);
 
-            lstSongsOnPlaylist.getSelectionModel().select(number3);
-
+                lstSongsOnPlaylist.getSelectionModel().select(number3);
+            }
+            else{
+                alertUser("Please select a song from a playlist");
+            }
         }
     }
 
