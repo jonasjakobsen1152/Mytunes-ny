@@ -15,13 +15,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +71,8 @@ public class SongViewController extends BaseController implements Initializable 
         lstSongs.setItems(songModel.getObservableSong());
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
         lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+
+
         lstSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         isNewPlay = true;
         });
@@ -100,14 +102,14 @@ public class SongViewController extends BaseController implements Initializable 
                 throw new RuntimeException(e);
             }   });
 
-        lstSongsOnPlaylist.setOnMouseClicked(event -> {
-            clickPlaylistNotMusicList=true;
-            inPlaylister=false;
+        lstSongsOnPlaylist.setOnMouseClicked(event -> { //Vi har en "lytter" på museklik på de tre listview tabeller.
+            clickPlaylistNotMusicList=true;     //Vi har boolean til at undersøge, om vi er I musiklisten eller musikplaylisten. Her musikplaylisten.
+            inPlaylister=false;                 //Vi er ikke i playlisten.
 
             if (event.getClickCount() == 2 ) //Ved dobbeltklik kan man starte musikken
             {
                 try {
-                    handlePlaySong();
+                    handlePlaySong();       //Håndtere afspilning af sange.
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -116,7 +118,7 @@ public class SongViewController extends BaseController implements Initializable 
 
                 lstSongs.setOnMouseClicked(event -> {
 
-                    clickPlaylistNotMusicList=false;
+                    clickPlaylistNotMusicList=false;     //Vi har boolean til at undersøge, om vi er I musiklisten eller musikplaylisten. Her musiklisten
                     inPlaylister=false;
 
                     if (event.getClickCount() == 2 ) { //Ved dobbeltklik kan man starte musikken
@@ -131,7 +133,7 @@ public class SongViewController extends BaseController implements Initializable 
         sliMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                soundVolume(sliMusicVolume.getValue());         //Lytter om lyden skal skues op.
+                soundVolume(sliMusicVolume.getValue());         //Lytter om lyden skal skues op. Værdien sendes til soundVolume.
             }
         });
     }
@@ -389,25 +391,26 @@ public class SongViewController extends BaseController implements Initializable 
 
 
 
-        if (clickPlaylistNotMusicList && inPlaylister==false)
+        if (clickPlaylistNotMusicList && inPlaylister==false)  //Vi sikre os, at vi er musikplayliste vinduet.
         {
             if (songIsPlayed)
                 handlePlaySong(); //Stop music
 
-            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-            int number1 = selectedSong.getId();
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Her gemmes sangen vi står på.
+            int songID1 = selectedSong.getId(); //Her hentes sangens databasenummer.
 
 
-            lstSongsOnPlaylist.getSelectionModel().selectPrevious();
-            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-            int number2 = selectedSong.getId();
-            int number3=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();
+            lstSongsOnPlaylist.getSelectionModel().selectPrevious(); //Her hentes linjen før.
+
+            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); //Sangen gemmes
+            int songID2 = selectedSong.getId();                                             //Sangens ID gemmes
+            int place=lstSongsOnPlaylist.getSelectionModel().getSelectedIndex();            //Vi gemmes placering vi står på.
 
 
-            songToPlaylistModel.songSwap(number1, number2, playlistNumber);
-            songToPlaylistModel.showList(playlistNumber);
-
-            lstSongsOnPlaylist.getSelectionModel().select(number3);
+            songToPlaylistModel.songSwap(songID1, songID2, playlistNumber);      //Vi kalder songSwap i Model klassen. Der trækker via en mellemstation
+            songToPlaylistModel.showList(playlistNumber);                       // i manageren en metode i DAO som bytter rank mellem to gemte sange.
+                                                                                // Listen opdateres
+            lstSongsOnPlaylist.getSelectionModel().select(place);               //Markeringen placeres hvor den før opdateringen.
 
 
 
@@ -418,7 +421,7 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleMovePlaylistSongDown(ActionEvent actionEvent) throws Exception {
 
 
-        if (clickPlaylistNotMusicList && inPlaylister==false) {
+        if (clickPlaylistNotMusicList && inPlaylister==false) {         //Metoden er beskrevet ovenfor.
 
             if (songIsPlayed)
                 handlePlaySong(); //Stop music
@@ -443,9 +446,9 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handlePlaySong() throws Exception {
 
-        if (clickPlaylistNotMusicList && inPlaylister==false)
-            playSongInPlaylist();
-        else if (clickPlaylistNotMusicList==false && inPlaylister==false)
+        if (clickPlaylistNotMusicList && inPlaylister==false)               //Vi sikre os, aat vi er i musikplayliste vinduet
+            playSongInPlaylist();                                           //Her kaldes metoden, der for musikplaylisten
+        else if (clickPlaylistNotMusicList==false && inPlaylister==false)   //Her er i musiklisten og kalder dens metode.
             playSongInMusicList();
 
         endOfPlayList=false; //Vi nulstiller endOfPlayList
@@ -456,47 +459,47 @@ public class SongViewController extends BaseController implements Initializable 
 
          boolean startSong = true;
 
-         if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
+         if (songIsPlayed) //Vi vil stopppe/pause musik, hvis den spilles..
          {
 
-             stopMusic(); //Stop music
-             songIsPlayed=false;
+             stopMusic(); //Stop music eller pause den
+             songIsPlayed=false;    //Nu spilles musikken ikke. Der sættes en boolean der fortæller det.
 
 
-             if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
-                 startSong=false;
+             if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang skal en ny sang ikke startes.
+                 startSong=false;       //Derfor sættes en boolean startSong til false
 
          }
 
-         if (endOfPlayList)
+         if (endOfPlayList)         //Hvis vi er på automatisk sangskifte, så skal en ny sang ikke startes, hvis vi er ved listens ende.
              startSong=false;
 
-         selectedSong= (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
+         selectedSong= (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); //vi Gemmer den sang, som vi står på.
 
-         if (selectedSong!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
+         if (selectedSong!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret og startSong er true.
          {
 
              String path=selectedSong.getFilePath(); //finder stinavnet
-             songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
+             songTitle=selectedSong.getTitle(); //Vi gemmer titlen og viser den i en label sat i metoden playSong
 
              previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
 
-             filePath(path);
+             filePath(path);    //kalder metoden filepath
 
          }
      }
 
-    public void playSongInMusicList() throws Exception {
+    public void playSongInMusicList() throws Exception {    //Denne metode ligner den foregående.
 
         boolean startSong = true;
 
-        if (songIsPlayed) //Denne if statement sikre, at man kan stoppe musikken selvom den ikke er markeret.
+        if (songIsPlayed)
         {
 
-            stopMusic(); //Stop music
+            stopMusic();
             songIsPlayed=false;
 
-            if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
+            if (lstSongs.getSelectionModel().getSelectedItem()==previousSong)
                 startSong=false;
 
         }
@@ -507,12 +510,12 @@ public class SongViewController extends BaseController implements Initializable 
         selectedSong=lstSongs.getSelectionModel().getSelectedItem();
 
 
-        if (selectedSong!=null && startSong) //Man skal kun kunne starte musik, hvis den er markeret.
+        if (selectedSong!=null && startSong)
         {
-            String path=selectedSong.getFilePath(); //finder stinavnet
-            songTitle=selectedSong.getTitle(); //Titlen viser i en label sat i metoden playSong
+            String path=selectedSong.getFilePath();
+            songTitle=selectedSong.getTitle();
 
-            previousSong=selectedSong; //Gemmer nuværende sang, så vi næste gang kan se om sangen har skiftet.
+            previousSong=selectedSong;
 
             filePath(path);
 
@@ -524,11 +527,11 @@ public class SongViewController extends BaseController implements Initializable 
 
          if (filesExits)
          {
-            playMusic(path);
-             songIsPlayed=true;
+            playMusic(path);    //Her kaldes musikspille metoden
+             songIsPlayed=true; //Vi sætter boolean sang afspilles til true
          }
          else
-            informationUser("File do not exist!");
+            informationUser("File do not exist!");      //Her kaldes en metode, der viser et vindue med besked om, at filen ikke findes.
 }
 
          private void informationUser(String information){
@@ -553,7 +556,7 @@ public class SongViewController extends BaseController implements Initializable 
          }
 
         public void playMusic(String path) throws Exception {
-             if (isNewPlay)
+             if (isNewPlay) //Alt musik er kun sat på pause. Hvis vi henter en nye mediaplayer ind, så stoppes reelt musikken.
              {
                  hit = new Media(new File(path).toURI().toString());
                  play = new MediaPlayer(hit);
@@ -561,41 +564,41 @@ public class SongViewController extends BaseController implements Initializable 
                  isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
 
              }
-                 soundVolume(soundLevel);
-                 timeTest();
-                 play.play();
+                 soundVolume(soundLevel);   //soundVolumen sættes. Den skal være ens fra sang til sang.
+                 timeTest();                //Vi kalder en metode, der afgøre om en sang er færdig.
+                 play.play();               //Musik afspilles.
         }
 
         public void stopMusic() {
-             timer.cancel();
-             play.pause();
+             timer.cancel();            //Vores timer stoppes.
+             play.pause();              //Musikken sættes på pause.
         }
 
          public void soundVolume(double soundLevel) {
              this.soundLevel = soundLevel;
 
-             if (play != null) {
-                 double soundLev = soundLevel / 100;
-                 play.setVolume(soundLev);
+             if (play != null) {    //Vi skal have valgt en mediaplayer. Hvis brugeren justerer lyden inden afspilning, kan man  ikke justerer lyden.
+                 double soundLev = soundLevel / 100;    //Lyden skal sættes ind som et dedimaltal mellem 0 og 1.
+                 play.setVolume(soundLev);  //Her sættes lyden.
              }
          }
 
          public void timeTest() {
 
-              timer = new Timer();
+              timer = new Timer();  //Da vi programmerede kendte vi ikke metoden i mediaplayer klassen til at bestemme om sangen er værdig.
               task = new TimerTask() {
             public void run() {
-                double current = play.getCurrentTime().toSeconds();
-                double end = hit.getDuration().toSeconds();
+                double current = play.getCurrentTime().toSeconds(); //Her får vi den nuværende spilletid.
+                double end = hit.getDuration().toSeconds();         //Her er sangens længde.
 
-                if (current/ end ==1)
+                if (current/ end ==1) //Hvis de divideres og værdien er 1, så er sangen færdig.
                 {
-                    timer.cancel();
+                    timer.cancel();     //Her stoppes tiden.
 
-                    if (clickPlaylistNotMusicList) {
+                    if (clickPlaylistNotMusicList) {    //Her vælger vi mellem to forskellige musiklister
                         if (lstSongsOnPlaylist.getItems().size() == lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1) //Hvis det er sidste sang i playlisten, så
                                                                                                                                     //skal den stoppe med at spille.
-                            endOfPlayList = true;
+                            endOfPlayList = true;   //Vi sætter boolean endOfPlayList til true. Det vil stoppe lydafspilning.
                         else
                             endOfPlayList = false;
 
@@ -609,11 +612,11 @@ public class SongViewController extends BaseController implements Initializable 
                             endOfPlayList = false;
 
                         lstSongs.getSelectionModel().selectNext(); //Her skifter til næste linje
-                        selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+                        selectedSong = lstSongs.getSelectionModel().getSelectedItem(); //Her vælges sangen på linjen.
 
                     }
 
-                        songIsPlayed=false;
+                        songIsPlayed=false;                 //Sangen spilles ikke. Derfor er songIsPlayed sat til false.
                     try {
                         handlePlaySong();
                     } catch (Exception e) {

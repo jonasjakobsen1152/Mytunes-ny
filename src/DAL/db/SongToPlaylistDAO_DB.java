@@ -32,8 +32,13 @@ public class SongToPlaylistDAO_DB {
                     "WHERE S.Id = P.MusicID and PI.PlaylisteID = P.PlaylisteID and P.PlaylisteID=" + playlisteID +
                     "ORDER BY P.Rank;";
 
+            //sql koden henter fra vores tre tabeller, hvor musik id i krydstabellen og song skal være ens
+            // og playliste nummer skal være ens i playliste og i krydstabellen.
+            // Vi sortere på sangenes rank.
 
-            ResultSet rs = stmt.executeQuery(sql);
+
+
+            ResultSet rs = stmt.executeQuery(sql);  //Her vises resultat settet
 
             // Loop through rows from the database result set
             while (rs.next()) {
@@ -47,13 +52,13 @@ public class SongToPlaylistDAO_DB {
                 String filePath = rs.getString("FilePath");
 
 
-                Song song = new Song(id, title, artist, category, seconds, filePath);
+                Song song = new Song(id, title, artist, category, seconds, filePath); //De hentede data gemmes i sang objekter
 
-                allSongs.add(song);
+                allSongs.add(song); //Sang objekterne tilføjes en arrayList
             }
 
 
-            return allSongs;
+            return allSongs; //Arraylisten sendes hele vejen op og vises  til sidst i vores gui.
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -63,7 +68,13 @@ public class SongToPlaylistDAO_DB {
 
 
     public void addSongToPlaylist(Song selectedSong, Playlist selectedPlaylist, int playlistSize) throws SQLException {
+
         String sql = "INSERT INTO PlaylistAndSongs (MusicID, PlaylisteID, Rank) VALUES (?,?,?);";
+
+        //Metoden hvor man bruger en preparedStatement sikre mod SQL injection. Således at man ikke kan ødelægge databasen.
+        // Ved spørgsmåltegnene indsættes data her tal. Data er tilføjet metoden og indsættes i setInt nedenunder.
+
+
 
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -74,7 +85,7 @@ public class SongToPlaylistDAO_DB {
             stmt.setInt(1, songId);
             stmt.setInt(2, playlistId);
             stmt.setInt(3, nextSongRank);
-            stmt.executeUpdate();
+            stmt.executeUpdate();       //Her opdateres databasen.
 
         }
     }
@@ -88,6 +99,9 @@ public class SongToPlaylistDAO_DB {
                 "WHERE PlaylistAndSongs.MusicID = ? \n" +
                 "and PlaylistAndSongs.PlaylisteID = ?\n" +
                 "and PlaylistAndSongs.Rank = ?";
+
+// Her slettes en linje i vores krydstabel. Hvor musikID og playlistID og rank er defineret.
+
 
 
         try (Connection conn = databaseConnector.getConnection()) {
@@ -117,6 +131,12 @@ public class SongToPlaylistDAO_DB {
 
         String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + songID + " AND " + "P.playlisteID=" + playlistID +";";
 
+        //Denne metode sender et heltal retur fra krydstabellen hvor musikID og playlistID er givet.
+        // Vi har valgt at bruge variabler i vores sql streng. Da vi ikke skriver til databasen er der ikke fare for SQL injection.
+
+
+
+
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -140,6 +160,9 @@ public class SongToPlaylistDAO_DB {
 
           String  sql =    "UPDATE PlaylistAndSongs set Rank = ? WHERE  MusicID= ? AND PlaylisteID = ? AND Rank = ?";
 
+          //Metoden bruges til at opdaterer rank på linjen med sange og playlister i krydstabellen.
+
+
             try (Connection conn = databaseConnector.getConnection()) {
                 PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -157,10 +180,14 @@ public class SongToPlaylistDAO_DB {
 
         public void swap(int number1, int number2, int playlistID) throws SQLServerException {
 
-            int rank1=getRank(number1,playlistID);
+        //Metoden bruges at bytte rank mellem to sange. Metoden får to sang numre og playlist nummeret.
+
+
+            int rank1=getRank(number1,playlistID);  //Først slås sangenes rank op.
             int rank2=getRank(number2,playlistID);
 
-            updateSongAndPlaylist(rank2, number1, playlistID, rank1);
-            updateSongAndPlaylist(rank1, number2, playlistID, rank2);
+
+            updateSongAndPlaylist(rank2, number1, playlistID, rank1); //Derefter updateres i krydstabellen den første sang og playlist,
+            updateSongAndPlaylist(rank1, number2, playlistID, rank2);  //men med den andens rank. Det gøres to gange.
         }
 }
