@@ -2,12 +2,10 @@ package GUI.Controller;
 
 import BE.Playlist;
 import BE.Song;
-import BLL.util.MusicSound;
 import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
 import GUI.Model.SongToPlaylistModel;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

@@ -1,7 +1,7 @@
 package DAL.db;
 
 import BE.Song;
-import BLL.util.MusicSound;
+import BLL.util.SecondsToMinute;
 import DAL.ISongDAO;
 
 import java.io.IOException;
@@ -70,8 +70,8 @@ public class SongDAO_DB implements ISongDAO {
             stmt.setString(3, category);
 
             //Her kalder vi musik klassen
-            MusicSound musicSound= new MusicSound();
-            int seconds =musicSound.timeMusic(filePath);
+            SecondsToMinute secondsToMinute = new SecondsToMinute();
+            int seconds = secondsToMinute.timeMusic(filePath);
 
             stmt.setInt(4,seconds); //I musikklassen kaldes timeMusik som sender tiden i sekunder for nummeret tilbage.
             stmt.setString(5,filePath);
@@ -114,8 +114,8 @@ public class SongDAO_DB implements ISongDAO {
             String filePath= song.getFilePath();
 
             //Her måles spilletiden.
-            MusicSound musicSound= new MusicSound();
-            int seconds =musicSound.timeMusic(filePath);
+            SecondsToMinute secondsToMinute = new SecondsToMinute();
+            int seconds = secondsToMinute.timeMusic(filePath);
 
             //I musikklassen kaldes timeMusic som sender tiden i sekunder for nummeret tilbage.
             stmt.setInt(4,seconds);
