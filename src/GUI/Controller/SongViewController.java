@@ -63,7 +63,7 @@ public class SongViewController extends BaseController implements Initializable 
     private Media hit;
     private Timer timer;
     private TimerTask task;
-    private int playlistNumber;
+    private int playlistNumber=0;
 
 
     @Override
@@ -364,6 +364,7 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
+<<<<<<< HEAD
         selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
         if(selectedSong != null && selectedPlaylist != null) {
             int lastIndex = songToPlaylistModel.getObservablePlaylist().size(); // Gets the size and stashes it in variable lastIndex
@@ -376,37 +377,58 @@ public class SongViewController extends BaseController implements Initializable 
                 int lastSongID = getSongForRank.getId(); // Holds the value for the songID of the last song
                 int lastPlaylistID = selectedPlaylist.getId(); // Holds the value for the playlistID
                 int lastRank = songToPlaylistModel.getRank(lastSongID, lastPlaylistID); // Gets the highest/last rank from the database
+=======
+>>>>>>> fd09d0efeea85a619efe99e261642733509b9fb9
 
-                selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
-                selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets the selected playlist the song will be added to
-                songToPlaylistModel.addSongToPlaylist(selectedSong, selectedPlaylist, lastRank + 1); // Adds the song to the database
-                updateSongToPlaylistModel(); // Updates the SongToPlaylistModel
+        if (clickPlaylistNotMusicList == false && playlistNumber != 0) {
+
+            if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem() != null || selectedPlaylist != null) {
+                int lastIndex = songToPlaylistModel.getObservablePlaylist().size(); // Gets the size and stashes it in variable lastIndex
+                if (lastIndex == 0) {
+                    selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
+                    selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets the selected playlist the song will be added to
+                    songToPlaylistModel.addSongToPlaylist(selectedSong, selectedPlaylist, 1); // Adds the song to the database
+                    updateSongToPlaylistModel(); // Updates the SongToPlaylistModel
+                } else {
+                    Song getSongForRank = (Song) lstSongsOnPlaylist.getItems().get(lastIndex - 1); // Gets the last song and creates a object with its values
+                    int lastSongID = getSongForRank.getId(); // Holds the value for the songID of the last song
+                    int lastPlaylistID = selectedPlaylist.getId(); // Holds the value for the playlistID
+                    int lastRank = songToPlaylistModel.getRank(lastSongID, lastPlaylistID); // Gets the highest/last rank from the database
+
+                    selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
+                    selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets the selected playlist the song will be added to
+                    songToPlaylistModel.addSongToPlaylist(selectedSong, selectedPlaylist, lastRank + 1); // Adds the song to the database
+                    updateSongToPlaylistModel(); // Updates the SongToPlaylistModel
+                }
+            } else {
+                alertUser("Please select a playlist and a song");
             }
-        }
-        else {
-            alertUser("Please select a playlist and a song");
         }
     }
 
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
-        if(lstSongsOnPlaylist.getSelectionModel().getSelectedItem() == null || selectedPlaylist == null) {
-            alertUser("Please the song from the playlist you wish to delete");
-        }
-        else {
-            selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Sets instance variable to the selected playlist
-            selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Sets the instance variable to selected song
-            int songID = selectedSong.getId(); // Gets the song id from our selected song
-            int playlistID = selectedPlaylist.getId(); // Gets the id from the selected playlist
-            int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID); // Uses the id's from instance variables
-            songToPlaylistModel.deleteSongFromPlaylist(selectedSong, selectedPlaylist, songToBeDeleted); // Sends down the selectedSong, from selected playlist with the rank of the song that should be deleted.
-            updateSongToPlaylistModel(); // Updates SongToPlaylistModel
+        if (clickPlaylistNotMusicList  && playlistNumber != 0) {
+
+
+            if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem() == null || selectedPlaylist == null) {
+                alertUser("Please the song from the playlist you wish to delete");
+            } else {
+                selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Sets instance variable to the selected playlist
+                selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Sets the instance variable to selected song
+                int songID = selectedSong.getId(); // Gets the song id from our selected song
+                int playlistID = selectedPlaylist.getId(); // Gets the id from the selected playlist
+                int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID); // Uses the id's from instance variables
+                songToPlaylistModel.deleteSongFromPlaylist(selectedSong, selectedPlaylist, songToBeDeleted); // Sends down the selectedSong, from selected playlist with the rank of the song that should be deleted.
+                updateSongToPlaylistModel(); // Updates SongToPlaylistModel
+            }
         }
     }
-
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) throws Exception {
         if (clickPlaylistNotMusicList && inPlaylister==false)  //Vi sikre os, at vi er musikplayliste vinduet.
-        {
-            if (songIsPlayed)
+            if (playlistNumber != 0)
+
+            {
+                        if (songIsPlayed)
                 handlePlaySong(); //Stop music
 
             selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Her gemmes sangen vi står på.
@@ -437,6 +459,7 @@ public class SongViewController extends BaseController implements Initializable 
 
 
         if (clickPlaylistNotMusicList && inPlaylister==false) {         //Metoden er beskrevet ovenfor.
+            if (playlistNumber != 0)
 
             if (songIsPlayed)
                 handlePlaySong(); //Stop music
