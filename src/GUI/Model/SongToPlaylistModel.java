@@ -13,7 +13,6 @@ public class SongToPlaylistModel {
 
     private ObservableList<Song> SongToPlayToBeViewed;
     private SongToPlaylistManager songToPlaylistManager;
-    private Song selectedSong;
 
 
     public SongToPlaylistModel() throws Exception {
@@ -41,7 +40,6 @@ public class SongToPlaylistModel {
     public void deleteSongFromPlaylist(Song selectedSong, Playlist selectedPlaylist, int selectedRank) throws Exception {
         songToPlaylistManager.deleteSongFromPlaylist(selectedSong,selectedPlaylist,selectedRank);
     }
-
 
     public void songSwap(int number1, int number2, int playlist) throws SQLServerException {
 
