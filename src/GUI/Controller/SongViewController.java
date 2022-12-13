@@ -267,9 +267,9 @@ public class SongViewController extends BaseController implements Initializable 
 
         if (clickPlaylistNotMusicList)
         lstSongsOnPlaylist.getSelectionModel().selectNext();
-        else
-        lstSongs.getSelectionModel().selectNext();
-
+        else {
+            lstSongs.getSelectionModel().selectNext();
+        }
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
             handlePlaySong(); //Stopper den sang, som er i gang
@@ -278,8 +278,10 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleAddPlaylist(ActionEvent actionEvent) throws Exception {
         String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
-        if (inputValue == null || inputValue.equals("")){
-            alertUser("Please enter a name");
+        if (inputValue == null){
+        }
+        else if (inputValue.equals("")){
+            alertUser("Playlist needs to be named");
         }
         else {
             playlistModel.createNewPlaylist(inputValue);
@@ -318,26 +320,27 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleDeletePlaylist(ActionEvent actionEvent) {
         Playlist deletedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-        if(deletedPlaylist == null){ // Checks if a playlist is selected
-            alertUser("Please select the song you wish to delete");
-        }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Current project is modified");
-        alert.setContentText("Save?");
-        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-        alert.getButtonTypes().setAll(okButton, noButton);
-        alert.showAndWait().ifPresent(type -> {
-            if (type == okButton) { // Check if user wants to complete the deletion of a song
-                try {
-                    playlistModel.deletePlaylist(deletedPlaylist); // Sends Playlist to be deleted to PlaylistModel.
-                    updatePlaylistModel();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+        if (deletedPlaylist == null) { // Checks if a playlist is selected
+            alertUser("Please select the song playlist you wish to delete");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Current project is modified");
+            alert.setContentText("Save?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+            alert.getButtonTypes().setAll(okButton, noButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == okButton) { // Check if user wants to complete the deletion of a song
+                    try {
+                        playlistModel.deletePlaylist(deletedPlaylist); // Sends Playlist to be deleted to PlaylistModel.
+                        updatePlaylistModel();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (type == noButton) { // Cancel the deletion of a song
                 }
-            } else if (type == noButton) { // Cancel the deletion of a song
-            }
-        });
+            });
+        }
     }
 
     private void updateSongModel() throws Exception {
@@ -361,10 +364,10 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
-        if(lstSongsOnPlaylist.getSelectionModel().getSelectedItem() != null || selectedPlaylist != null) {
+        selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
+        if(selectedSong != null && selectedPlaylist != null) {
             int lastIndex = songToPlaylistModel.getObservablePlaylist().size(); // Gets the size and stashes it in variable lastIndex
             if (lastIndex == 0) {
-                selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
                 selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets the selected playlist the song will be added to
                 songToPlaylistModel.addSongToPlaylist(selectedSong, selectedPlaylist, 1); // Adds the song to the database
                 updateSongToPlaylistModel(); // Updates the SongToPlaylistModel
