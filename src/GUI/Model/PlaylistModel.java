@@ -10,12 +10,10 @@ import java.util.List;
 public class PlaylistModel {
     private ObservableList<Playlist> playlistToBeViewed;
     private PlaylistManager playlistManager;
-    private Playlist selectedPlaylist;
 
     public PlaylistModel() throws Exception {
         playlistManager = new PlaylistManager();
         playlistToBeViewed = FXCollections.observableArrayList();
-
         playlistToBeViewed.addAll(playlistManager.getAllPlaylist());
     }
 
@@ -38,11 +36,6 @@ public class PlaylistModel {
         showList();
     }
 
-    public Playlist getSelectedPlaylist() {return selectedPlaylist;}
-
-    public void setSelectedPlaylist(Playlist selectedPlaylist) {
-        this.selectedPlaylist = selectedPlaylist;
-    }
     public void deletePlaylist(Playlist deletePlaylist) throws Exception {
         playlistManager.deletePlaylist(deletePlaylist);
         showList();

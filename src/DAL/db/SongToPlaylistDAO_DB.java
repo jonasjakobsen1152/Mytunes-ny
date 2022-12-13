@@ -102,7 +102,6 @@ public class SongToPlaylistDAO_DB {
             stmt.setInt(2, playlistId);
             stmt.setInt(3,selectedRank);
 
-
             stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -116,22 +115,17 @@ public class SongToPlaylistDAO_DB {
         //int songNumber=song.getId();
         int rank = 0;
 
-
         String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + songID + " AND " + "P.playlisteID=" + playlistID +";";
-
-
 
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(sql);
 
-
             // Loop through rows from the database result set
             while (rs.next()) {
                 rank = rs.getInt("Rank");
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -139,10 +133,7 @@ public class SongToPlaylistDAO_DB {
 
                 return rank;
 
-
-
     }
-
 
         public void updateSongAndPlaylist(int rank2,  int  musicID1 ,int playlisteID1, int rank1 )
         {
@@ -157,17 +148,12 @@ public class SongToPlaylistDAO_DB {
                 stmt.setInt(2, musicID1);//Rank First
                 stmt.setInt(3, playlisteID1); //MusicID First
                 stmt.setInt(4, rank1);//MusicID second
-
-
-
                 stmt.executeUpdate();
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-
-
 
         public void swap(int number1, int number2, int playlistID) throws SQLServerException {
 
@@ -176,13 +162,5 @@ public class SongToPlaylistDAO_DB {
 
             updateSongAndPlaylist(rank2, number1, playlistID, rank1);
             updateSongAndPlaylist(rank1, number2, playlistID, rank2);
-
-
         }
-
-
-
-
-
-
 }

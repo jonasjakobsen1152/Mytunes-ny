@@ -266,9 +266,7 @@ public class SongViewController extends BaseController implements Initializable 
         if (clickPlaylistNotMusicList)
         lstSongsOnPlaylist.getSelectionModel().selectNext();
         else
-        lstSongs.getSelectionModel().selectNext()
-;
-
+        lstSongs.getSelectionModel().selectNext();
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
         {
@@ -442,11 +440,8 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
-    public void handleSearchAllSongs(ActionEvent actionEvent) {
-    }
 
     public void handlePlaySong() throws Exception {
-
 
         if (clickPlaylistNotMusicList && inPlaylister==false)
             playSongInPlaylist();
@@ -470,7 +465,6 @@ public class SongViewController extends BaseController implements Initializable 
 
              if (lstSongsOnPlaylist.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                  startSong=false;
-
 
          }
 
@@ -502,7 +496,6 @@ public class SongViewController extends BaseController implements Initializable 
             stopMusic(); //Stop music
             songIsPlayed=false;
 
-
             if (lstSongs.getSelectionModel().getSelectedItem()==previousSong) //Hvis brugeren ikke har valgt en anden sang. Så stopper musikken.
                 startSong=false;
 
@@ -526,73 +519,71 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
-public void filePath(String path) throws Exception {
-    boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
+        public void filePath(String path) throws Exception {
+         boolean filesExits= Files.exists(Path.of(path)); //check om filen eksisterer
 
-    if (filesExits)
-    {
-        playMusic(path);
-        songIsPlayed=true;
-    }
-    else
-        informationUser("File do not exist!");
+         if (filesExits)
+         {
+            playMusic(path);
+             songIsPlayed=true;
+         }
+         else
+            informationUser("File do not exist!");
 }
 
-    private void informationUser(String information){
-        Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setTitle("Regarding music");
-        info.setHeaderText(information + "");
-        info.showAndWait();
-    }
+         private void informationUser(String information){
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Regarding music");
+            info.setHeaderText(information + "");
+            info.showAndWait();
+         }
 
-    private void alertUser(String error){
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle(error);
-    alert.setHeaderText(error + "");
-    alert.showAndWait();
-    }
+         private void alertUser(String error){
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle(error);
+             alert.setHeaderText(error + "");
+             alert.showAndWait();
+         }
 
-    private void displayError(Throwable t) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(errorText);
-        alert.setHeaderText(t.getMessage());
-        alert.showAndWait();
-    }
+         private void displayError(Throwable t) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(errorText);
+            alert.setHeaderText(t.getMessage());
+            alert.showAndWait();
+         }
 
-    public void playMusic(String path) throws Exception {
-        if (isNewPlay)
-        {
-            hit = new Media(new File(path).toURI().toString());
-            play = new MediaPlayer(hit);
-            txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
-            isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
+        public void playMusic(String path) throws Exception {
+             if (isNewPlay)
+             {
+                 hit = new Media(new File(path).toURI().toString());
+                 play = new MediaPlayer(hit);
+                 txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
+                 isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
 
-    }
-
-        soundVolume(soundLevel);
-        timeTest();
-        play.play();
-    }
-
-    public void stopMusic() {
-        timer.cancel();
-        play.pause();
-    }
-
-    public void soundVolume(double soundLevel)
-    {
-        this.soundLevel = soundLevel;
-
-        if (play != null) {
-            double soundLev = soundLevel / 100;
-            play.setVolume(soundLev);
+             }
+                 soundVolume(soundLevel);
+                 timeTest();
+                 play.play();
         }
-    }
 
-    public void timeTest() {
+        public void stopMusic() {
+             timer.cancel();
+             play.pause();
+        }
 
-        timer = new Timer();
-        task = new TimerTask() {
+         public void soundVolume(double soundLevel) {
+             this.soundLevel = soundLevel;
+
+             if (play != null) {
+                 double soundLev = soundLevel / 100;
+                 play.setVolume(soundLev);
+             }
+         }
+
+         public void timeTest() {
+
+              timer = new Timer();
+              task = new TimerTask() {
             public void run() {
                 double current = play.getCurrentTime().toSeconds();
                 double end = hit.getDuration().toSeconds();

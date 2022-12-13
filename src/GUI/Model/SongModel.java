@@ -10,12 +10,11 @@ import java.util.List;
 public class SongModel {
     private ObservableList<Song> songsToBeViewed;
     private SongManager songManager;
-    private Song selectedSong;
+
 
     public SongModel() throws Exception  {
         songManager = new SongManager();
         songsToBeViewed = FXCollections.observableArrayList();
-
         songsToBeViewed.addAll(songManager.getAllSongs());
 
     }
@@ -45,12 +44,6 @@ public class SongModel {
 
         // update ListView
         showList();
-    }
-
-    public Song getSelectedSong() { return selectedSong; }
-
-    public void setSelectedSong(Song selectedSong) {
-        this.selectedSong = selectedSong;
     }
 
     public void deleteSong(Song deletedSong) throws Exception {
