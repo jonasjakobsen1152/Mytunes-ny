@@ -12,12 +12,8 @@ public abstract class BaseController {
     }
     private MYTModel model;
 
-    public void setModel(MYTModel model) {
-        this.model = model;
-    }
-
     public MYTModel getModel() {
         return model;
     }
-    public abstract void setup();
+    public abstract void setup(); //This is here so we can override it in SongViewController
 }

@@ -75,7 +75,6 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Slider layoutX="287.0" layoutY="83.0" prefHeight="14.0" prefWidth="419.0" />
    </children>
    <effect>
       <ColorAdjust />

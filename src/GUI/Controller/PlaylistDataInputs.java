@@ -19,18 +19,6 @@ public class PlaylistDataInputs {
     public PlaylistDataInputs() throws Exception {
     }
 
-    public void handleAddInput(ActionEvent actionEvent) throws Exception {
-
-        String Name = txtName.getText();
-        try{
-            playlistModel.createNewPlaylist(Name);
-            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-            stage.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     public void setSelectPlaylist(Playlist p) {
         selectPlaylist = p;
 

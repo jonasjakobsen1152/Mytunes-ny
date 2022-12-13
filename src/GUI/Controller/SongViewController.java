@@ -22,8 +22,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +44,6 @@ public class SongViewController extends BaseController implements Initializable 
     public Button btnDeleteSongFromPlaylist;
     private SongModel songModel;
     @FXML
-    private Slider slideTime;
     private MYTModel mytModel;
     private PlaylistModel playlistModel;
     private SongToPlaylistModel songToPlaylistModel;
@@ -66,7 +63,6 @@ public class SongViewController extends BaseController implements Initializable 
     private Media hit;
     private Timer timer;
     private TimerTask task;
-    private java.awt.event.MouseEvent mouseEvent;
     private int playlistNumber;
 
 
@@ -74,20 +70,14 @@ public class SongViewController extends BaseController implements Initializable 
     public void initialize (URL url, ResourceBundle resourceBundle){
         lstSongs.setItems(songModel.getObservableSong());
         lstPlaylist.setItems(playlistModel.getObservablePlaylist());
-        //timeSlider()
-
-    lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
-        
-    lstSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
+        lstSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         isNewPlay = true;
-    });
-
+        });
 
         lstSongsOnPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             isNewPlay = true;
         });
-
-
 
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
@@ -97,8 +87,6 @@ public class SongViewController extends BaseController implements Initializable 
                 e.printStackTrace();
             }
         }));
-
-
 
         lstPlaylist.setOnMouseClicked(event -> {
 
@@ -137,7 +125,6 @@ public class SongViewController extends BaseController implements Initializable 
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-
                     }
                 });
 
@@ -259,10 +246,6 @@ public class SongViewController extends BaseController implements Initializable 
                 }
             });
         }
-    }
-
-
-    public void handleSliMusicVolume(MouseEvent mouseEvent) throws Exception {
     }
 
     public void handleRestart() throws Exception {
@@ -649,31 +632,6 @@ public void filePath(String path) throws Exception {
             }
         };
         timer.scheduleAtFixedRate(task,10,1000); //Den måler hver sekund altså 1000 ms med en lille delay.
-    }
-    private void timeSlider()
-    {
-
-        slideTime.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(!newValue)
-                {
-                    slideTime.setMax(play.getTotalDuration().toSeconds());
-
-                    play.seek(Duration.seconds(slideTime.getValue()));
-                }
-            }
-        });
-        slideTime.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double currentTime = play.getCurrentTime().toSeconds();
-                if(Math.abs(currentTime - newValue.doubleValue()) > 0.5)
-                {
-                    play.seek(Duration.seconds(newValue.doubleValue()));
-                }
-            }
-        });
     }
 }
 

@@ -83,11 +83,4 @@ public class SongDataInputs {
             txtFilePath.setText(fileName);
         }
     }
-    public void setModel() {
-        songModel = model.getSongModel();
-    }
-
-    public void setModel(MYTModel model) {
-        this.songModel = model.getSongModel();
-    }
 }
