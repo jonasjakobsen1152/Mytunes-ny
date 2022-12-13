@@ -2,12 +2,10 @@ package GUI.Controller;
 
 import BE.Playlist;
 import BE.Song;
-import BLL.util.MusicSound;
 import GUI.Model.MYTModel;
 import GUI.Model.PlaylistModel;
 import GUI.Model.SongModel;
 import GUI.Model.SongToPlaylistModel;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -83,6 +81,13 @@ public class SongViewController extends BaseController implements Initializable 
     lstSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         isNewPlay = true;
     });
+
+
+        lstSongsOnPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            isNewPlay = true;
+        });
+
+
 
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
@@ -572,12 +577,14 @@ public void filePath(String path) throws Exception {
     }
 
     public void playMusic(String path) throws Exception {
-        if (isNewPlay) {
+        if (isNewPlay)
+        {
             hit = new Media(new File(path).toURI().toString());
             play = new MediaPlayer(hit);
             txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
             isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
-        }
+
+    }
 
         soundVolume(soundLevel);
         timeTest();
