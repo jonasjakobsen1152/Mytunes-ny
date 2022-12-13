@@ -289,9 +289,9 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleEditPlaylist(ActionEvent actionEvent) {
         try {
-            Playlist selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
+            Playlist selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Gets selected playlist
 
-            if(selectedPlaylist != null) {
+            if(selectedPlaylist != null) { // Checks if the playlist is null
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/GUI/View/editPlaylist.fxml"));
 
@@ -318,7 +318,7 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleDeletePlaylist(ActionEvent actionEvent) {
         Playlist deletedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-        if(deletedPlaylist == null){
+        if(deletedPlaylist == null){ // Checks if a playlist is selected
             alertUser("Please select the song you wish to delete");
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -328,35 +328,35 @@ public class SongViewController extends BaseController implements Initializable 
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
         alert.showAndWait().ifPresent(type -> {
-            if (type == okButton) {
+            if (type == okButton) { // Check if user wants to complete the deletion of a song
                 try {
                     playlistModel.deletePlaylist(deletedPlaylist); // Sends Playlist to be deleted to PlaylistModel.
                     updatePlaylistModel();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            } else if (type == noButton) { // do something
+            } else if (type == noButton) { // Cancel the deletion of a song
             }
         });
     }
 
     private void updateSongModel() throws Exception {
-        SongModel updatedSongModel = new SongModel();
-        songModel = updatedSongModel;
-        lstSongs.setItems(songModel.getObservableSong());
+        SongModel updatedSongModel = new SongModel(); // Istantiates a new songModel
+        songModel = updatedSongModel; // Updates it to our instance variable
+        lstSongs.setItems(songModel.getObservableSong()); // Sets the list to the updated instance variable
     }
 
     private void updatePlaylistModel() throws Exception {
-        PlaylistModel updatedPlaylistModel = new PlaylistModel();
-        playlistModel = updatedPlaylistModel;
-        lstPlaylist.setItems(playlistModel.getObservablePlaylist());
+        PlaylistModel updatedPlaylistModel = new PlaylistModel(); // Istantiates a new PlayListModel
+        playlistModel = updatedPlaylistModel; // Updates it to our instance variable
+        lstPlaylist.setItems(playlistModel.getObservablePlaylist()); // Sets the list to the updated instance variable
     }
 
     private void updateSongToPlaylistModel() throws Exception {
-        SongToPlaylistModel updatedSongToPlaylistModel = new SongToPlaylistModel();
-        songToPlaylistModel = updatedSongToPlaylistModel;
-        lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist());
-        songToPlaylistModel.showList(playlistNumber);
+        SongToPlaylistModel updatedSongToPlaylistModel = new SongToPlaylistModel(); // Istantiates a new songToPlayListModel
+        songToPlaylistModel = updatedSongToPlaylistModel; // Updates it to our instance variable
+        lstSongsOnPlaylist.setItems(songToPlaylistModel.getObservablePlaylist()); // Updates the list to the new list from songToPlayListModel
+        songToPlaylistModel.showList(playlistNumber); // Clears and shows the new list
 
     }
 
@@ -374,17 +374,14 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
-        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem();
-        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem();
-        int songID = selectedSong.getId();
-        int playlistID = selectedPlaylist.getId();
+        selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Sets instance variable to the selected playlist
+        selectedSong = (Song) lstSongsOnPlaylist.getSelectionModel().getSelectedItem(); // Sets the instance variable to selected song
+        int songID = selectedSong.getId(); // Gets the song id from our selected song
+        int playlistID = selectedPlaylist.getId(); // Gets the id from the selected playlist
+        int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID); // Uses the id's from instance variables
 
-        int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID);
-
-        //int selectedRank = lstSongsOnPlaylist.getSelectionModel().getSelectedIndex() + 1; // Gets the position of the Song and adds 1 to as java uses Zero-based numbering and the database does not.
-
-        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,songToBeDeleted);
-        updateSongToPlaylistModel();
+        songToPlaylistModel.deleteSongFromPlaylist(selectedSong,selectedPlaylist,songToBeDeleted); // Sends down the selectedSong, from selected playlist with the rank of the song that should be deleted.
+        updateSongToPlaylistModel(); // Updates SongToPlaylistModel
     }
 
     public void handleMovePlaylistSongUp(ActionEvent actionEvent) throws Exception {
