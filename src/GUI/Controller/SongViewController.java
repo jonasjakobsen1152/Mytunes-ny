@@ -82,6 +82,13 @@ public class SongViewController extends BaseController implements Initializable 
         isNewPlay = true;
     });
 
+
+        lstSongsOnPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            isNewPlay = true;
+        });
+
+
+
         txtFilter.textProperty().addListener(((observable, oldValue, newValue) -> {
             try{
                 songModel.searchSong(newValue);
@@ -570,12 +577,14 @@ public void filePath(String path) throws Exception {
     }
 
     public void playMusic(String path) throws Exception {
-        if (isNewPlay) {
+        if (isNewPlay)
+        {
             hit = new Media(new File(path).toURI().toString());
             play = new MediaPlayer(hit);
             txtShowSong.setText("Playing: " + songTitle); //Label tekst til skærmen om hvilket sang der afspilles.
             isNewPlay = false; // Fortsætter med at spille samme sang som blev pauset.
-        }
+
+    }
 
         soundVolume(soundLevel);
         timeTest();
