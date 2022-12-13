@@ -142,6 +142,11 @@ public class SongDAO_DB implements ISongDAO {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 
+            //Vi sletter fra vores song tabel. Men eftersom vi har foreign keys er vi nød til specificere dem. Derfor skrives inner join.
+            //Her beskriver bindingen mellem child og parent tabellerne.
+            // Til sidst beskrives hvilket parameter, her sang  nummer, vi sletter efter. Nu vil sangen og referencer i krydstabellen
+            //blive slettet.
+
             //Bind parameters
 
             stmt.setInt(1, song.getId());

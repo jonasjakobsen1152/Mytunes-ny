@@ -111,6 +111,10 @@ public class PlaylistDAO_DB implements IPlaylistDAO {
             "DELETE PlaylistAndSongs FROM PlaylistAndSongs inner join PlaylistInfo on PlaylistInfo.PlaylisteID=PlaylistAndSongs.PlaylisteID " +
                     "WHERE PlaylistAndSongs.ID=? Delete FROM PlaylistInfo WHERE PlaylisteID = ?;";
 
+            //Vi sletter fra vores playliste tabel. Men eftersom vi har foreign keys er vi  nød til specificere dem. Derfor skrives inner join.
+            //Her beskriver bindingen mellem child og parent tabellerne.
+            // Til sidst beskrives hvilket parameter, her playlistens nummer, vi sletter efter. Nu vil playlisten og referencer i krydstabellen
+            //blive slettet.
 
 
 

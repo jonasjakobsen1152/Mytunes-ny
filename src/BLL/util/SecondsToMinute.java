@@ -19,7 +19,7 @@ public class SecondsToMinute {
         return duration;
     }
 
-    public String secondsMinute(int seconds)
+    public String secondsMinute(int seconds)  //Metoden er af string typen. Derfor returnere den en streng.
     {
 
         int hours=0;
@@ -31,13 +31,13 @@ public class SecondsToMinute {
 
 
         secondRest=seconds;
-        hours=secondRest/3600;
+        hours=secondRest/3600; //Først udregnes antallet af timer. Eftersom der er 3600 sekunder på time dividers med det tal.
 
         if (hours>=1)
         {
-            secondRest=seconds-3600*hours;
+            secondRest=seconds-3600*hours; //Her udregnes resten. Det kunne vi også havde gjort med % metoden. Altså seconds % 3600. Det vil give resten.
                      }
-        minutes=secondRest/60;
+        minutes=secondRest/60;   //Vi tager resten af sekunderne og fortsætter med udregning af antallet af minutter. Her divideres med 60.
 
         if (minutes>=1)
         {
@@ -45,7 +45,7 @@ public class SecondsToMinute {
         }
 
         if (hours<=10)
-            hourString="0"+hours;
+            hourString="0"+hours;  //Vi vil have formatet 00:00:00. Derfor tilføjes manglende nuller.
         else
             hourString=hours+"";
 
