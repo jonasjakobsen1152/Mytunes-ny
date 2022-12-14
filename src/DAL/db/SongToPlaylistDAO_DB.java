@@ -132,7 +132,7 @@ public class SongToPlaylistDAO_DB {
         String sql = "SELECT * FROM PlaylistAndSongs P WHERE P.MusicID=" + songID + " AND " + "P.playlisteID=" + playlistID +";";
 
         //Denne metode sender et heltal retur fra krydstabellen hvor musikID og playlistID er givet.
-        // Vi har valgt at bruge variabler i vores sql streng. Da vi ikke skriver til databasen er der ikke fare for SQL injection.
+        // Vi har valgt at bruge variabler i vores sql streng. Da vi ikke skriver til databasen er der ikke fare for SQL exploit injection.
 
 
 

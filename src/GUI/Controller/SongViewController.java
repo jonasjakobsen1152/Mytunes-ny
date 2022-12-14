@@ -398,7 +398,8 @@ public class SongViewController extends BaseController implements Initializable 
             int songID = selectedSong.getId(); // Gets the song id from our selected song
             int playlistID = selectedPlaylist.getId(); // Gets the id from the selected playlist
             int songToBeDeleted = songToPlaylistModel.getRank(songID, playlistID); // Uses the id's from instance variables
-            songToPlaylistModel.deleteSongFromPlaylist(selectedSong, selectedPlaylist, songToBeDeleted); // Sends down the selectedSong, from selected playlist with the rank of the song that should be deleted.
+            songToPlaylistModel.deleteSongFromPlaylist(selectedSong, selectedPlaylist, songToBeDeleted);
+            // Sends down the selectedSong, from selected playlist with the rank of the song that should be deleted.
             updateSongToPlaylistModel(); // Updates SongToPlaylistModel
         }
     }
