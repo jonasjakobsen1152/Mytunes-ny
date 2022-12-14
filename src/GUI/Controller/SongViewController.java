@@ -207,7 +207,8 @@ public class SongViewController extends BaseController implements Initializable 
                SongDataInputs songDataInputs = fxmlLoader.getController();
                songDataInputs.setSelectSong(selectedSong);
                stage.showAndWait();
-               updateSongModel(); // Updates the list
+               updateSongModel(); // Updates the lstSongs
+               updateSongToPlaylistModel(); // Updates the lstSongsToPlaylist. So the edited song will be shown.
            }
            else {
                alertUser("Please select a song to edit");
