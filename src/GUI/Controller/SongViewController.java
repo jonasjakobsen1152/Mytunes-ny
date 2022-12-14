@@ -343,18 +343,25 @@ public class SongViewController extends BaseController implements Initializable 
         }
     }
 
+    /*
+    Updates the lstSongs
+     */
     private void updateSongModel() throws Exception {
         SongModel updatedSongModel = new SongModel(); // Istantiates a new songModel
         songModel = updatedSongModel; // Updates it to our instance variable
         lstSongs.setItems(songModel.getObservableSong()); // Sets the list to the updated instance variable
     }
-
+    /*
+    Updates the lastPlaylist
+     */
     private void updatePlaylistModel() throws Exception {
         PlaylistModel updatedPlaylistModel = new PlaylistModel(); // Istantiates a new PlayListModel
         playlistModel = updatedPlaylistModel; // Updates it to our instance variable
         lstPlaylist.setItems(playlistModel.getObservablePlaylist()); // Sets the list to the updated instance variable
     }
-
+    /*
+    Updates the songToPlaylistModel
+     */
     private void updateSongToPlaylistModel() throws Exception {
         SongToPlaylistModel updatedSongToPlaylistModel = new SongToPlaylistModel(); // Istantiates a new songToPlayListModel
         songToPlaylistModel = updatedSongToPlaylistModel; // Updates it to our instance variable
@@ -362,7 +369,9 @@ public class SongViewController extends BaseController implements Initializable 
         songToPlaylistModel.showList(playlistNumber); // Clears and shows the new list
 
     }
-
+    /*
+    Adds songs from lstSongs to songToPlaylistModel
+    */
     public void handleAddSongToPlaylist(ActionEvent actionEvent) throws Exception {
         selectedSong = lstSongs.getSelectionModel().getSelectedItem(); // Gets the selectedSong that should be added
         if(selectedSong != null && selectedPlaylist != null) {
@@ -387,7 +396,9 @@ public class SongViewController extends BaseController implements Initializable 
             alertUser("Please select a playlist and a song");
         }
     }
-
+    /*
+    Deletes songs from songToPlaylistModel
+    */
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
         if(lstSongsOnPlaylist.getSelectionModel().getSelectedItem() == null || selectedPlaylist == null) {
             alertUser("Please the song from the playlist you wish to delete");
