@@ -189,27 +189,25 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleEditSong(ActionEvent actionEvent) throws Exception {
 
         if (songIsPlayed) //Stopper afspilning af musik, hvis noget skal ændres
-
-
             stopMusic();
 
         try {
-           Song selectedSong = lstSongs.getSelectionModel().getSelectedItem();
+           Song selectedSong = lstSongs.getSelectionModel().getSelectedItem(); //Gets the selected Song
 
-           if(selectedSong != null) {
+           if(selectedSong != null) { //Checks if a song is selected
                FXMLLoader fxmlLoader = new FXMLLoader();
-               fxmlLoader.setLocation(getClass().getResource("/GUI/View/editSong.fxml"));
+               fxmlLoader.setLocation(getClass().getResource("/GUI/View/editSong.fxml")); //Gets the fxml window to be opened
 
                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
                Stage stage = new Stage();
                stage.setTitle("Edit the song");
                stage.initModality(Modality.WINDOW_MODAL);
-               stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+               stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow()); // Does so the window has to be closed before the programm can be accessed again
                stage.setScene(scene);
                SongDataInputs songDataInputs = fxmlLoader.getController();
                songDataInputs.setSelectSong(selectedSong);
                stage.showAndWait();
-               updateSongModel();
+               updateSongModel(); // Updates the list
            }
            else {
                alertUser("Please select a song to edit");
@@ -222,7 +220,7 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleDeleteSong(ActionEvent actionEvent) throws Exception {
 
         Song deletedSong = lstSongs.getSelectionModel().getSelectedItem();
-        if(deletedSong == null){
+        if(deletedSong == null){ // Checks if a song is selected
             alertUser("Please select the song you wish to delete");
         }
         else{
@@ -239,12 +237,12 @@ public class SongViewController extends BaseController implements Initializable 
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton) {
                     try {
-                        songModel.deleteSong(deletedSong); // Sends Song to be delted to songModel.
+                        songModel.deleteSong(deletedSong); // Sends Song to be deleted to songModel.
                         updateSongModel();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                } else if (type == noButton) { // do something
+                } else if (type == noButton) { // Cancel deletion
                 }
             });
         }
@@ -277,15 +275,15 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     public void handleAddPlaylist(ActionEvent actionEvent) throws Exception {
-        String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Her er den dovne mulighed
-        if (inputValue == null){
+        String inputValue = JOptionPane.showInputDialog("Please insert playlist name "); // Opens a window that a playlist name can be added into
+        if (inputValue == null){ // Checks if window cancelled
         }
-        else if (inputValue.equals("")){
+        else if (inputValue.equals("")){ //Checks if user input nothing
             alertUser("Playlist needs to be named");
         }
         else {
-            playlistModel.createNewPlaylist(inputValue);
-            updatePlaylistModel();
+            playlistModel.createNewPlaylist(inputValue); // Create playlist
+            updatePlaylistModel(); //Updates the lstPlaylist
         }
     }
 
