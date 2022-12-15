@@ -400,7 +400,7 @@ public class SongViewController extends BaseController implements Initializable 
     */
     public void handleDeleteSongFromPlaylist(ActionEvent actionEvent) throws Exception {
         if(lstSongsOnPlaylist.getSelectionModel().getSelectedItem() == null || selectedPlaylist == null) {
-            alertUser("Please the song from the playlist you wish to delete");
+            alertUser("Please select the song you wish to delete");
         }
         else {
             selectedPlaylist = lstPlaylist.getSelectionModel().getSelectedItem(); // Sets instance variable to the selected playlist
